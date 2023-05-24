@@ -6,16 +6,18 @@ const Header = (props) => {
     const navigate = useNavigate();
 
     const items = [
-        { label: 'home', command: () => { navigate('/') } },
+        { label: 'Home', command: () => { navigate('/') } },
     ];
 
     const start = <Link to="/"><img alt="logo" src="https://primefaces.org/cdn/primereact/images/logo.png" height="40" className="mr-2" /></Link>;
     const end = null; //<InputText placeholder="Search" type="text" className="w-full" />;
 
     return (
-        <div className="card">
-            <Menubar model={items} start={start} end={end} />
-        </div>
+        <>
+            <div className="card">
+                <Menubar model={items} start={start} end={end} />
+            </div>
+        </>
     );
 };
 
