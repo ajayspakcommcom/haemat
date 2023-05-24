@@ -1,12 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import LoginContext from '../../Context/Login/LoginContext';
 
 import './Login.css';
 
-const Login = () => {
-
-    const ctx = useContext(LoginContext);
+const ForgotPassword = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -21,8 +18,8 @@ const Login = () => {
 
     const loginHandler = (e) => {
         e.preventDefault();
-        ctx.onLogin(true);
-        console.log(ctx.isLogin);
+        console.log(email);
+        console.log(password);
     };
 
     return (
@@ -31,17 +28,12 @@ const Login = () => {
                 <section>
                     <form onSubmit={loginHandler}>
                         <h1>Login</h1>
-                        {/* {ctx.isLogin && <span>Login</span>}
-                        {!ctx.isLogin && <span>Logout</span>} */}
                         <div className="inputbox">
                             <input type="email" placeholder='Email' id='txtEmail' onChange={emailChangeHandler} />
                         </div>
-                        <div className="inputbox">
-                            <input type="password" placeholder='Password' id='txtPwd' onChange={passwordChangeHandler} />
-                        </div>
-                        <button type='submit'>Log in</button>
+                        <button type='submit'>Send</button>
                         <div className="forget">
-                            <Link to="/forgot-password">Forgot Password</Link>
+                            <Link to="/">Login In</Link>
                         </div>
                     </form>
                 </section>
@@ -50,4 +42,4 @@ const Login = () => {
     )
 };
 
-export default Login;
+export default ForgotPassword;

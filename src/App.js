@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from './Component/UI/Layout';
 import Home from './Pages/Home/Home';
 import Login from './Pages/Login/Login';
+import ForgotPassword from './Pages/Login/ForgotPassword';
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/dashboard" element={<Layout />}>
           <Route index element={<Home />} />
         </Route>

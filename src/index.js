@@ -7,11 +7,14 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import 'primeflex/primeflex.css'
+import LoginContextProvider from './Context/Provider/LoginContextProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <LoginContextProvider>
+      <App />
+    </LoginContextProvider>
   </React.StrictMode>
 );
 
