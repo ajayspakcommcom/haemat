@@ -31,7 +31,7 @@ const ForgotPassword = () => {
                         <div className="inputbox">
                             <input type="email" placeholder='Email' id='txtEmail' onChange={emailChangeHandler} />
                         </div>
-                        <button type='submit'>Send</button>
+                        <button type='submit' className='button'>Send</button>
                         <div className="forget">
                             <Link to="/">Login In</Link>
                         </div>

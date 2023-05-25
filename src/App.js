@@ -7,6 +7,7 @@ import Login from './Pages/Login/Login';
 import ForgotPassword from './Pages/Login/ForgotPassword';
 import LoginContext from './Context/Login/LoginContext';
 import DoctorList from './Pages/DoctorList/DoctorList';
+import Product from './Pages/Product/Product';
 
 
 function App() {
@@ -24,9 +25,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LoginLayoutPage />}>
-          {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route index element={<Home />} />
           <Route path='/doctor-list' element={<DoctorList />} />
+          <Route path='/product/:id/:actionName' element={<Product />} />
         </Route>
       </Routes>
     </BrowserRouter>

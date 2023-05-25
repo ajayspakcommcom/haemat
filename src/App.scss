@@ -1,1 +1,11 @@
 @import './Content/sass/variable.scss';
+
+.header-right-list {
+    display: flex;
+
+    &>li {
+        &:first-child {
+            margin-right: 10px;
+        }
+    }
+}

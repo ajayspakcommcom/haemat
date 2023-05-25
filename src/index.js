@@ -8,12 +8,15 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import 'primeflex/primeflex.css'
 import LoginContextProvider from './Context/Provider/LoginContextProvider';
+import ProductContextProvider from './Context/Provider/ProductContextProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <LoginContextProvider>
-      <App />
+      <ProductContextProvider>
+        <App />
+      </ProductContextProvider>
     </LoginContextProvider>
   </React.StrictMode>
 );

@@ -46,15 +46,13 @@ const Login = () => {
                 <section>
                     <form onSubmit={loginHandler}>
                         <h1>Login</h1>
-                        {/* {ctx.isLogin && <span>Login</span>}
-                        {!ctx.isLogin && <span>Logout</span>} */}
                         <div className="inputbox">
                             <input type="email" placeholder='Email' id='txtEmail' onChange={emailChangeHandler} />
                         </div>
                         <div className="inputbox">
                             <input type="password" placeholder='Password' id='txtPwd' onChange={passwordChangeHandler} />
                         </div>
-                        <button type='submit'>Log in</button>
+                        <button type='submit' className='button'>Log in</button>
                         <div className="forget">
                             <Link to="/forgot-password">Forgot Password</Link>
                         </div>
