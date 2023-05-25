@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { Link } from "react-router-dom";
 import LoginContext from '../../Context/Login/LoginContext';
-
 import './Login.css';
+import { validateEmail } from '../../Service/Common';
 
 const Login = () => {
 
@@ -21,8 +21,23 @@ const Login = () => {
 
     const loginHandler = (e) => {
         e.preventDefault();
-        ctx.onLogin(true);
-        console.log(ctx.isLogin);
+
+        if (email.length === 0) {
+            alert('Please Enter Email');
+            return false;
+        }
+
+        if (!validateEmail(email)) {
+            alert('Please Enter valid Email Address');
+            return false;
+        }
+
+        if (password.length === 0) {
+            alert('Please Enter Your Password');
+            return false;
+        }
+
+        ctx.onLogin({ email: email, password: password });
     };
 
     return (
