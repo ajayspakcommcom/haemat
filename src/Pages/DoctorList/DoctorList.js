@@ -14,9 +14,10 @@ const DoctorList = () => {
     const ctx = useContext(ProductContext);
 
     const goto = (obj, actionName) => {
-        console.log(obj);
-        console.log(actionName);
+        // console.log(obj);
+        // console.log(actionName);
         navigate(`/product/${obj.id}/${actionName}`);
+        ctx.addProduct(obj);
     };
 
     useEffect(() => {
@@ -35,7 +36,7 @@ const DoctorList = () => {
 
     return (
         <>
-            <div className="card p-5">
+            <div className="card p-3">
                 <h2>Doctor List</h2>
                 <DataTable value={doctorList} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} emptyMessage="No customers found.">
                     <Column field="code" header="Customer Code" />

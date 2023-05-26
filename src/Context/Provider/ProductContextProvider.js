@@ -22,7 +22,8 @@ const ProductContextProvider = (props) => {
     }, []);
 
     const addProductHandler = (obj) => {
-        setData(getProductData());
+        localStorage.setItem("productData", JSON.stringify(obj));
+        setData(obj);
     };
 
     const clearProductHandler = (obj) => {
