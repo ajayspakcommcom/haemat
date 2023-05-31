@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import LoginContext from '../Login/LoginContext';
+import axios from "axios";
+import configData from '../../Config/Config.json';
 
 const getUserData = () => {
     if (localStorage.getItem("userData") === null) {
@@ -12,7 +14,8 @@ const getUserData = () => {
 const LoginContextProvider = (props) => {
 
     const [userData, setUserData] = useState({});
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [error, setError] = useState({});
+    const [isLoggedIn, setIsLoggedIn] = useState({});
 
     useEffect(() => {
         setUserData(getUserData());
@@ -26,15 +29,36 @@ const LoginContextProvider = (props) => {
     }, [isLoggedIn]);
 
     const onLoginHandler = (obj) => {
+        console.log(obj);
         let logObj = { ...obj };
-        localStorage.setItem("userData", JSON.stringify(logObj));
-        setUserData(getUserData());
-        setIsLoggedIn(true);
+
+
+        axios.post(`${configData.SERVER_URL}/login`, logObj).then((resp) => {
+            console.log(resp);
+
+            if (resp.data.success) {
+                localStorage.setItem("userData", JSON.stringify(resp.data.userDetiails));
+                setUserData(getUserData());
+                setIsLoggedIn(true);
+            } else {
+                setError({ msg: 'Invalid Username and Password' });
+            }
+
+        }).catch((err) => {
+            console.log(err)
+            setIsLoggedIn(false);
+        });
+
+        // localStorage.setItem("userData", JSON.stringify(logObj));
+        // setUserData(getUserData());
+        // setIsLoggedIn(true);
+
     };
 
     const onLogoutHandler = (obj) => {
         localStorage.removeItem('userData');
-        setIsLoggedIn(false);
+        setIsLoggedIn('Invalid User name and password');
+        setError({});
     };
 
 
@@ -43,7 +67,8 @@ const LoginContextProvider = (props) => {
             onLogin: onLoginHandler,
             onLogout: onLogoutHandler,
             userData: userData,
-            isLogin: isLoggedIn
+            isLogin: isLoggedIn,
+            error: error
         }}>{props.children}</LoginContext.Provider>
     );
 };

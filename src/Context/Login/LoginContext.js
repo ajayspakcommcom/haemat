@@ -4,7 +4,8 @@ const LoginContext = createContext({
     onLogin: (obj) => { },
     onLogout: (obj) => { },
     isLogin: false,
-    userData: {}
+    userData: {},
+    error: {}
 });
 
 export default LoginContext;

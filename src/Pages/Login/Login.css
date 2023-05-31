@@ -73,6 +73,7 @@ input:valid~label {
     color: #fff;
     display: flex;
     justify-content: center;
+    display: none;
 }
 
 .forget label input {
@@ -115,4 +116,8 @@ input:valid~label {
 
 .register p a:hover {
     text-decoration: underline;
+}
+
+.login-error {
+    color: red;
 }

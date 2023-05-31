@@ -12,13 +12,13 @@ import ProductContextProvider from './Context/Provider/ProductContextProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <LoginContextProvider>
-      <ProductContextProvider>
-        <App />
-      </ProductContextProvider>
-    </LoginContextProvider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <LoginContextProvider>
+    <ProductContextProvider>
+      <App />
+    </ProductContextProvider>
+  </LoginContextProvider>
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

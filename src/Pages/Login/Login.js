@@ -46,6 +46,7 @@ const Login = () => {
                 <section>
                     <form onSubmit={loginHandler}>
                         <h1>Login</h1>
+                        {ctx.error && <p className='login-error'>{ctx.error.msg}</p>}
                         <div className="inputbox">
                             <input type="email" placeholder='Email' id='txtEmail' onChange={emailChangeHandler} />
                         </div>
