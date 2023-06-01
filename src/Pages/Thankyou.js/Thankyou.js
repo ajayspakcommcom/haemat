@@ -14,8 +14,6 @@ const Thankyou = (props) => {
         props.onGoToDashboard();
     };
 
-
-
     return (
         <>
             <div className="thank-form">
