@@ -66,7 +66,7 @@ const Product = () => {
 
         setInputFields((prevState) => {
             let inputField = _selectedBrands.map((item) => {
-                return { name: '', key: item.key, placeholder: 'Enter Value' }
+                return { name: '', key: item.key, placeholder: +item.key == 37 ? 'No of Vials' : 'No of Strips' }
             });
             return [...inputField];
         });
@@ -127,7 +127,7 @@ const Product = () => {
                 empID: +empId,
                 medId: +item.key,
                 orderDate: date ? date.toLocaleDateString() : date,
-                NoOfVials: +item.key == 37 ? +item.name : null,
+                NoOfVials: +item.key == 37 ? +item.name : -1,
                 NoOfStrips: +item.key != 37 ? +item.name : null,
                 NoOfPatients: +noOfPatient
             };

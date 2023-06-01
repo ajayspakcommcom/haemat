@@ -30,7 +30,6 @@ const DoctorList = () => {
     useEffect(() => {
         axios.get(url).then((resp) => {
             setDoctorList(resp.data);
-
         }).catch((err) => {
             console.log(err)
         });
