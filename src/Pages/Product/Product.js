@@ -15,6 +15,7 @@ import { getEmpId } from '../../Service/Common';
 import LoginContext from '../../Context/Login/LoginContext';
 import Thankyou from '../Thankyou.js/Thankyou';
 import configData from '../../Config/Config.json';
+import { InputNumber } from 'primereact/inputnumber';
 
 
 const Product = () => {
@@ -38,6 +39,7 @@ const Product = () => {
 
 
     const [date, setDate] = useState(null);
+    const [noOfPatient, setNoOfPatient] = useState(null);
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [brandImgList, setBrandImgList] = useState([]);
 
@@ -69,6 +71,7 @@ const Product = () => {
             return [...inputField];
         });
     };
+
 
     useEffect(() => {
 
@@ -102,9 +105,20 @@ const Product = () => {
 
     const saveData = (e) => {
         e.preventDefault();
-        setIsBtnDisabled(true);
 
         let medicineData = inputFields, drId = params.id, empId = loginContext.userData.empId ? loginContext.userData.empId : getEmpId(), endPoints = [];
+
+        console.log(medicineData);
+
+        if (!date) {
+            alert('Please select the date');
+            return;
+        }
+
+        if (!noOfPatient) {
+            alert('Please fill no of Patients');
+            return;
+        }
 
         medicineData.forEach((item, indx) => {
 
@@ -113,10 +127,15 @@ const Product = () => {
                 empID: +empId,
                 medId: +item.key,
                 orderDate: date ? date.toLocaleDateString() : date,
-                NoOfVials: +item.name
+                NoOfVials: +item.key == 37 ? +item.name : null,
+                NoOfStrips: +item.key != 37 ? +item.name : null,
+                NoOfPatients: +noOfPatient
             };
             endPoints.push(itemObj);
         });
+
+        console.log(endPoints);
+        setIsBtnDisabled(true);
 
         Promise.all(endPoints.map((endpoint) => axios.post(`${configData.SERVER_URL}/save-details/`, endpoint))).then(
             axios.spread((...allData) => {
@@ -125,6 +144,7 @@ const Product = () => {
                 setIsThankyouPageVisible(true);
             })
         );
+
     };
 
     const comeFromThankPageHandler = () => {
@@ -168,7 +188,10 @@ const Product = () => {
             {!isThankyouPageVisible &&
                 <form className='product-form' onSubmit={saveData}>
                     <h2>Please filled the data</h2>
-                    <Calendar value={date} onChange={(e) => setDate(e.value)} showIcon />
+
+                    <Calendar inputId="birth_date" value={date} onChange={(e) => setDate(e.value)} showIcon className='mb-4' />
+
+                    <InputNumber value={noOfPatient} onChange={(e) => { setNoOfPatient(e.value) }} placeholder='No of Patients' />
 
                     <ul className='brand-wrapper'>
                         {brandImgList.map((word, index) => {
