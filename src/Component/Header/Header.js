@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
+import { Skeleton } from 'primereact/skeleton';
 import { Link, useNavigate } from "react-router-dom";
 import { Menubar } from 'primereact/menubar';
 import LoginContext from "../../Context/Login/LoginContext";
 import { getEmpName } from '../../Service/Common';
-import User from '../icons/User';
+import Logout from '../icons/Logout/Logout';
 
 const Header = (props) => {
 
@@ -23,18 +24,20 @@ const Header = (props) => {
         ctx.onLogout();
     };
 
-    const userLogo = <Link to="/"><img alt="logo" src="https://primefaces.org/cdn/primereact/images/logo.png" height="40" className="mr-2" /></Link>;
+    const userLogo = <Link to="/">
+        <img alt="logo" src="https://primefaces.org/cdn/primereact/images/logo.png" height="40" className="mr-2" />
+    </Link>;
     const userNav = <>
         <ul className='header-right-list'>
-            <li><span>Welcome, {userName ? userName : getEmpName()} </span></li>
-            <li><Link to="/"><span onClick={logoutMe}><User /></span></Link></li>
+            <li><span>Welcome, {userName ? userName : getEmpName()}</span></li>
+            <li><Link to="/"><span onClick={logoutMe}><Logout /></span></Link></li>
         </ul>
     </>;
 
     const adminNav = <>
         <ul className='header-right-list'>
             <li><span>Admin, {userName ? userName : getEmpName()} </span></li>
-            <li><Link to="/"><span onClick={logoutMe}><User /></span></Link></li>
+            <li><Link to="/"><span onClick={logoutMe}><Logout /></span></Link></li>
         </ul>
     </>;
 

@@ -4,14 +4,6 @@ import axios from "axios";
 import configData from '../../Config/Config.json';
 import { getUserData } from '../../Service/Common';
 
-// const getUserData = () => {
-//     if (localStorage.getItem("userData") === null) {
-//         return {};
-//     } else {
-//         return JSON.parse(localStorage.getItem('userData'));
-//     }
-// };
-
 const LoginContextProvider = (props) => {
 
     const [userData, setUserData] = useState({});
@@ -30,13 +22,9 @@ const LoginContextProvider = (props) => {
     }, [isLoggedIn]);
 
     const onLoginHandler = (obj) => {
-        console.log(obj);
         let logObj = { ...obj };
 
-
         axios.post(`${configData.SERVER_URL}/login`, logObj).then((resp) => {
-            console.log(resp);
-
             if (resp.data.success) {
                 localStorage.setItem("userData", JSON.stringify(resp.data.userDetiails));
                 setUserData(getUserData());
@@ -49,11 +37,6 @@ const LoginContextProvider = (props) => {
             console.log(err)
             setIsLoggedIn(false);
         });
-
-        // localStorage.setItem("userData", JSON.stringify(logObj));
-        // setUserData(getUserData());
-        // setIsLoggedIn(true);
-
     };
 
     const onLogoutHandler = (obj) => {
@@ -70,7 +53,9 @@ const LoginContextProvider = (props) => {
             userData: userData,
             isLogin: isLoggedIn,
             error: error
-        }}>{props.children}</LoginContext.Provider>
+        }}>
+            {props.children}
+        </LoginContext.Provider>
     );
 };
 

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import LoginContext from '../../Context/Login/LoginContext';
 import './Login.css';
@@ -10,6 +10,7 @@ const Login = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
     const emailChangeHandler = (e) => {
         setEmail(e.target.value);
@@ -21,6 +22,7 @@ const Login = () => {
 
     const loginHandler = (e) => {
         e.preventDefault();
+
 
         if (email.length === 0) {
             alert('Please Enter Email');
@@ -38,7 +40,16 @@ const Login = () => {
         }
 
         ctx.onLogin({ email: email, password: password });
+        setIsBtnDisabled(true);
     };
+
+    useEffect(() => {
+        if (ctx.error) {
+            setIsBtnDisabled(false);
+        } else {
+            setIsBtnDisabled(true);
+        }
+    }, [ctx.error]);
 
     return (
         <>
@@ -53,7 +64,7 @@ const Login = () => {
                         <div className="inputbox">
                             <input type="password" placeholder='Password' id='txtPwd' onChange={passwordChangeHandler} />
                         </div>
-                        <button type='submit' className='button'>Log in</button>
+                        <button type='submit' className='button' disabled={isBtnDisabled}>Log in</button>
                         <div className="forget">
                             <Link to="/forgot-password">Forgot Password</Link>
                         </div>
