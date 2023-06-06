@@ -1,25 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import axios from "axios";
+import React, { useContext } from 'react';
 import DoctorList from '../DoctorList/DoctorList';
+import LoginContext from '../../Context/Login/LoginContext';
+import AdminDashboard from '../Admin/Dashboard/AdminDashboard';
 
 
 const Home = (props) => {
 
-    const [person, setPerson] = useState([]);
+    const ctx = useContext(LoginContext);
+    const designation = (ctx.userData.post || '').toLowerCase();
 
-    useEffect(() => {
-        // axios.get('http://3.7.254.233:3333/person-list').then(resp => {
-        //     setPerson((prevState) => {
-        //         return resp.data.flat();
-        //     });
-        // });
-    }, []);
-
-    return (
-        <>
-            <DoctorList />
-        </>
-    );
+    if (designation === 'admin') {
+        return (
+            <>
+                <AdminDashboard />
+            </>
+        );
+    } else {
+        return (
+            <>
+                <DoctorList />
+            </>
+        );
+    }
 };
 
 export default Home;

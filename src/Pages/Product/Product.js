@@ -210,7 +210,7 @@ const Product = () => {
                         })}
                     </div>
 
-                    <div className="flex justify-content-around input-feild-wrapper">
+                    <div className="flex justify-content-start input-feild-wrapper">
                         {inputFields.map((input, index) => {
                             return (
                                 <div key={index} id={input.key}>

@@ -7,11 +7,13 @@ export const validateEmail = (email) => {
 
 export const getUserData = () => {
     if (localStorage.getItem('userData')) {
-        return JSON.parse(localStorage.getItem('userData')).empId;
+        return JSON.parse(localStorage.getItem('userData'));
     } else {
-        return null;
+        return {};
     }
 }
+
+
 
 export const getImage = (path, fileName) => {
     return require(`${path + fileName.toLowerCase()}`);

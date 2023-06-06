@@ -13,13 +13,7 @@ import Product from './Pages/Product/Product';
 function App() {
 
   const ctx = useContext(LoginContext);
-
-  const LoginLayoutPage = ctx.isLogin ? Layout : Login;
-
-
-  // useEffect(() => {
-  //   console.log(ctx.userData);
-  // }, []);
+  const LoginLayoutPage = !ctx.isLogin ? Login : Layout;
 
   return (
     <BrowserRouter>
@@ -33,6 +27,8 @@ function App() {
       </Routes>
     </BrowserRouter>
   )
+
+
 
 }
 

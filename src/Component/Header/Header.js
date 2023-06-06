@@ -3,12 +3,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { Menubar } from 'primereact/menubar';
 import LoginContext from "../../Context/Login/LoginContext";
 import { getEmpName } from '../../Service/Common';
+import User from '../icons/User';
 
 const Header = (props) => {
 
     const ctx = useContext(LoginContext);
 
+
     const [userName, setUserName] = useState(ctx.userData.name);
+    const designation = (ctx.userData.post || '').toLowerCase();
 
     const navigate = useNavigate();
 
@@ -20,18 +23,25 @@ const Header = (props) => {
         ctx.onLogout();
     };
 
-    const start = <Link to="/"><img alt="logo" src="https://primefaces.org/cdn/primereact/images/logo.png" height="40" className="mr-2" /></Link>;
-    const end = <>
+    const userLogo = <Link to="/"><img alt="logo" src="https://primefaces.org/cdn/primereact/images/logo.png" height="40" className="mr-2" /></Link>;
+    const userNav = <>
         <ul className='header-right-list'>
             <li><span>Welcome, {userName ? userName : getEmpName()} </span></li>
-            <li><Link to="/"><span onClick={logoutMe}>Logout</span></Link></li>
+            <li><Link to="/"><span onClick={logoutMe}><User /></span></Link></li>
+        </ul>
+    </>;
+
+    const adminNav = <>
+        <ul className='header-right-list'>
+            <li><span>Admin, {userName ? userName : getEmpName()} </span></li>
+            <li><Link to="/"><span onClick={logoutMe}><User /></span></Link></li>
         </ul>
     </>;
 
     return (
         <>
             <div className="card">
-                <Menubar model={items} start={start} end={end} />
+                <Menubar model={items} start={userLogo} end={designation === 'admin' ? adminNav : userNav} />
             </div>
         </>
     );

@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import LoginContext from '../Login/LoginContext';
 import axios from "axios";
 import configData from '../../Config/Config.json';
+import { getUserData } from '../../Service/Common';
 
-const getUserData = () => {
-    if (localStorage.getItem("userData") === null) {
-        return {};
-    } else {
-        return JSON.parse(localStorage.getItem('userData'));
-    }
-};
+// const getUserData = () => {
+//     if (localStorage.getItem("userData") === null) {
+//         return {};
+//     } else {
+//         return JSON.parse(localStorage.getItem('userData'));
+//     }
+// };
 
 const LoginContextProvider = (props) => {
 
