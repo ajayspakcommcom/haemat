@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { Skeleton } from 'primereact/skeleton';
 import { Link, useNavigate } from "react-router-dom";
 import { Menubar } from 'primereact/menubar';
 import LoginContext from "../../Context/Login/LoginContext";
