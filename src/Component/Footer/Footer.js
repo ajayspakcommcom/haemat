@@ -5,7 +5,7 @@ const Footer = (props) => {
     return (
         <>
             <footer>
-                <p>Copyright @ {new Date().getFullYear()} Bharat Serums and Vaccines Limited (BSV) <br /> Privacy Policy</p>
+                <p>Copyright @ {new Date().getFullYear()} Bharat Serums and Vaccines Limited <br /> Privacy Policy</p>
             </footer>
         </>
     );
