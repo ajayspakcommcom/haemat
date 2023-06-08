@@ -66,7 +66,8 @@ const Product = () => {
 
         setInputFields((prevState) => {
             let inputField = _selectedBrands.map((item) => {
-                return { name: '', key: item.key, placeholder: +item.key == 37 ? 'No of Vials' : 'No of Strips' }
+                //return { name: '', key: item.key, placeholder: +item.key == 37 ? 'No of Vials' : 'No of Strips' }
+                return { name: '', key: item.key, placeholder: +item.key == 37 ? 'Vials for Thymogam' : +item.key == 36 ? 'Strips for Revugam' : 'Strips for Oncyclo' }
             });
             return [...inputField];
         });

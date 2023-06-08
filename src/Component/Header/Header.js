@@ -4,6 +4,9 @@ import { Menubar } from 'primereact/menubar';
 import LoginContext from "../../Context/Login/LoginContext";
 import { getEmpName } from '../../Service/Common';
 import Logout from '../icons/Logout/Logout';
+import './Header.css';
+
+
 
 const Header = (props) => {
 
@@ -24,7 +27,8 @@ const Header = (props) => {
     };
 
     const userLogo = <Link to="/">
-        <img alt="logo" src="https://primefaces.org/cdn/primereact/images/logo.png" height="40" className="mr-2" />
+        {/* <img alt="logo" src="https://primefaces.org/cdn/primereact/images/logo.png" height="40" className="mr-2" /> */}
+        <img alt="logo" src={process.env.PUBLIC_URL + '/logo.png'} height="40" className="mr-2" />
     </Link>;
     const userNav = <>
         <ul className='header-right-list'>
