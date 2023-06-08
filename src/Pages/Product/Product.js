@@ -16,6 +16,7 @@ import LoginContext from '../../Context/Login/LoginContext';
 import Thankyou from '../Thankyou.js/Thankyou';
 import configData from '../../Config/Config.json';
 import { InputNumber } from 'primereact/inputnumber';
+import Loader from '../../Component/Loader/Loader';
 
 
 const Product = () => {
@@ -24,6 +25,7 @@ const Product = () => {
     const loginContext = useContext(LoginContext);
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
     const [isThankyouPageVisible, setIsThankyouPageVisible] = useState(false);
+    const [isLoaderVisible, setIsLoaderVisible] = useState(true);
 
     const params = useParams();
 
@@ -96,6 +98,7 @@ const Product = () => {
             console.log(brandList);
             setBrandImgList(imgList);
             setBrands(brandList);
+            setIsLoaderVisible(false);
 
         }).catch((err) => {
             console.log(err)
@@ -106,6 +109,7 @@ const Product = () => {
 
     const saveData = (e) => {
         e.preventDefault();
+
 
         let medicineData = inputFields, drId = params.id, empId = loginContext.userData.empId ? loginContext.userData.empId : getEmpId(), endPoints = [];
 
@@ -137,12 +141,14 @@ const Product = () => {
 
         console.log(endPoints);
         setIsBtnDisabled(true);
+        setIsLoaderVisible(true);
 
         Promise.all(endPoints.map((endpoint) => axios.post(`${configData.SERVER_URL}/save-details/`, endpoint))).then(
             axios.spread((...allData) => {
                 console.log({ allData });
                 setIsBtnDisabled(false);
                 setIsThankyouPageVisible(true);
+                setIsLoaderVisible(false);
             })
         );
 
@@ -154,6 +160,7 @@ const Product = () => {
 
     return (
         <>
+            {isLoaderVisible && <Loader />}
             <div className='card p-3 product-wrapper'>
                 <div className='product-header'>
 

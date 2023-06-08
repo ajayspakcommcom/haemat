@@ -1,13 +1,15 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import './AdminDashboard.css';
 import { Button } from 'primereact/button';
+import Loader from '../../../Component/Loader/Loader';
 
 
 const AdminDashboard = () => {
 
     const dt = useRef(null);
+    const [isLoaderVisible, setIsLoaderVisible] = useState(true);
 
 
 
@@ -212,6 +214,7 @@ const AdminDashboard = () => {
 
     return (
         <>
+            {/* {isLoaderVisible && <Loader />} */}
             <div className="card p-3">
                 <h2>Admin Report</h2>
                 <DataTable ref={dt} value={adminReport} paginator rows={5} header={header} rowsPerPageOptions={[5, 10, 25, 50]} emptyMessage="No customers found.">

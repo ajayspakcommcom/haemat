@@ -22,7 +22,7 @@ const Thankyou = (props) => {
                     <Card>
                         <p className="m-0 text-center">Thank you for the submission.</p>
                         <p className="mb-5 text-center">Click below to go back to the dashboard.</p>
-                        <Button label="Go to Dadhboard" className='save' onClick={goToDashboard} />
+                        <Button label="Go to Dashboard" className='save' onClick={goToDashboard} />
                     </Card>
                 </div>
 

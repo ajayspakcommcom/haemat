@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import LoginContext from '../../Context/Login/LoginContext';
 import './Login.css';
 import { validateEmail } from '../../Service/Common';
+import Loader from '../../Component/Loader/Loader';
 
 const Login = () => {
 
@@ -11,6 +12,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
+    const [isLoaderVisible, setIsLoaderVisible] = useState(false);
 
     const emailChangeHandler = (e) => {
         setEmail(e.target.value);
@@ -41,18 +43,22 @@ const Login = () => {
 
         ctx.onLogin({ email: email, password: password });
         setIsBtnDisabled(true);
+        setIsLoaderVisible(true);
     };
 
     useEffect(() => {
         if (ctx.error) {
             setIsBtnDisabled(false);
+            setIsLoaderVisible(false);
         } else {
             setIsBtnDisabled(true);
+            setIsLoaderVisible(false);
         }
     }, [ctx.error]);
 
     return (
         <>
+            {isLoaderVisible && <Loader />}
             <section className="login-wrapper">
                 <section>
                     <form onSubmit={loginHandler}>
