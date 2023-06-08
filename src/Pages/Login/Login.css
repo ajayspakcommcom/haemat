@@ -18,7 +18,7 @@
 
 section {
     position: relative;
-    background-color: transparent;
+    background-color: #fff;
     border: 2px solid rgba(255, 255, 255, 0.5);
     border-radius: 20px;
     backdrop-filter: blur(55px);
@@ -26,19 +26,30 @@ section {
     justify-content: center;
     align-items: center;
     padding: 2rem 3rem;
-    box-shadow: 1px 1px 20px #cfcfcf;
+    box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.5);
 }
 
 h1 {
     font-size: 2rem;
     color: #000;
     text-align: center;
+    margin: 0 0 0 0;
+}
+
+h1 img {
+    display: block;
+    margin: auto;
+}
+
+.login-logo {
+    width: 120px;
+    height: auto;
 }
 
 .inputbox {
     position: relative;
     margin: 30px 0;
-    max-width: 310px;
+    min-width: 350px;
     border-bottom: 2px solid #000;
 }
 

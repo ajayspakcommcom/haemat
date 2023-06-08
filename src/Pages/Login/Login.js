@@ -7,6 +7,8 @@ import Loader from '../../Component/Loader/Loader';
 
 const Login = () => {
 
+
+
     const ctx = useContext(LoginContext);
 
     const [email, setEmail] = useState('');
@@ -62,7 +64,9 @@ const Login = () => {
             <section className="login-wrapper">
                 <section>
                     <form onSubmit={loginHandler}>
-                        <h1>Login</h1>
+                        <h1>
+                            <img alt="logo" src={process.env.PUBLIC_URL + '/logo-black.png'} className='login-logo' />
+                        </h1>
                         {ctx.error && <p className='login-error'>{ctx.error.msg}</p>}
                         <div className="inputbox">
                             <input type="email" placeholder='Email' id='txtEmail' onChange={emailChangeHandler} />
