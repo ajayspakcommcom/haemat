@@ -11,8 +11,6 @@ const AdminDashboard = () => {
     const dt = useRef(null);
     const [isLoaderVisible, setIsLoaderVisible] = useState(true);
 
-
-
     const adminReport = [
         {
             "doctorID": 1000,

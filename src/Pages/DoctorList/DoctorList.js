@@ -32,8 +32,24 @@ const DoctorList = () => {
 
     useEffect(() => {
         axios.get(url).then((resp) => {
-            setDoctorList(resp.data);
-            //console.log(resp.data);
+
+            const respData = resp.data.map((item) => {
+                return {
+                    customerCode: item.customerCode ? item.customerCode : '-NA-',
+                    doctorName: item.doctorName ? item.doctorName : '-NA-',
+                    specialtyName: item.specialtyName ? item.specialtyName : '-NA-',
+                    cityName: item.cityName ? item.cityName : '-NA-',
+                    StateName: item.StateName ? item.StateName : '-NA-',
+                    hospitalName: item.hospitalName ? item.hospitalName : '-NA-',
+                    doctorID: item.doctorID
+                }
+            });
+
+            console.log(respData);
+            console.log('====================================');
+            console.log(resp.data);
+
+            setDoctorList(respData);
             setIsLoaderVisible(false);
         }).catch((err) => {
             console.log(err)
