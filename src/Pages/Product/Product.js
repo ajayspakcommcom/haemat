@@ -68,6 +68,7 @@ const Product = () => {
         setInputFields((prevState) => {
             let inputField = _selectedBrands.map((item) => {
                 //return { name: '', key: item.key, placeholder: +item.key == 37 ? 'No of Vials' : 'No of Strips' }
+                //return { name: '', key: item.key, placeholder: +item.key == 37 ? 'Vials for Thymogam' : +item.key == 36 ? 'Strips for Revugam' : 'Strips for Oncyclo' }
                 return { name: '', key: item.key, placeholder: +item.key == 37 ? 'Vials for Thymogam' : +item.key == 36 ? 'Strips for Revugam' : 'Strips for Oncyclo' }
             });
             return [...inputField];
@@ -197,7 +198,7 @@ const Product = () => {
 
             {!isThankyouPageVisible &&
                 <form className='product-form' onSubmit={saveData}>
-                    <h2>Please filled the data</h2>
+                    <h2>Please fill the data</h2>
 
                     <Calendar inputId="birth_date" value={date} onChange={(e) => setDate(e.value)} showIcon className='mb-4' />
 
