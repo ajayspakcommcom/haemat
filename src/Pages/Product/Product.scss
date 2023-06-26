@@ -95,3 +95,11 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance: textfield;
 }
+
+#table-header {
+
+    th,
+    td {
+        width: 16%;
+    }
+}

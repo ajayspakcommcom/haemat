@@ -18,7 +18,6 @@ import configData from '../../Config/Config.json';
 import { InputNumber } from 'primereact/inputnumber';
 import Loader from '../../Component/Loader/Loader';
 
-
 const Product = () => {
 
     const ctx = useContext(ProductContext);
@@ -32,7 +31,7 @@ const Product = () => {
     //const brands = [{ key: '31' }, { key: '32' }, { key: '33' }];
     const [brands, setBrands] = useState([]);
     const url = `${configData.SERVER_URL}/getdoctordetails/${params.id}`;
-    console.log(params);
+    //console.log(params);
 
 
     const [paramData, setParamData] = useState(params);
@@ -53,7 +52,7 @@ const Product = () => {
         let data = [...inputFields];
         data[index][event.target.name] = event.target.value;
         setInputFields(data);
-        console.log(data);
+        //console.log(data);
     }
 
     const onBrandChange = (e) => {
@@ -79,14 +78,15 @@ const Product = () => {
     useEffect(() => {
 
         axios.get(url).then((resp) => {
-            console.log(resp);
+            // console.log(resp);
             setDrData(resp.data[0][0]);
 
             let imgList = [{ name: "oncyclo", url: oncyclo }, { name: "revugam", url: revugam }, { name: "thymogam", url: thymogam }];
             let brandList = resp.data[1].map((item) => {
                 return { key: item.medID };
             });
-            console.log(resp.data[1]);
+
+            console.log(imgList);
             console.log(brandList);
 
             if (paramData.actionName == 'itp') {
@@ -95,9 +95,9 @@ const Product = () => {
                 brandList = brandList.filter(item => item.key == 37);
             }
 
-            console.log(brandList);
-            setBrandImgList(imgList);
-            setBrands(brandList);
+            //console.log(brandList);
+            setBrandImgList(imgList.reverse());
+            setBrands(brandList.reverse());
             setIsLoaderVisible(false);
 
         }).catch((err) => {
@@ -165,13 +165,14 @@ const Product = () => {
                 <div className='product-header'>
 
                     <div className='content'>
-                        <h2>{ctx.productData.name}({paramData.actionName})</h2>
+                        <h2>{paramData.actionName === 'aa' ? 'Aplastic Anaemia' : 'Immune Thrombocytopenic Purpura'}</h2>
                         <Divider />
                         <h3>About</h3>
-                        <table>
+                        <table id='table-header'>
                             <thead>
                                 <tr>
                                     <th>Customer Code</th>
+                                    <th>Doctor Name</th>
                                     <th>Speciality</th>
                                     <th>City</th>
                                     <th>State</th>
@@ -180,11 +181,12 @@ const Product = () => {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{drData.customerCode}</td>
-                                    <td>{drData.specialtyName}</td>
-                                    <td>{drData.cityName}</td>
-                                    <td>{drData.StateName}</td>
-                                    <td>{drData.hospitalName}</td>
+                                    <td>{drData.customerCode ? drData.customerCode : '-NA-'}</td>
+                                    <td>{drData.doctorName ? drData.doctorName : '-NA-'}</td>
+                                    <td>{drData.specialtyName ? drData.specialtyName : '-NA-'}</td>
+                                    <td>{drData.cityName ? drData.cityName : '-NA-'}</td>
+                                    <td>{drData.StateName ? drData.StateName : '-NA-'}</td>
+                                    <td>{drData.hospitalName ? drData.hospitalName : '-NA-'}</td>
                                 </tr>
                             </tbody>
                         </table>
