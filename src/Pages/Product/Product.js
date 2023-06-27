@@ -66,11 +66,37 @@ const Product = () => {
         setSelectedBrands(_selectedBrands);
 
         setInputFields((prevState) => {
+
+            // let inputField = _selectedBrands.map((item) => {
+            //     //return { name: '', key: item.key, placeholder: +item.key == 37 ? 'No of Vials' : 'No of Strips' }
+            //     //return { name: '', key: item.key, placeholder: +item.key == 37 ? 'Vials for Thymogam' : +item.key == 36 ? 'Strips for Revugam' : 'Strips for Oncyclo' }
+            //     return { name: '', key: item.key, placeholder: +item.key == 37 ? 'Vials for Thymogam' : +item.key == 36 ? 'Strips for Revugam' : 'Strips for Oncyclo' }
+            // });
+            // return [...inputField];
+
+
+            const previousData = [...prevState];
+
             let inputField = _selectedBrands.map((item) => {
-                //return { name: '', key: item.key, placeholder: +item.key == 37 ? 'No of Vials' : 'No of Strips' }
-                //return { name: '', key: item.key, placeholder: +item.key == 37 ? 'Vials for Thymogam' : +item.key == 36 ? 'Strips for Revugam' : 'Strips for Oncyclo' }
-                return { name: '', key: item.key, placeholder: +item.key == 37 ? 'Vials for Thymogam' : +item.key == 36 ? 'Strips for Revugam' : 'Strips for Oncyclo' }
+                return { name: '', key: item.key, placeholder: +item.key === 37 ? 'Vials for Thymogam' : +item.key === 36 ? 'Strips for Revugam' : 'Strips for Oncyclo' }
             });
+
+
+            console.log(previousData);
+            console.log(inputField);
+
+            inputField.forEach((inputItem) => {
+                previousData.forEach((prevItem) => {
+                    if (prevItem.key === inputItem.key) {
+                        inputItem.name = prevItem.name;
+                    } else {
+                        inputItem.name = inputItem.name;
+                    }
+                });
+            });
+
+            console.log(inputField);
+
             return [...inputField];
         });
     };
