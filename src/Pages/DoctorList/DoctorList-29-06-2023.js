@@ -10,8 +10,6 @@ import LoginContext from '../../Context/Login/LoginContext';
 import { getEmpId } from '../../Service/Common';
 import configData from '../../Config/Config.json';
 import Loader from '../../Component/Loader/Loader';
-import { FilterMatchMode, FilterOperator } from 'primereact/api';
-import { InputText } from 'primereact/inputtext';
 
 
 const DoctorList = () => {
@@ -30,40 +28,6 @@ const DoctorList = () => {
         navigate(`/product/${obj.doctorID}/${actionName}`);
         productContext.addProduct(obj);
     };
-
-    const [filters, setFilters] = useState({
-        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        'country.name': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-        representative: { value: null, matchMode: FilterMatchMode.IN },
-        status: { value: null, matchMode: FilterMatchMode.EQUALS },
-        verified: { value: null, matchMode: FilterMatchMode.EQUALS }
-    });
-
-    const [globalFilterValue, setGlobalFilterValue] = useState('');
-
-    const onGlobalFilterChange = (e) => {
-        const value = e.target.value;
-        let _filters = { ...filters };
-
-        _filters['global'].value = value;
-
-        setFilters(_filters);
-        setGlobalFilterValue(value);
-    };
-
-    const renderHeader = () => {
-        return (
-            <div className="flex justify-content-end">
-                <span className="p-input-icon-left">
-                    <i className="pi pi-search" />
-                    <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
-                </span>
-            </div>
-        );
-    };
-
-    const header = renderHeader();
 
     useEffect(() => {
         axios.get(url).then((resp) => {
@@ -105,8 +69,7 @@ const DoctorList = () => {
             {isLoaderVisible && <Loader />}
             <div className="card p-3">
                 <h2>Doctor List</h2>
-                <DataTable value={doctorList} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} emptyMessage="No customers found." filters={filters}
-                    globalFilterFields={['doctorName', 'specialtyName', 'cityName', 'StateName', 'hospitalName']} header={header}>
+                <DataTable value={doctorList} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} emptyMessage="No customers found.">
                     <Column field="customerCode" header="Customer Code" />
                     <Column field="doctorName" header="Name" />
                     <Column field="specialtyName" header="Speciality" />
