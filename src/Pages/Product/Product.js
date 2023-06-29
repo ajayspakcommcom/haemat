@@ -74,7 +74,7 @@ const Product = () => {
             const previousData = [...prevState];
 
             let inputField = _selectedBrands.map((item) => {
-                return { name: '', key: item.key, placeholder: +item.key === 37 ? 'Vials for Thymogam' : +item.key === 36 ? 'Strips for Revugam' : 'Strips for Oncyclo' }
+                return { name: '', key: item.key, placeholder: +item.key === 37 ? 'Total Vials for Thymogam' : +item.key === 36 ? 'Total Strips for Revugam' : 'Total Strips for Oncyclo' }
             });
 
             inputField.forEach((inputItem) => {
