@@ -11,6 +11,7 @@ import { getEmpId } from '../../Service/Common';
 import configData from '../../Config/Config.json';
 import Loader from '../../Component/Loader/Loader';
 
+
 const DoctorList = () => {
 
     const productContext = useContext(ProductContext);
@@ -27,8 +28,6 @@ const DoctorList = () => {
         navigate(`/product/${obj.doctorID}/${actionName}`);
         productContext.addProduct(obj);
     };
-
-
 
     useEffect(() => {
         axios.get(url).then((resp) => {

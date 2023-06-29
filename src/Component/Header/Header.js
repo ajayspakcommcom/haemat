@@ -28,7 +28,7 @@ const Header = (props) => {
 
     const userLogo = <Link to="/">
         {/* <img alt="logo" src="https://primefaces.org/cdn/primereact/images/logo.png" height="40" className="mr-2" /> */}
-        <img alt="logo" src={process.env.PUBLIC_URL + '/logo.png'} height="40" className="mr-2 logo" />
+        <img alt="logo" src={process.env.PUBLIC_URL + '/logo-white.svg'} height="40" className="mr-2 logo" />
     </Link>;
     const userNav = <>
         <ul className='header-right-list'>
