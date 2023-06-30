@@ -351,16 +351,10 @@ const AdminDashboard = () => {
         );
     };
 
-    const getTdr = (vials) => {
-        let isTdr = false;
-        if (vials.length > 0) {
-            isTdr = vials.every(item => item.NoOfVials > 0);
-        }
-    };
-
     const actionBodyTamplate = (rowData) => {
         return (
             <>
+                {JSON.stringify(rowData)}
                 <Button label="Detail" className='save' />
             </>
         );
@@ -370,8 +364,8 @@ const AdminDashboard = () => {
         <>
             <div className="card p-3">
                 <h2>Admin Report</h2>
-                {
-                    report.length > 0 && <DataTable ref={dt} value={report} paginator rows={5} header={header} rowsPerPageOptions={[5, 10, 25, 50]} emptyMessage="No customers found." showGridlines>
+                {report.length > 0 &&
+                    <DataTable ref={dt} value={report} paginator rows={5} header={header} rowsPerPageOptions={[5, 10, 25, 50]} emptyMessage="No customers found." showGridlines>
                         <Column field="CreatedDate" header="Date" body={dateBodyTamplate} />
                         <Column field="ZoneName" header="Zone" />
                         <Column field="DoctorsID" header="Customer Code" />

@@ -75,7 +75,7 @@ const Product = () => {
             const previousData = [...prevState];
 
             let inputField = _selectedBrands.map((item) => {
-                return { name: '', key: item.key, placeholder: +item.key === 37 ? 'Total Vials for Thymogam' : +item.key === 36 ? 'Total Strips for Revugam' : 'Total Strips for Oncyclo' }
+                return { name: '', key: item.key, placeholder: +item.key === 37 ? 'Total Vials for Thymogam' : +item.key === 36 ? 'Total Strips for Revugam' : +item.key === 38 ? 'Total Strips for 25 Revugam' : 'Total Strips for Oncyclo' }
             });
 
             inputField.forEach((inputItem) => {
@@ -98,7 +98,7 @@ const Product = () => {
             const previousData = [...prevState];
 
             let papInputField = _selectedBrands.map((item) => {
-                return { name: '', key: item.key, placeholder: +item.key === 37 ? 'Vials for Pap Thymogam' : +item.key === 36 ? 'Strips for Pap Revugam' : 'Strips for Pap Oncyclo' }
+                return { name: '', key: item.key, placeholder: +item.key === 37 ? 'Vials for Pap Thymogam' : +item.key === 36 ? 'Strips for Pap Revugam' : +item.key === 38 ? 'Strips for Pap 25 Revugam' : 'Strips for Pap Oncyclo' }
             });
 
             papInputField.forEach((inputItem) => {
@@ -126,8 +126,10 @@ const Product = () => {
         axios.get(url).then((resp) => {
 
             setDrData(resp.data[0][0]);
+            console.log(resp.data[0][0]);
 
-            let imgList = [{ name: "oncyclo", url: oncyclo }, { name: "revugam", url: revugam }, { name: "thymogam", url: thymogam }];
+            //let imgList = [{ name: "oncyclo", url: oncyclo }, { name: "revugam", url: revugam }, { name: "thymogam", url: thymogam }];
+            let imgList = [{ name: "oncyclo", url: oncyclo }, { name: "revugam", url: revugam }, { name: "revugam25", url: revugam25 }, { name: "thymogam", url: thymogam }];
             let brandList = resp.data[1].map((item) => {
                 return { key: item.medID };
             });
@@ -135,13 +137,25 @@ const Product = () => {
             console.log(imgList);
             console.log(brandList);
 
-            if (paramData.actionName === 'itp') {
+            // if (paramData.actionName === 'itp') {
+            //     imgList = imgList.filter(item => item.name === 'revugam');
+            //     imgList[0].url = revugam25;
+            //     brandList = brandList.filter(item => item.key === 36);
+            // }
 
-                imgList = imgList.filter(item => item.name === 'revugam');
-                imgList[0].url = revugam25;
-                //console.log(imgList);
-                brandList = brandList.filter(item => item.key === 36);
+            console.log(paramData.actionName)
+
+            if (paramData.actionName === 'itp') {
+                imgList = imgList.filter(item => item.name === 'revugam' || item.name === 'revugam25');
+                brandList = brandList.filter(item => item.key === 36 || item.key === 38);
+            } else {
+                imgList = imgList.filter(item => item.name !== 'revugam25');
+                brandList = brandList.filter(item => item.key !== 38);
             }
+
+            console.log(imgList);
+            console.log(brandList);
+
 
 
             setBrandImgList(imgList.reverse());
