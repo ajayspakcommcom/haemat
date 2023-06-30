@@ -43,22 +43,11 @@ export const getEmpName = () => {
     }
 };
 
-export const groupDataByKey = (arrData, filterKey) => {
-
-    return arrData.reduce((acc, obj) => {
-        const key = filterKey;
-
-        if (!acc[key]) {
-            acc[key] = [];
-        }
-
-        acc[key].push(obj);
-
-        return acc;
+export const groupByKey = (array, key) => {
+    return array.reduce((result, currentValue) => {
+        (result[currentValue[key]] = result[currentValue[key]] || []).push(currentValue);
+        return result;
     }, {});
-
-
-};
-
+}
 
 

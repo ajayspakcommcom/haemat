@@ -80,9 +80,9 @@ const DoctorList = () => {
                 }
             });
 
-            console.log(respData);
-            console.log('====================================');
-            console.log(resp.data);
+            // console.log(respData);
+            // console.log('====================================');
+            // console.log(resp.data);
 
             setDoctorList(respData);
             setIsLoaderVisible(false);
