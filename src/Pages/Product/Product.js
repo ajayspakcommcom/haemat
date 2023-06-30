@@ -186,7 +186,7 @@ const Product = () => {
                 doctorId: +drId,
                 empID: +empId,
                 medId: +item.key,
-                orderDate: date ? date.toLocaleDateString() : date,
+                orderDate: date, //? date.toLocaleDateString() : date,
                 NoOfVials: +item.key === 37 ? +item.name : -1,
                 NoOfStrips: +item.key !== 37 ? +item.name : null,
                 NoOfPatients: +noOfPatient,

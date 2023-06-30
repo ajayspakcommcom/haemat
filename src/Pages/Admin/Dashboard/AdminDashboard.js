@@ -6,6 +6,7 @@ import { Button } from 'primereact/button';
 import Loader from '../../../Component/Loader/Loader';
 import axios from "axios";
 import configData from '../../../Config/Config.json';
+import { groupDataByKey } from '../../../Service/Common';
 
 
 const AdminDashboard = () => {
@@ -19,6 +20,7 @@ const AdminDashboard = () => {
     useEffect(() => {
         axios.get(url).then((resp) => {
             console.log(resp.data[0]);
+            console.log('=========================')
 
             const result = resp.data[0].map((item) => {
                 return {
