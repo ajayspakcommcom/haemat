@@ -10,6 +10,7 @@ import './Product.scss';
 import axios from "axios";
 import oncyclo from '../../Content/img/med/oncyclo.png';
 import revugam from '../../Content/img/med/revugam.png';
+import revugam25 from '../../Content/img/med/revugam-25.png';
 import thymogam from '../../Content/img/med/thymogam.png';
 import { getEmpId } from '../../Service/Common';
 import LoginContext from '../../Context/Login/LoginContext';
@@ -134,9 +135,11 @@ const Product = () => {
             console.log(imgList);
             console.log(brandList);
 
-            if (paramData.actionName == 'itp') {
+            if (paramData.actionName === 'itp') {
+
                 imgList = imgList.filter(item => item.name === 'revugam');
-                console.log(imgList);
+                imgList[0].url = revugam25;
+                //console.log(imgList);
                 brandList = brandList.filter(item => item.key === 36);
             }
 
