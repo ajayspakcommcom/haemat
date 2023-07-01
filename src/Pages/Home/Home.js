@@ -7,9 +7,10 @@ import AdminDashboard from '../Admin/Dashboard/AdminDashboard';
 const Home = (props) => {
 
     const ctx = useContext(LoginContext);
-    const designation = (ctx.userData.post || '').toLowerCase();
+    console.log(ctx.userData.post);
+    const designation = (ctx.userData.post || '').toLowerCase().trim();
 
-    if (designation === 'admin') {
+    if (designation === 'admin' || designation === 'zbm') {
         return (
             <>
                 <AdminDashboard />
