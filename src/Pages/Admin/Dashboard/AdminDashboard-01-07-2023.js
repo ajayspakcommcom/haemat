@@ -7,7 +7,6 @@ import Loader from '../../../Component/Loader/Loader';
 import axios from "axios";
 import configData from '../../../Config/Config.json';
 import { groupByKey } from '../../../Service/Common';
-import DoctorDetail from './DoctorDetail';
 
 
 const AdminDashboard = () => {
@@ -15,9 +14,6 @@ const AdminDashboard = () => {
     const dt = useRef(null);
     const [isLoaderVisible, setIsLoaderVisible] = useState(true);
     const [report, setReport] = useState(true);
-    const [drDetail, setDrDetail] = useState([]);
-    const [isDetail, setIsDetail] = useState(false);
-
     let originalData = useRef(null);
 
     const url = `${configData.SERVER_URL}/admin-report`;
@@ -25,7 +21,8 @@ const AdminDashboard = () => {
     useEffect(() => {
         axios.get(url).then((resp) => {
             originalData.current = [...resp.data[0]];
-
+            // console.log('=========================')
+            console.log(originalData.current);
 
             const result = resp.data[0].map((item) => {
                 //debugger;
@@ -44,7 +41,7 @@ const AdminDashboard = () => {
                     NoOfStrips: item.strips,
                     PapValue: item.PapValue,
                     medID: item.medID,
-                    EmpID: item.EmpID,
+                    EmpID: item.EmpID
 
                 };
             });
@@ -60,9 +57,12 @@ const AdminDashboard = () => {
                 let patientList = [];
                 let vialsList = [];
                 let stripList = [];
-                let papList = [];
+
+
 
                 groupedData[key].forEach(item => {
+
+                    console.log(item);
 
                     if (item.DoctorsID === groupedData[key][0].DoctorsID) {
                         patientList.push({
@@ -80,11 +80,6 @@ const AdminDashboard = () => {
                             NoOfStrips: +item.NoOfStrips
                         });
 
-                        papList.push({
-                            medID: item.medID,
-                            PapValue: +item.PapValue
-                        });
-
                     }
                 });
 
@@ -100,13 +95,12 @@ const AdminDashboard = () => {
                     EmpID: groupedData[key][0].EmpID,
                     NoOfPatients: patientList,
                     NoOfVials: vialsList,
-                    NoOfStrips: stripList,
-                    papValues: papList
+                    NoOfStrips: stripList
                 });
 
             }
 
-            //console.log(groupedDataList)
+            console.log(groupedDataList);
             setReport(groupedDataList);
         }).catch((err) => {
             console.log(err);
@@ -344,7 +338,7 @@ const AdminDashboard = () => {
     const cityBodyTamplate = (rowData) => {
         return (
             <>
-                <span>{rowData.hospitalCity && rowData.HospitalCity.length > 0 ? rowData.HospitalCity : '-NA-'}</span>
+                -NA-
             </>
         );
     };
@@ -357,133 +351,37 @@ const AdminDashboard = () => {
         );
     };
 
-
-    const getPapPatients = (rowData) => {
-        let oncycloPap = [], revugamPap = [], thymogamPap = [];
-
-        if (rowData.papValues.length > 0) {
-
-            oncycloPap = [...rowData.papValues.filter(item => {
-                return item.medID === 35
-            })]
-
-            revugamPap = [...rowData.papValues.filter(item => {
-                return item.medID === 36
-            })]
-
-            thymogamPap = [...rowData.papValues.filter(item => {
-                return item.medID === 37
-            })]
-        }
-
-        let filteredOncycloPap = oncycloPap.map(item => {
-            return item.PapValue
-        })
-
-        let filteredRevugamPap = revugamPap.map(item => {
-            return item.PapValue
-        })
-
-        let filteredThymogamPap = thymogamPap.map(item => {
-            return item.PapValue
-        })
-
-        filteredOncycloPap = filteredOncycloPap.reduce((accumulator, currentValue) => {
-            return accumulator + currentValue;
-        }, 0);
-
-        filteredRevugamPap = filteredRevugamPap.reduce((accumulator, currentValue) => {
-            return accumulator + currentValue;
-        }, 0);
-
-        filteredThymogamPap = filteredThymogamPap.reduce((accumulator, currentValue) => {
-            return +accumulator + +currentValue;
-        }, 0);
-
-        return {
-            Oncyclo: filteredOncycloPap,
-            Revugam: filteredRevugamPap,
-            Thymogam: filteredThymogamPap
-        };
-
-    };
-
-    const papBodyTamplate = (rowData) => {
-        return (
-            <>
-                <>
-                    <table className='table'>
-                        <thead>
-                            <tr>
-                                <th>Oncyclo</th>
-                                <th>Revugam</th>
-                                <th>Thymogam</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>{getPapPatients(rowData).Oncyclo}</td>
-                                <td>{getPapPatients(rowData).Revugam}</td>
-                                <td>{getPapPatients(rowData).Thymogam}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </>
-            </>
-        );
-    };
-
-    const getDetailByDrId = (id) => {
-
-        setIsDetail(true);
-        const data = originalData.current;
-
-        const filteredData = data.filter(item => {
-            return item.DoctorsID[0] === id;
-        });
-
-        setDrDetail(filteredData);
-    };
-
     const actionBodyTamplate = (rowData) => {
         return (
             <>
-                <Button label="Detial" onClick={() => { getDetailByDrId(rowData.DoctorsID) }} />
+                {JSON.stringify(rowData)}
+                <Button label="Detail" className='save' />
             </>
         );
-    };
-
-    const backHandler = () => {
-        setIsDetail(false);
     };
 
     return (
         <>
-            {!isDetail &&
-                <div className="card p-3">
-                    <h2>Admin Report</h2>
-                    {report.length > 0 &&
-                        <DataTable ref={dt} value={report} paginator rows={5} header={header} rowsPerPageOptions={[5, 10, 25, 50]} emptyMessage="No customers found." showGridlines>
-                            <Column field="CreatedDate" header="Date" body={dateBodyTamplate} />
-                            <Column field="ZoneName" header="Zone" />
-                            <Column field="DoctorsID" header="Customer Code" />
-                            <Column field="DoctorsName" header="Dr Name" />
-                            <Column field="Speciality" header="Speciality" />
-                            <Column field="HospitalName" header="Hospital Name" />
-                            <Column field="HospitalCity" header="City" body={cityBodyTamplate} />
-                            <Column field="Indication" header="Indication" body={indicationBodyTamplate} />
-                            <Column field="NoOfPatients" header="No Patients" body={patientBodyTemplate} />
-                            <Column field="NoOfVials" header="No Vials / Strips" body={vialBodyTemplate} />
-                            <Column field="PapValue" header="Pap" body={papBodyTamplate} />
-                            <Column field="action" header="Detail" body={actionBodyTamplate} />
-                        </DataTable>
-                    }
+            <div className="card p-3">
+                <h2>Admin Report</h2>
+                {report.length > 0 &&
+                    <DataTable ref={dt} value={report} paginator rows={5} header={header} rowsPerPageOptions={[5, 10, 25, 50]} emptyMessage="No customers found." showGridlines>
+                        <Column field="CreatedDate" header="Date" body={dateBodyTamplate} />
+                        <Column field="ZoneName" header="Zone" />
+                        <Column field="DoctorsID" header="Customer Code" />
+                        <Column field="DoctorsName" header="Dr Name" />
+                        <Column field="Speciality" header="Speciality" />
+                        <Column field="HospitalName" header="Hospital Name" />
+                        <Column field="HospitalCity" header="City" body={cityBodyTamplate} />
+                        <Column field="Indication" header="Indication" body={indicationBodyTamplate} />
+                        <Column field="NoOfPatients" header="No Patients" body={patientBodyTemplate} />
+                        <Column field="NoOfVials" header="No Vials / Strips" body={vialBodyTemplate} />
+                        <Column field="PapValue" header="Detail" body={actionBodyTamplate} />
+                    </DataTable>
+                }
 
-                    {isLoaderVisible && <Loader />}
-                </div>
-            }
-
-            {isDetail && <DoctorDetail data={drDetail} onBackHandler={backHandler} />}
+                {isLoaderVisible && <Loader />}
+            </div>
         </>
     )
 };
