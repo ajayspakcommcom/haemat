@@ -26,6 +26,7 @@ const AdminDashboard = () => {
         axios.get(url).then((resp) => {
             originalData.current = [...resp.data[0]];
 
+            console.log(originalData.current);
 
             const result = resp.data[0].map((item) => {
                 //debugger;

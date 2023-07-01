@@ -10,8 +10,6 @@ const DoctorDetail = (props) => {
     useEffect(() => {
         if (props.data.length > 0) {
 
-
-
             const filteredData = props.data.map((item) => {
                 return {
                     "OrderDate": item.OrderDate[0] ? new Date(item.OrderDate[0]).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '',
@@ -40,11 +38,8 @@ const DoctorDetail = (props) => {
                 }
             });
             setData(filteredData);
-
-            console.log('Actual', props.data)
-            console.log('Filtered', filteredData)
+            console.log(props.data);
         }
-
 
     }, [props]);
 
