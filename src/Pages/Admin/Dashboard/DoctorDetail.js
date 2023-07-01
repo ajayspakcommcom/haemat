@@ -62,7 +62,7 @@ const DoctorDetail = (props) => {
     };
 
     const items = [
-        { icon: 'pi pi-sitemap', label: 'Computer', template: iconItemTemplate }
+        { icon: 'pi pi-sitemap', label: 'Detail', template: iconItemTemplate }
     ];
 
     const home = { url: 'https://www.primereact.org', template: homeTemplate };
