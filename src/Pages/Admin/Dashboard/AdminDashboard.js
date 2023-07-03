@@ -50,6 +50,8 @@ const AdminDashboard = () => {
                 };
             });
 
+            console.log(result)
+
             setIsLoaderVisible(false);
 
             const groupedData = groupByKey(result, 'DoctorsID');

@@ -209,10 +209,11 @@ const Product = () => {
             endPoints.push(itemObj);
         });
 
-        setIsBtnDisabled(true);
-        setIsLoaderVisible(true);
 
         console.log(endPoints);
+
+        setIsBtnDisabled(true);
+        setIsLoaderVisible(true);
 
         Promise.all(endPoints.map((endpoint) => axios.post(`${configData.SERVER_URL}/save-details/`, endpoint))).then(
             axios.spread((...allData) => {
