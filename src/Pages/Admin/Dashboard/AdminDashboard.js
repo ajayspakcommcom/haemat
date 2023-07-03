@@ -55,7 +55,7 @@ const AdminDashboard = () => {
 
             setIsLoaderVisible(false);
 
-            const groupedData = groupByKey(result, 'DoctorsID');
+            const groupedData = groupByKey(result, 'CreatedDate');
             const groupedDataList = [];
 
 
@@ -508,13 +508,13 @@ const AdminDashboard = () => {
         );
     };
 
-    const getDetailByDrId = (id) => {
+    const getDetailByOrderDate = (date) => {
 
         setIsDetail(true);
         const data = originalData.current;
 
         const filteredData = data.filter(item => {
-            return item.DoctorsID[0] === id;
+            return item.OrderDate[0] === date;
         });
 
         setDrDetail(filteredData);
@@ -523,7 +523,7 @@ const AdminDashboard = () => {
     const actionBodyTamplate = (rowData) => {
         return (
             <>
-                <Button label="Detail" onClick={() => { getDetailByDrId(rowData.DoctorsID) }} />
+                <Button label="Detail" onClick={() => { getDetailByOrderDate(rowData.CreatedDate) }} />
             </>
         );
     };
