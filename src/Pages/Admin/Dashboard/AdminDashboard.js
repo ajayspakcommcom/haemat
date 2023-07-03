@@ -26,12 +26,13 @@ const AdminDashboard = () => {
         axios.get(url).then((resp) => {
             originalData.current = [...resp.data[0]];
 
-            console.log(originalData.current);
+            //console.log(originalData.current);
 
             const result = resp.data[0].map((item) => {
-                //debugger;
+                //console.log(item)
                 return {
-                    CreatedDate: item.CreatedDate,
+                    //CreatedDate: item.CreatedDate,
+                    CreatedDate: item.OrderDate[0],
                     ZoneName: item.ZoneName,
                     DoctorsID: item.DoctorsID[0],
                     DoctorsName: item.DoctorsName[0],
@@ -199,6 +200,7 @@ const AdminDashboard = () => {
                     return prevsValue + currentValue.PapValue;
                 }, 0);
 
+                console.log(item)
 
                 return {
                     "CreatedDate": item.CreatedDate,
@@ -209,7 +211,9 @@ const AdminDashboard = () => {
                     "HospitalName": item.HospitalName,
                     "Indication": item.Indication,
                     "EmpID": item.EmpID,
-                    "NoOfPatients": item.NoOfPatients[0].NoOfPatients,
+                    "Oncyclo NoOfPatients": item.NoOfPatients[0].NoOfPatients,
+                    "Revugam NoOfPatients": item.NoOfPatients[0].NoOfPatients,
+                    "Thymogam NoOfPatients": item.NoOfPatients[0].NoOfPatients,
                     //"NoOfVialsStrips": `Oncyclo ${totalOncycloStrips.toString()}, Revugam ${totalRevugamStrips.toString()}, Thymogam ${totalVials.toString()}`,
                     //"papValues": `Oncyclo ${totalOncycloPap.toString()}, Revugam ${totalRevugamPap.toString()},  Thymogam ${totalThymogamPap.toString()}`,
 
@@ -220,7 +224,6 @@ const AdminDashboard = () => {
                     "OncycloPap": `${totalOncycloPap.toString()}`,
                     "RevugamPap": `${totalRevugamPap.toString()}`,
                     "ThymogamPap": `${totalThymogamPap.toString()}`,
-
 
                 }
             });

@@ -156,8 +156,6 @@ const Product = () => {
             console.log(imgList);
             console.log(brandList);
 
-
-
             setBrandImgList(imgList.reverse());
             setBrands(brandList.reverse());
             setIsLoaderVisible(false);
@@ -183,7 +181,9 @@ const Product = () => {
             return;
         }
 
-        if (!noOfPatient) {
+        console.log(noOfPatient)
+
+        if (noOfPatient === null) {
             alert('Please fill no of Patients');
             return;
         }
