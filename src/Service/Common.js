@@ -50,6 +50,16 @@ export const groupByKey = (array, key) => {
     }, {});
 }
 
+// export const sortAdminDataByDate = (array) => {
+//     if (array.length > 0) {
+//         array.sort((a, b) => {
+//             let dateA = new Date(a.CreatedDate);
+//             let dateB = new Date(b.CreatedDate);
+//             return dateA - dateB;
+//         });
+//     }
+// };
+
 
 
 

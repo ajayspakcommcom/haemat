@@ -8,7 +8,6 @@ import axios from "axios";
 import configData from '../../../Config/Config.json';
 import { groupByKey } from '../../../Service/Common';
 import DoctorDetail from './DoctorDetail';
-import { Divider } from 'primereact/divider';
 
 
 const AdminDashboard = () => {
@@ -18,7 +17,6 @@ const AdminDashboard = () => {
     const [report, setReport] = useState(true);
     const [drDetail, setDrDetail] = useState([]);
     const [isDetail, setIsDetail] = useState(false);
-    const [tdr, setTdr] = useState([]);
 
     let originalData = useRef(null);
 
@@ -59,27 +57,9 @@ const AdminDashboard = () => {
 
             const groupedData = groupByKey(result, 'DoctorsID');
             let groupedDataList = [];
-            const groupedDataByKeyList = [];
-            const tdrData = [];
 
-            for (const key in groupedData) {
-                groupedDataByKeyList.push(groupByKey(groupedData[key], 'CreatedDate'));
-            }
 
-            for (const item of groupedDataByKeyList) {
-                for (const key in item) {
-                    console.log(item[key]);
-                    tdrData.push({
-                        'drName': item[key][0].DoctorsName,
-                        'noOfPatients': item[key][0].NoOfPatients,
-                        'tdr': item[key].length === 3 ? 'Yes' : 'No',
-                        'date': new Date(item[key][0].CreatedDate).toLocaleDateString()
-                    });
-                }
-            }
-
-            console.log(tdrData);
-            setTdr(tdrData);
+            console.log(groupedData)
 
             for (const key in groupedData) {
 
@@ -272,19 +252,6 @@ const AdminDashboard = () => {
         });
     };
 
-    const exportExcelTdr = () => {
-        import('xlsx').then((xlsx) => {
-            const worksheet = xlsx.utils.json_to_sheet(tdr);
-            const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-            const excelBuffer = xlsx.write(workbook, {
-                bookType: 'xlsx',
-                type: 'array'
-            });
-            saveAsExcelFile(excelBuffer, 'adminReport');
-
-        });
-    };
-
     const exportPdf = () => {
         import('jspdf').then((jsPDF) => {
             import('jspdf-autotable').then(() => {
@@ -297,18 +264,10 @@ const AdminDashboard = () => {
     };
 
     const header = (
-        <div className="flex flex-wrap align-items-center justify-content-between gap-2">
-            <span className="text-xl text-900 font-bold">Dr Report</span>
+        <div className="flex align-items-center justify-content-end gap-2">
             {/* <Button type="button" icon="pi pi-file" rounded onClick={() => exportCSV(false)} data-pr-tooltip="CSV" /> */}
             <Button type="button" icon="pi pi-file-excel" severity="success" rounded onClick={exportExcel} data-pr-tooltip="XLS" />
             {/* <Button type="button" icon="pi pi-file-pdf" severity="warning" rounded onClick={exportPdf} data-pr-tooltip="PDF" /> */}
-        </div>
-    );
-
-    const tdrHeader = (
-        <div className="flex flex-wrap align-items-center justify-content-between gap-2">
-            <span className="text-xl text-900 font-bold">Tdr Report</span>
-            <Button type="button" icon="pi pi-file-excel" severity="success" rounded onClick={exportExcelTdr} data-pr-tooltip="XLS" />
         </div>
     );
 
@@ -587,44 +546,30 @@ const AdminDashboard = () => {
     return (
         <>
             {!isDetail &&
-                <>
-
-                    <div className="card p-3">
-                        {report.length > 0 &&
-                            <DataTable ref={dt} value={report} paginator rows={5} header={header} rowsPerPageOptions={[5, 10, 25, 50]} emptyMessage="No customers found." showGridlines>
-                                <Column field="CreatedDate" header="Date" body={dateBodyTamplate} />
-                                <Column field="ZoneName" header="Zone" />
-                                <Column field="DoctorsID" header="Customer Code" />
-                                <Column field="DoctorsName" header="Dr Name" />
-                                <Column field="Speciality" header="Speciality" />
-                                <Column field="HospitalName" header="Hospital Name" />
-                                <Column field="HospitalCity" header="City" body={cityBodyTamplate} />
-                                <Column field="Indication" header="Indication" body={indicationBodyTamplate} />
-                                <Column field="NoOfPatients" header="No Patients" body={patientBodyTemplate} />
-                                <Column field="NoOfVials" header="No Vials / Strips" body={vialBodyTemplate} />
-                                <Column field="PapValue" header="Pap" body={papBodyTamplate} />
-                                <Column field="action" header="Detail" body={actionBodyTamplate} />
-                            </DataTable>
-                        }
-
-                        {isLoaderVisible && <Loader />}
-                    </div>
-                    <div className="card p-3">
-                        <DataTable value={tdr} paginator rows={5} header={tdrHeader} rowsPerPageOptions={[5, 10, 25, 50]} emptyMessage="No customers found." showGridlines>
-                            <Column field="date" header="Date" />
-                            <Column field="drName" header="Doctor Name" />
-                            <Column field="noOfPatients" header="No Of Patients" />
-                            <Column field="tdr" header="Tdr" />
+                <div className="card p-3">
+                    <h2>Admin Report</h2>
+                    {report.length > 0 &&
+                        <DataTable ref={dt} value={report} paginator rows={5} header={header} rowsPerPageOptions={[5, 10, 25, 50]} emptyMessage="No customers found." showGridlines>
+                            <Column field="CreatedDate" header="Date" body={dateBodyTamplate} />
+                            <Column field="ZoneName" header="Zone" />
+                            <Column field="DoctorsID" header="Customer Code" />
+                            <Column field="DoctorsName" header="Dr Name" />
+                            <Column field="Speciality" header="Speciality" />
+                            <Column field="HospitalName" header="Hospital Name" />
+                            <Column field="HospitalCity" header="City" body={cityBodyTamplate} />
+                            <Column field="Indication" header="Indication" body={indicationBodyTamplate} />
+                            <Column field="NoOfPatients" header="No Patients" body={patientBodyTemplate} />
+                            <Column field="NoOfVials" header="No Vials / Strips" body={vialBodyTemplate} />
+                            <Column field="PapValue" header="Pap" body={papBodyTamplate} />
+                            <Column field="action" header="Detail" body={actionBodyTamplate} />
                         </DataTable>
-                    </div>
-                </>
+                    }
+
+                    {isLoaderVisible && <Loader />}
+                </div>
             }
 
-
-
             {isDetail && <DoctorDetail data={drDetail} onBackHandler={backHandler} />}
-
-
         </>
     )
 };
