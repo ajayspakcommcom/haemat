@@ -28,10 +28,10 @@ const AdminDashboard = () => {
         axios.get(url).then((resp) => {
             originalData.current = [...resp.data[0]];
 
-            //console.log(originalData.current);
+            // console.log(originalData.current);
 
             const result = resp.data[0].map((item) => {
-                console.log(item)
+                //console.log(item)
                 return {
                     //CreatedDate: item.CreatedDate,
                     CreatedDate: item.OrderDate[0],
@@ -49,7 +49,7 @@ const AdminDashboard = () => {
                     PapValue: item.PapValue,
                     medID: item.medID,
                     EmpID: item.EmpID,
-
+                    EmployeeName: item.EmployeeName
                 };
             });
 
@@ -70,6 +70,7 @@ const AdminDashboard = () => {
                 for (const key in item) {
                     console.log(item[key]);
                     tdrData.push({
+                        'EmployeeName': item[key][0].EmployeeName,
                         'drName': item[key][0].DoctorsName,
                         'noOfPatients': item[key][0].NoOfPatients,
                         'tdr': item[key].length === 3 ? 'Yes' : 'No',
@@ -114,6 +115,7 @@ const AdminDashboard = () => {
                     }
                 });
 
+                //console.log(groupedData)
                 groupedDataList.push({
                     CreatedDate: groupedData[key][0].CreatedDate,
                     ZoneName: groupedData[key][0].ZoneName,
@@ -127,7 +129,8 @@ const AdminDashboard = () => {
                     NoOfPatients: patientList,
                     NoOfVials: vialsList,
                     NoOfStrips: stripList,
-                    papValues: papList
+                    papValues: papList,
+                    EmployeeName: groupedData[key][0].EmployeeName
                 });
 
             }
@@ -255,7 +258,7 @@ const AdminDashboard = () => {
                     "OncycloPap": `${totalOncycloPap.toString()}`,
                     "RevugamPap": `${totalRevugamPap.toString()}`,
                     "ThymogamPap": `${totalThymogamPap.toString()}`,
-
+                    "EmployeeName": item.EmployeeName
                 }
             });
 
@@ -594,6 +597,7 @@ const AdminDashboard = () => {
                             <DataTable ref={dt} value={report} paginator rows={5} header={header} rowsPerPageOptions={[5, 10, 25, 50]} emptyMessage="No customers found." showGridlines>
                                 <Column field="CreatedDate" header="Date" body={dateBodyTamplate} />
                                 <Column field="ZoneName" header="Zone" />
+                                <Column field="EmployeeName" header="EmployeeName" />
                                 <Column field="DoctorsID" header="Customer Code" />
                                 <Column field="DoctorsName" header="Dr Name" />
                                 <Column field="Speciality" header="Speciality" />
@@ -613,6 +617,7 @@ const AdminDashboard = () => {
                         <DataTable value={tdr} paginator rows={5} header={tdrHeader} rowsPerPageOptions={[5, 10, 25, 50]} emptyMessage="No customers found." showGridlines>
                             <Column field="date" header="Date" />
                             <Column field="drName" header="Doctor Name" />
+                            <Column field="EmployeeName" header="EmployeeName" />
                             <Column field="noOfPatients" header="No Of Patients" />
                             <Column field="tdr" header="Tdr" />
                         </DataTable>
