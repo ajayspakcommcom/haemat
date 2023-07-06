@@ -79,8 +79,9 @@ const AdminDashboard = () => {
                 }
             }
 
-            console.log(tdrData);
-            setTdr(tdrData);
+            const filteredTdr = tdrData.filter(item => item.tdr.toLowerCase() === "yes");
+
+            setTdr(filteredTdr);
 
             for (const key in groupedData) {
 
