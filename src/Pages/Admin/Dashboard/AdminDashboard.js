@@ -6,7 +6,7 @@ import { Button } from 'primereact/button';
 import Loader from '../../../Component/Loader/Loader';
 import axios from "axios";
 import configData from '../../../Config/Config.json';
-import { groupByKey } from '../../../Service/Common';
+import { groupByKey, getIndicationText } from '../../../Service/Common';
 import DoctorDetail from './DoctorDetail';
 import { Divider } from 'primereact/divider';
 
@@ -28,7 +28,7 @@ const AdminDashboard = () => {
         axios.get(url).then((resp) => {
             originalData.current = [...resp.data[0]];
 
-            console.log(originalData.current);
+            //console.log(originalData.current)
 
             const result = resp.data[0].map((item) => {
                 //console.log(item)
@@ -41,7 +41,7 @@ const AdminDashboard = () => {
                     Speciality: item.Speciality[0],
                     HospitalName: item.HospitalName[0],
                     HospitalCity: item.hospitalCity,
-                    Indication: item.Indication,
+                    Indication: item.Indication ? item.Indication[0] : '',
                     NoOfPatients: item.NoOfPatients,
                     //NoOfVials: item.NoOfVials + item.strips,
                     NoOfVials: item.NoOfVials,
@@ -53,7 +53,7 @@ const AdminDashboard = () => {
                 };
             });
 
-            //console.log(result)
+            console.log(result)
 
             setIsLoaderVisible(false);
 
@@ -68,7 +68,7 @@ const AdminDashboard = () => {
 
             for (const item of groupedDataByKeyList) {
                 for (const key in item) {
-                    console.log(item[key]);
+                    //console.log(item[key]);
                     tdrData.push({
                         'EmployeeName': item[key][0].EmployeeName,
                         'drName': item[key][0].DoctorsName,
@@ -136,7 +136,7 @@ const AdminDashboard = () => {
 
             }
 
-            //console.log(groupedDataList);
+            console.log(groupedDataList);
 
             groupedDataList = groupedDataList.sort((a, b) => {
                 let dateA = new Date(a.CreatedDate);
@@ -244,7 +244,7 @@ const AdminDashboard = () => {
                     "DoctorsName": item.DoctorsName,
                     "Speciality": item.Speciality,
                     "HospitalName": item.HospitalName,
-                    "Indication": item.Indication,
+                    "Indication": getIndicationText(item.Indication),
                     "EmpID": item.EmpID,
                     "Oncyclo NoOfPatients": item.NoOfPatients[0].NoOfPatients,
                     "Revugam NoOfPatients": item.NoOfPatients[0].NoOfPatients,
@@ -483,7 +483,7 @@ const AdminDashboard = () => {
     const indicationBodyTamplate = (rowData) => {
         return (
             <>
-                {rowData.Indication ? rowData.Indication : '-NA-'}
+                {rowData.Indication ? getIndicationText(rowData.Indication) : '-NA-'}
             </>
         );
     };
