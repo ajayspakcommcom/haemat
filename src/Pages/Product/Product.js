@@ -204,7 +204,8 @@ const Product = () => {
                 NoOfVials: +item.key === 37 ? +item.name : -1,
                 NoOfStrips: +item.key !== 37 ? +item.name : null,
                 NoOfPatients: +noOfPatient,
-                papValue: +papVal
+                papValue: +papVal,
+                indication: paramData.actionName
             };
             endPoints.push(itemObj);
         });
