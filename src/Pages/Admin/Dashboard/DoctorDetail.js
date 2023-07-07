@@ -8,6 +8,9 @@ const DoctorDetail = (props) => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
+
+        console.log(props.data);
+
         if (props.data.length > 0) {
 
             const filteredData = props.data.map((item) => {
@@ -38,7 +41,6 @@ const DoctorDetail = (props) => {
                 }
             });
             setData(filteredData);
-            console.log(props.data);
         }
 
     }, [props]);
