@@ -61,7 +61,6 @@ export const groupByKey = (array, key) => {
 // };
 
 export const getIndicationText = (itemObj) => {
-    console.log(itemObj);
     if (itemObj === 'aa') {
         return 'Aplastic Anaemia';
     } else if (itemObj === 'itp') {

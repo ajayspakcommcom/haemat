@@ -194,6 +194,8 @@ const AdminDashboard = () => {
 
             const arrayData = [...report];
 
+            console.log(arrayData);
+
             const filteredData = arrayData.map(item => {
                 //console.log(item);
 
@@ -246,9 +248,9 @@ const AdminDashboard = () => {
                     "HospitalName": item.HospitalName,
                     "Indication": getIndicationText(item.Indication),
                     "EmpID": item.EmpID,
-                    "Oncyclo NoOfPatients": item.NoOfPatients[0].NoOfPatients,
-                    "Revugam NoOfPatients": item.NoOfPatients[0].NoOfPatients,
-                    "Thymogam NoOfPatients": item.NoOfPatients[0].NoOfPatients,
+                    "Oncyclo NoOfPatients": item.NoOfPatients[0].medID === 35 ? item.NoOfPatients[0].NoOfPatients : '-NA-',
+                    "Revugam NoOfPatients": (item.NoOfPatients[0].medID === 36 || item.NoOfPatients[0].medID === 38) ? item.NoOfPatients[0].NoOfPatients : '-NA-',
+                    "Thymogam NoOfPatients": item.NoOfPatients[0].medID === 37 ? item.NoOfPatients[0].NoOfPatients : '-NA-',
                     //"NoOfVialsStrips": `Oncyclo ${totalOncycloStrips.toString()}, Revugam ${totalRevugamStrips.toString()}, Thymogam ${totalVials.toString()}`,
                     //"papValues": `Oncyclo ${totalOncycloPap.toString()}, Revugam ${totalRevugamPap.toString()},  Thymogam ${totalThymogamPap.toString()}`,
 
@@ -263,7 +265,7 @@ const AdminDashboard = () => {
                 }
             });
 
-            //console.log(filteredData);
+            console.log(filteredData);
 
             const worksheet = xlsx.utils.json_to_sheet(filteredData);
             const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
