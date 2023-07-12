@@ -194,10 +194,10 @@ const AdminDashboard = () => {
 
             const arrayData = [...report];
 
-            console.log(arrayData);
 
+
+            // old requirement
             const filteredData = arrayData.map(item => {
-                //console.log(item);
 
                 const vialArrayList = item.NoOfVials.filter(v => v.medID === 37);
 
@@ -237,8 +237,6 @@ const AdminDashboard = () => {
                     return prevsValue + currentValue.PapValue;
                 }, 0);
 
-                console.log(item)
-
                 return {
                     "CreatedDate": item.CreatedDate,
                     "ZoneName": item.ZoneName,
@@ -253,7 +251,6 @@ const AdminDashboard = () => {
                     "Thymogam NoOfPatients": item.NoOfPatients[0].medID === 37 ? item.NoOfPatients[0].NoOfPatients : '-NA-',
                     //"NoOfVialsStrips": `Oncyclo ${totalOncycloStrips.toString()}, Revugam ${totalRevugamStrips.toString()}, Thymogam ${totalVials.toString()}`,
                     //"papValues": `Oncyclo ${totalOncycloPap.toString()}, Revugam ${totalRevugamPap.toString()},  Thymogam ${totalThymogamPap.toString()}`,
-
                     "OncycloStrips": `${totalOncycloStrips.toString()}`,
                     "RevugamStrips": `${totalRevugamStrips.toString()}`,
                     "ThymogamVials": `${totalVials.toString()}`,
@@ -265,9 +262,42 @@ const AdminDashboard = () => {
                 }
             });
 
-            console.log(filteredData);
 
-            const worksheet = xlsx.utils.json_to_sheet(filteredData);
+            // new requirement 
+            const newData = originalData.current
+            console.log(newData);
+
+            const newFilteredData = newData.map((item) => {
+
+                console.log(item);
+
+                return {
+                    "ZoneName": item.ZoneName,
+                    "EmployeeName": item.EmployeeName,
+                    "OrderDate": item.OrderDate[0],
+                    "DoctorsName": item.DoctorsName[0],
+                    "Speciality": item.Speciality[0],
+                    "HospitalName": item.HospitalName[0],
+                    "Indication": item.Indication ? getIndicationText(item.Indication[0]) : '-NA-', //getIndicationText(item.Indication),
+
+                    "Thymogam NoOfPatients": item.medID === 37 ? item.NoOfPatients : '-NA-',
+                    "Revugam NoOfPatients": (item.medID === 36 || item.medID === 38) ? item.NoOfPatients : '-NA-',
+                    "Oncyclo NoOfPatients": item.medID === 35 ? item.NoOfPatients : '-NA-',
+
+                    "ThymogamVials": item.medID === 37 ? item.NoOfVials : '-NA-',
+                    "RevugamStrips": (item.medID === 36 || item.medID === 38) ? item.strips : '-NA-',
+                    "OncycloStrips": item.medID === 35 ? item.strips : '-NA-',
+
+                    "ThymogamPap": item.medID === 37 ? item.PapValue : '-NA-',
+                    "RevugamPap": (item.medID === 36 || item.medID === 38) ? item.PapValue : '-NA-',
+                    "OncycloPap": item.medID === 35 ? item.PapValue : '-NA-',
+                }
+            });
+
+
+            console.log(newFilteredData);
+
+            const worksheet = xlsx.utils.json_to_sheet(newFilteredData);
             const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
             const excelBuffer = xlsx.write(workbook, {
                 bookType: 'xlsx',
