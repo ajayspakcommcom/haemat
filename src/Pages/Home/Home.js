@@ -5,8 +5,6 @@ import AdminDashboard from '../Admin/Dashboard/AdminDashboard';
 
 
 const Home = (props) => {
-
-    //debugger;
     const ctx = useContext(LoginContext);
     console.log(ctx.userData.post);
     const designation = (ctx.userData.post || '').toLowerCase().trim();

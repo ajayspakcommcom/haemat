@@ -4,6 +4,7 @@ import LoginContext from '../../Context/Login/LoginContext';
 import './Login.css';
 import { validateEmail } from '../../Service/Common';
 import Loader from '../../Component/Loader/Loader';
+// import UnderConstruction from '../UnderConstruction/UnderConstruction';
 
 const Login = () => {
 
@@ -65,7 +66,6 @@ const Login = () => {
                 <section>
                     <form onSubmit={loginHandler}>
                         <h1>
-                            {/* <img alt="logo" src={process.env.PUBLIC_URL + '/logo-black.png'} className='login-logo' /> */}
                             <img alt="logo" src={process.env.PUBLIC_URL + '/logo.svg'} className='login-logo' />
                         </h1>
                         {ctx.error && <p className='login-error'>{ctx.error.msg}</p>}
@@ -82,6 +82,9 @@ const Login = () => {
                     </form>
                 </section>
             </section>
+
+            {/* <UnderConstruction /> */}
+
         </>
     )
 };
