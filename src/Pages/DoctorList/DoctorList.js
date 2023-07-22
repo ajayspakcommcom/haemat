@@ -106,7 +106,8 @@ const DoctorList = () => {
             <div className="card p-3">
                 <h2>Doctor List</h2>
                 <DataTable value={doctorList} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} emptyMessage="No customers found." filters={filters}
-                    globalFilterFields={['doctorName', 'specialtyName', 'cityName', 'StateName', 'hospitalName']} header={header} showGridlines>
+                    globalFilterFields={['doctorName', 'specialtyName', 'cityName', 'StateName', 'hospitalName']} header={header} showGridlines paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+                    currentPageReportTemplate="{first} to {last} of {totalRecords}" >
                     <Column field="customerCode" header="Customer Code" />
                     <Column field="doctorName" header="Name" />
                     <Column field="specialtyName" header="Speciality" />
