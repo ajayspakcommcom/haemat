@@ -53,7 +53,7 @@ const AdminDashboard = () => {
                 };
             });
 
-            console.log(result)
+            //console.log(result)
 
             setIsLoaderVisible(false);
 
@@ -68,18 +68,54 @@ const AdminDashboard = () => {
 
             for (const item of groupedDataByKeyList) {
                 for (const key in item) {
+
                     //console.log(item[key]);
-                    tdrData.push({
-                        'EmployeeName': item[key][0].EmployeeName,
-                        'drName': item[key][0].DoctorsName,
-                        'noOfPatients': item[key][0].NoOfPatients,
-                        'tdr': item[key].length === 3 ? 'Yes' : 'No',
-                        'date': new Date(item[key][0].CreatedDate).toLocaleDateString()
-                    });
+
+                    let isTdr = false;
+
+                    if (item[key].length === 3) {
+                        let oncycloMed = item[key].find(item => item.medID === 35);
+                        let revugamMed = item[key].find(item => item.medID === 36);
+                        let thymogamMed = item[key].find(item => item.medID === 37);
+
+                        // console.log(oncycloMed);
+                        // console.log(oncycloMed ? parseInt(oncycloMed?.NoOfStrips) : 0)
+
+                        // console.log(revugamMed);
+                        // console.log(parseInt(revugamMed?.NoOfStrips));
+
+                        // console.log(thymogamMed);
+                        // console.log(thymogamMed?.NoOfVials);
+
+                        if (oncycloMed && revugamMed && thymogamMed) {
+                            if ((parseInt(oncycloMed?.NoOfStrips) > 0) && (parseInt(revugamMed?.NoOfStrips)) && (parseInt(thymogamMed?.NoOfVials))) {
+                                isTdr = true;
+                            }
+                            //console.log('============================');
+                        }
+                    }
+
+                    //console.log(isTdr);
+
+                    if (isTdr) {
+                        tdrData.push({
+                            'EmployeeName': item[key][0].EmployeeName,
+                            'drName': item[key][0].DoctorsName,
+                            'noOfPatients': item[key][0].NoOfPatients,
+                            //'tdr': item[key].length === 3 ? 'Yes' : 'No',
+                            'tdr': item[key].length === 3 ? 'Yes' : 'No',
+                            'date': new Date(item[key][0].CreatedDate).toLocaleDateString()
+                        });
+                    }
+
+
+
                 }
             }
 
             const filteredTdr = tdrData.filter(item => item.tdr.toLowerCase() === "yes");
+
+            //console.log(filteredTdr);
 
             setTdr(filteredTdr);
 
@@ -136,7 +172,7 @@ const AdminDashboard = () => {
 
             }
 
-            console.log(groupedDataList);
+            //console.log(groupedDataList);
 
             groupedDataList = groupedDataList.sort((a, b) => {
                 let dateA = new Date(a.CreatedDate);
