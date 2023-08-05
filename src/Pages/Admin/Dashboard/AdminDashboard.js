@@ -305,12 +305,12 @@ const AdminDashboard = () => {
 
             const newFilteredData = newData.map((item) => {
 
-                //console.log(item);
+                console.log(item.OrderDate[0]);
 
                 return {
                     "ZoneName": item.ZoneName,
                     "EmployeeName": item.EmployeeName,
-                    "OrderDate": item.OrderDate[0],
+                    "OrderDate": new Date(item.OrderDate[0]).toLocaleDateString('en-GB'),
                     "DoctorsName": item.DoctorsName[0],
                     "Speciality": item.Speciality[0],
                     "HospitalName": item.HospitalName[0],
@@ -332,7 +332,7 @@ const AdminDashboard = () => {
 
 
 
-            console.log(newFilteredData);
+            //console.log(newFilteredData);
 
             const worksheet = xlsx.utils.json_to_sheet(newFilteredData);
             const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
