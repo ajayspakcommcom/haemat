@@ -305,7 +305,7 @@ const AdminDashboard = () => {
 
             const newFilteredData = newData.map((item) => {
 
-                console.log(item.OrderDate[0]);
+                //console.log(item.OrderDate[0]);
 
                 return {
                     "ZoneName": item.ZoneName,
@@ -316,23 +316,23 @@ const AdminDashboard = () => {
                     "HospitalName": item.HospitalName[0],
                     "Indication": item.Indication ? getIndicationText(item.Indication[0]) : 0, //getIndicationText(item.Indication),
 
-                    "Thymogam NoOfPatients": item.medID === 37 ? item.NoOfPatients : 0,
-                    "Revugam NoOfPatients": (item.medID === 36 || item.medID === 38) ? item.NoOfPatients : 0,
-                    "Oncyclo NoOfPatients": item.medID === 35 ? item.NoOfPatients : 0,
+                    "Thymogam NoOfPatients": item.medID === 37 ? parseInt(item.NoOfPatients) : 0,
+                    "Revugam NoOfPatients": (item.medID === 36 || item.medID === 38) ? parseInt(item.NoOfPatients) : 0,
+                    "Oncyclo NoOfPatients": item.medID === 35 ? parseInt(item.NoOfPatients) : 0,
 
-                    "ThymogamVials": item.medID === 37 ? item.NoOfVials : 0,
-                    "RevugamStrips": (item.medID === 36 || item.medID === 38) ? item.strips : 0,
-                    "OncycloStrips": item.medID === 35 ? item.strips : 0,
+                    "ThymogamVials": item.medID === 37 ? parseInt(item.NoOfVials) : 0,
+                    "RevugamStrips": (item.medID === 36 || item.medID === 38) ? parseInt(item.strips) : 0,
+                    "OncycloStrips": item.medID === 35 ? parseInt(item.strips) : 0,
 
-                    "ThymogamPap": item.medID === 37 ? item.PapValue : 0,
-                    "RevugamPap": (item.medID === 36 || item.medID === 38) ? item.PapValue : 0,
-                    "OncycloPap": item.medID === 35 ? item.PapValue : 0,
+                    "ThymogamPap": item.medID === 37 ? parseInt(item.PapValue) : 0,
+                    "RevugamPap": (item.medID === 36 || item.medID === 38) ? parseInt(item.PapValue) : 0,
+                    "OncycloPap": item.medID === 35 ? parseInt(item.PapValue) : 0,
                 }
             });
 
 
 
-            //console.log(newFilteredData);
+            console.log(newFilteredData);
 
             const worksheet = xlsx.utils.json_to_sheet(newFilteredData);
             const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
