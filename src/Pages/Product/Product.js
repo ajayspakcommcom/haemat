@@ -211,6 +211,14 @@ const Product = () => {
         });
 
 
+
+
+        endPoints.map((item) => {
+            item.orderDate = new Date(item.orderDate.setDate(item.orderDate.getDate() + 1));
+            item.orderDate = new Date(item.orderDate);
+            return item;
+        });
+
         console.log(endPoints);
 
         setIsBtnDisabled(true);
