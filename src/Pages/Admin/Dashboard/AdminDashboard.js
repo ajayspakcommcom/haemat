@@ -8,7 +8,7 @@ import axios from "axios";
 import configData from '../../../Config/Config.json';
 import { groupByKey, getIndicationText } from '../../../Service/Common';
 import DoctorDetail from './DoctorDetail';
-import { Divider } from 'primereact/divider';
+import { Calendar } from 'primereact/calendar';
 
 
 const AdminDashboard = () => {
@@ -19,6 +19,9 @@ const AdminDashboard = () => {
     const [drDetail, setDrDetail] = useState([]);
     const [isDetail, setIsDetail] = useState(false);
     const [tdr, setTdr] = useState([]);
+
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
 
     let originalData = useRef(null);
 
@@ -657,12 +660,50 @@ const AdminDashboard = () => {
         setIsDetail(false);
     };
 
+    const onFilterHandler = (e) => {
+        e.preventDefault();
+        console.log(startDate);
+        console.log(endDate);
+
+        const empId = JSON.parse(localStorage.getItem('userData'))?.empId;
+
+        const paramObj = {
+            empId: empId,
+            startDate: startDate,
+            endDate: endDate
+        };
+
+        const headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            //'Authorization': `Bearer ${getAuthToken()
+        }
+
+        axios.post(url, paramObj).then(data => {
+            console.log(data);
+        }).catch(err => {
+            console.log(err);
+        });
+
+    };
+
     return (
         <>
             {!isDetail &&
                 <>
 
                     <div className="card p-3">
+
+                        {/* const [startDate, setStartDate] = useState(null);
+                    const [endDate, setEndDate] = useState(null); */}
+
+                        <div className='flex gap-3 mb-3'>
+                            <Calendar value={startDate} onChange={(e) => setStartDate(e.value)} placeholder='From' />
+                            <Calendar value={endDate} onChange={(e) => setEndDate(e.value)} placeholder='To' />
+                            <Button label="Submit" onClick={onFilterHandler} />
+                        </div>
+
+
                         {report.length > 0 &&
                             <DataTable ref={dt} value={report} paginator rows={5} header={header} rowsPerPageOptions={[5, 10, 25, 50]} emptyMessage="No customers found." showGridlines>
                                 <Column field="CreatedDate" header="Date" body={dateBodyTamplate} />
