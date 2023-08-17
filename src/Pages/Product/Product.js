@@ -20,6 +20,7 @@ import { InputNumber } from 'primereact/inputnumber';
 import Loader from '../../Component/Loader/Loader';
 
 
+
 const Product = () => {
 
     const ctx = useContext(ProductContext);
@@ -143,18 +144,28 @@ const Product = () => {
             //     brandList = brandList.filter(item => item.key === 36);
             // }
 
-            console.log(paramData.actionName)
+            //console.log(paramData.actionName)
 
             if (paramData.actionName === 'itp') {
                 imgList = imgList.filter(item => item.name === 'revugam' || item.name === 'revugam25');
                 brandList = brandList.filter(item => item.key === 36 || item.key === 38);
-            } else {
+            } else if (paramData.actionName === 'aa') {
                 imgList = imgList.filter(item => item.name !== 'revugam25');
                 brandList = brandList.filter(item => item.key !== 38);
+            } else {
+                console.log('tdr');
+                imgList = imgList.filter(item => item.name !== 'revugam25');
+                brandList = brandList.filter(item => item.key !== 38);
+
+                // for tdr
+                setInputFields([{ "name": "", "key": 37, "placeholder": "Total Vials for Thymogam" }, { "name": "", "key": 36, "placeholder": "Total Strips for Revugam" }, { "name": "", "key": 35, "placeholder": "Total Strips for Oncyclo" }]);
+                papSetInputFields([{ "name": "", "key": 37, "placeholder": "Vials for Pap Thymogam" }, { "name": "", "key": 36, "placeholder": "Strips for Pap Revugam" }, { "name": "", "key": 35, "placeholder": "Strips for Pap Oncyclo" }]);
+                // for tdr
+
             }
 
-            console.log(imgList);
-            console.log(brandList);
+            // console.log(imgList);
+            // console.log(brandList);
 
             setBrandImgList(imgList.reverse());
             setBrands(brandList.reverse());
@@ -163,6 +174,8 @@ const Product = () => {
         }).catch((err) => {
             console.log(err)
         });
+
+
 
 
     }, []);
@@ -246,7 +259,7 @@ const Product = () => {
                 <div className='product-header'>
 
                     <div className='content'>
-                        <h2>{paramData.actionName === 'aa' ? 'Aplastic Anaemia' : 'Immune Thrombocytopenic Purpura'}</h2>
+                        <h2>{paramData.actionName === 'tdr' ? 'TDR' : paramData.actionName === 'aa' ? 'Aplastic Anaemia' : 'Immune Thrombocytopenic Purpura'}</h2>
                         <Divider />
                         <h3>About</h3>
                         <table id='table-header'>
@@ -295,7 +308,8 @@ const Product = () => {
                         {brands.map((brand) => {
                             return (
                                 <div key={brand.key}>
-                                    <Checkbox inputId={brand.key} name="brand" value={brand} onChange={onBrandChange} checked={selectedBrands.some((item) => item.key === brand.key)} />
+                                    {paramData.actionName !== 'tdr' && <Checkbox inputId={brand.key} name="brand" value={brand} onChange={onBrandChange} checked={selectedBrands.some((item) => item.key === brand.key)} />}
+                                    {paramData.actionName === 'tdr' && <Checkbox inputId={brand.key} name="brand" value={brand} checked={true} disabled />}
                                 </div>
                             );
                         })}

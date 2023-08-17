@@ -6,6 +6,6 @@ h2 {
     display: flex;
 }
 
-.action-btn>button:first-child {
+.action-btn>button {
     margin-right: 15px;
 }

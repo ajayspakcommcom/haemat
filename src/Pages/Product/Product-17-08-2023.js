@@ -10,6 +10,7 @@ import './Product.scss';
 import axios from "axios";
 import oncyclo from '../../Content/img/med/oncyclo.png';
 import revugam from '../../Content/img/med/revugam.png';
+import revugam25 from '../../Content/img/med/revugam-25.png';
 import thymogam from '../../Content/img/med/thymogam.png';
 import { getEmpId } from '../../Service/Common';
 import LoginContext from '../../Context/Login/LoginContext';
@@ -17,6 +18,7 @@ import Thankyou from '../Thankyou.js/Thankyou';
 import configData from '../../Config/Config.json';
 import { InputNumber } from 'primereact/inputnumber';
 import Loader from '../../Component/Loader/Loader';
+
 
 const Product = () => {
 
@@ -26,13 +28,11 @@ const Product = () => {
     const [isThankyouPageVisible, setIsThankyouPageVisible] = useState(false);
     const [isLoaderVisible, setIsLoaderVisible] = useState(true);
 
+
     const params = useParams();
 
-    //const brands = [{ key: '31' }, { key: '32' }, { key: '33' }];
     const [brands, setBrands] = useState([]);
     const url = `${configData.SERVER_URL}/getdoctordetails/${params.id}`;
-    //console.log(params);
-
 
     const [paramData, setParamData] = useState(params);
     const [drData, setDrData] = useState({});
@@ -44,15 +44,20 @@ const Product = () => {
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [brandImgList, setBrandImgList] = useState([]);
 
-
-    //const [inputFields, setInputFields] = useState([{ name: '', key: '31' }, { name: '', key: '32' }, { name: '', key: '33' }]);
     const [inputFields, setInputFields] = useState([]);
+    const [papInputFields, papSetInputFields] = useState([]);
+
 
     const handleFormChange = (index, event) => {
         let data = [...inputFields];
         data[index][event.target.name] = event.target.value;
         setInputFields(data);
-        //console.log(data);
+    }
+
+    const papHandleFormChange = (index, event) => {
+        let data = [...papInputFields];
+        data[index][event.target.name] = event.target.value;
+        papSetInputFields(data);
     }
 
     const onBrandChange = (e) => {
@@ -67,23 +72,11 @@ const Product = () => {
 
         setInputFields((prevState) => {
 
-            // let inputField = _selectedBrands.map((item) => {
-            //     //return { name: '', key: item.key, placeholder: +item.key == 37 ? 'No of Vials' : 'No of Strips' }
-            //     //return { name: '', key: item.key, placeholder: +item.key == 37 ? 'Vials for Thymogam' : +item.key == 36 ? 'Strips for Revugam' : 'Strips for Oncyclo' }
-            //     return { name: '', key: item.key, placeholder: +item.key == 37 ? 'Vials for Thymogam' : +item.key == 36 ? 'Strips for Revugam' : 'Strips for Oncyclo' }
-            // });
-            // return [...inputField];
-
-
             const previousData = [...prevState];
 
             let inputField = _selectedBrands.map((item) => {
-                return { name: '', key: item.key, placeholder: +item.key === 37 ? 'Vials for Thymogam' : +item.key === 36 ? 'Strips for Revugam' : 'Strips for Oncyclo' }
+                return { name: '', key: item.key, placeholder: +item.key === 37 ? 'Total Vials for Thymogam' : +item.key === 36 ? 'Total Strips for Revugam' : +item.key === 38 ? 'Total Strips for 25 Revugam' : 'Total Strips for Oncyclo' }
             });
-
-
-            console.log(previousData);
-            console.log(inputField);
 
             inputField.forEach((inputItem) => {
                 previousData.forEach((prevItem) => {
@@ -95,20 +88,48 @@ const Product = () => {
                 });
             });
 
-            console.log(inputField);
-
             return [...inputField];
         });
+
+
+
+        papSetInputFields((prevState) => {
+
+            const previousData = [...prevState];
+
+            let papInputField = _selectedBrands.map((item) => {
+                return { name: '', key: item.key, placeholder: +item.key === 37 ? 'Vials for Pap Thymogam' : +item.key === 36 ? 'Strips for Pap Revugam' : +item.key === 38 ? 'Strips for Pap 25 Revugam' : 'Strips for Pap Oncyclo' }
+            });
+
+            papInputField.forEach((inputItem) => {
+                previousData.forEach((prevItem) => {
+                    if (prevItem.key === inputItem.key) {
+                        inputItem.name = prevItem.name;
+                    } else {
+                        inputItem.name = inputItem.name;
+                    }
+                });
+            });
+
+            console.log(papInputField);
+
+            return [...papInputField];
+        });
+
+
+
     };
 
 
     useEffect(() => {
 
         axios.get(url).then((resp) => {
-            // console.log(resp);
-            setDrData(resp.data[0][0]);
 
-            let imgList = [{ name: "oncyclo", url: oncyclo }, { name: "revugam", url: revugam }, { name: "thymogam", url: thymogam }];
+            setDrData(resp.data[0][0]);
+            console.log(resp.data[0][0]);
+
+            //let imgList = [{ name: "oncyclo", url: oncyclo }, { name: "revugam", url: revugam }, { name: "thymogam", url: thymogam }];
+            let imgList = [{ name: "oncyclo", url: oncyclo }, { name: "revugam", url: revugam }, { name: "revugam25", url: revugam25 }, { name: "thymogam", url: thymogam }];
             let brandList = resp.data[1].map((item) => {
                 return { key: item.medID };
             });
@@ -116,13 +137,25 @@ const Product = () => {
             console.log(imgList);
             console.log(brandList);
 
-            if (paramData.actionName == 'itp') {
-                imgList = imgList.filter(item => item.name == 'thymogam');
-                console.log(imgList);
-                brandList = brandList.filter(item => item.key == 37);
+            // if (paramData.actionName === 'itp') {
+            //     imgList = imgList.filter(item => item.name === 'revugam');
+            //     imgList[0].url = revugam25;
+            //     brandList = brandList.filter(item => item.key === 36);
+            // }
+
+            console.log(paramData.actionName)
+
+            if (paramData.actionName === 'itp') {
+                imgList = imgList.filter(item => item.name === 'revugam' || item.name === 'revugam25');
+                brandList = brandList.filter(item => item.key === 36 || item.key === 38);
+            } else {
+                imgList = imgList.filter(item => item.name !== 'revugam25');
+                brandList = brandList.filter(item => item.key !== 38);
             }
 
-            //console.log(brandList);
+            console.log(imgList);
+            console.log(brandList);
+
             setBrandImgList(imgList.reverse());
             setBrands(brandList.reverse());
             setIsLoaderVisible(false);
@@ -138,35 +171,56 @@ const Product = () => {
         e.preventDefault();
 
 
-        let medicineData = inputFields, drId = params.id, empId = loginContext.userData.empId ? loginContext.userData.empId : getEmpId(), endPoints = [];
+        let medicineData = inputFields, drId = params.id, empId = loginContext.userData.empId ? loginContext.userData.empId : getEmpId(), endPoints = [], papMedicineData = papInputFields;
 
         console.log(medicineData);
+        console.log(papMedicineData);
 
         if (!date) {
             alert('Please select the date');
             return;
         }
 
-        if (!noOfPatient) {
+        console.log(noOfPatient)
+
+        if (noOfPatient === null) {
             alert('Please fill no of Patients');
             return;
         }
 
         medicineData.forEach((item, indx) => {
+            let papVal;
+            papMedicineData.forEach((papItem) => {
+                if (item.key === papItem.key) {
+                    papVal = papItem.name;
+                }
+            });
 
             let itemObj = {
                 doctorId: +drId,
                 empID: +empId,
                 medId: +item.key,
-                orderDate: date ? date.toLocaleDateString() : date,
-                NoOfVials: +item.key == 37 ? +item.name : -1,
-                NoOfStrips: +item.key != 37 ? +item.name : null,
-                NoOfPatients: +noOfPatient
+                orderDate: date, //? date.toLocaleDateString() : date,
+                NoOfVials: +item.key === 37 ? +item.name : -1,
+                NoOfStrips: +item.key !== 37 ? +item.name : null,
+                NoOfPatients: +noOfPatient,
+                papValue: +papVal,
+                indication: paramData.actionName
             };
             endPoints.push(itemObj);
         });
 
+
+
+
+        endPoints.map((item) => {
+            item.orderDate = new Date(item.orderDate.setDate(item.orderDate.getDate() + 1));
+            item.orderDate = new Date(item.orderDate);
+            return item;
+        });
+
         console.log(endPoints);
+
         setIsBtnDisabled(true);
         setIsLoaderVisible(true);
 
@@ -250,12 +304,28 @@ const Product = () => {
                     <div className="flex justify-content-start input-feild-wrapper">
                         {inputFields.map((input, index) => {
                             return (
-                                <div key={index} id={input.key}>
-                                    <InputText type='number' name='name' placeholder={input.placeholder} value={input.name} onChange={event => handleFormChange(index, event)} />
-                                </div>
+                                <>
+                                    <div key={index} id={input.key}>
+                                        <InputText type='number' name='name' placeholder={input.placeholder} value={input.name} onChange={event => handleFormChange(index, event)} />
+                                    </div>
+                                </>
                             )
                         })}
                     </div>
+
+                    <div className="flex justify-content-start input-feild-wrapper">
+                        {papInputFields.map((input, index) => {
+                            return (
+                                <>
+                                    <div key={Math.random()} id={'pap-' + input.key}>
+                                        <InputText type='number' name='name' placeholder={input.placeholder} value={input.name} onChange={event => papHandleFormChange(index, event)} />
+                                    </div>
+                                </>
+                            )
+                        })}
+                    </div>
+
+
                     <Button label="Save" className='save' disabled={isBtnDisabled} />
                 </form>}
 

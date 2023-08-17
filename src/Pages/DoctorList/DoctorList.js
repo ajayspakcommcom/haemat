@@ -96,6 +96,7 @@ const DoctorList = () => {
             <div className='action-btn'>
                 <Button label="AA" raised onClick={() => { goto(doctorList, 'aa') }} />
                 <Button label="ITP" raised onClick={() => { goto(doctorList, 'itp') }} />
+                <Button label="TDR" raised onClick={() => { goto(doctorList, 'tdr') }} />
             </div>
         );
     };
