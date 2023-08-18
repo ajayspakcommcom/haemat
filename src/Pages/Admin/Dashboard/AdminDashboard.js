@@ -28,13 +28,13 @@ const AdminDashboard = () => {
     const url = `${configData.SERVER_URL}/admin-report`;
 
     useEffect(() => {
+
         axios.get(url).then((resp) => {
+
             originalData.current = [...resp.data[0]];
 
-            //console.log(originalData.current);
-
             const result = resp.data[0].map((item) => {
-                //console.log(item)
+
                 return {
                     //CreatedDate: item.CreatedDate,
                     CreatedDate: item.OrderDate[0],
@@ -72,8 +72,6 @@ const AdminDashboard = () => {
             for (const item of groupedDataByKeyList) {
                 for (const key in item) {
 
-                    //console.log(item[key]);
-
                     let isTdr = false;
 
                     if (item[key].length === 3) {
@@ -81,24 +79,12 @@ const AdminDashboard = () => {
                         let revugamMed = item[key].find(item => item.medID === 36);
                         let thymogamMed = item[key].find(item => item.medID === 37);
 
-                        // console.log(oncycloMed);
-                        // console.log(oncycloMed ? parseInt(oncycloMed?.NoOfStrips) : 0)
-
-                        // console.log(revugamMed);
-                        // console.log(parseInt(revugamMed?.NoOfStrips));
-
-                        // console.log(thymogamMed);
-                        // console.log(thymogamMed?.NoOfVials);
-
                         if (oncycloMed && revugamMed && thymogamMed) {
                             if ((parseInt(oncycloMed?.NoOfStrips) > 0) && (parseInt(revugamMed?.NoOfStrips)) && (parseInt(thymogamMed?.NoOfVials))) {
                                 isTdr = true;
                             }
-                            //console.log('============================');
                         }
                     }
-
-                    //console.log(isTdr);
 
                     if (isTdr) {
                         tdrData.push({
@@ -110,15 +96,10 @@ const AdminDashboard = () => {
                             'date': new Date(item[key][0].CreatedDate).toLocaleDateString()
                         });
                     }
-
-
-
                 }
             }
 
             const filteredTdr = tdrData.filter(item => item.tdr.toLowerCase() === "yes");
-
-            //console.log(filteredTdr);
 
             setTdr(filteredTdr);
 
@@ -155,7 +136,7 @@ const AdminDashboard = () => {
                     }
                 });
 
-                //console.log(groupedData)
+
                 groupedDataList.push({
                     CreatedDate: groupedData[key][0].CreatedDate,
                     ZoneName: groupedData[key][0].ZoneName,
@@ -175,20 +156,18 @@ const AdminDashboard = () => {
 
             }
 
-            //console.log(groupedDataList);
-
             groupedDataList = groupedDataList.sort((a, b) => {
                 let dateA = new Date(a.CreatedDate);
                 let dateB = new Date(b.CreatedDate);
                 return dateA - dateB;
             });
 
-
-
             setReport(groupedDataList);
+
         }).catch((err) => {
             console.log(err);
         });
+
     }, []);
 
 
@@ -662,8 +641,170 @@ const AdminDashboard = () => {
 
     const onFilterHandler = (e) => {
         e.preventDefault();
-        console.log(startDate);
-        console.log(endDate);
+
+        setIsLoaderVisible(true)
+
+        const empId = JSON.parse(localStorage.getItem('userData'))?.empId;
+
+        const paramObj = {
+            empId: empId,
+            startDate: startDate,
+            endDate: endDate
+        };
+
+        console.log(paramObj)
+
+        // const headers = {
+        //     'Accept': 'application/json',
+        //     'Content-Type': 'application/json',
+        //     //'Authorization': `Bearer ${getAuthToken()}`
+        // }
+
+        axios.post(url, paramObj).then(data => {
+
+            const result = data.data[0].map((item) => {
+                return {
+                    //CreatedDate: item.CreatedDate,
+                    CreatedDate: item.OrderDate[0],
+                    ZoneName: item.ZoneName,
+                    DoctorsID: item.DoctorsID[0],
+                    DoctorsName: item.DoctorsName[0],
+                    Speciality: item.Speciality[0],
+                    HospitalName: item.HospitalName[0],
+                    HospitalCity: item.hospitalCity,
+                    Indication: item.Indication ? item.Indication[0] : '',
+                    NoOfPatients: item.NoOfPatients,
+                    //NoOfVials: item.NoOfVials + item.strips,
+                    NoOfVials: item.NoOfVials,
+                    NoOfStrips: item.strips,
+                    PapValue: item.PapValue,
+                    medID: item.medID,
+                    EmpID: item.EmpID,
+                    EmployeeName: item.EmployeeName
+                };
+            });
+
+            //console.log(result)
+
+            setIsLoaderVisible(false);
+
+            const groupedData = groupByKey(result, 'DoctorsID');
+            let groupedDataList = [];
+            const groupedDataByKeyList = [];
+            const tdrData = [];
+
+            for (const key in groupedData) {
+                groupedDataByKeyList.push(groupByKey(groupedData[key], 'CreatedDate'));
+            }
+
+            for (const item of groupedDataByKeyList) {
+                for (const key in item) {
+
+                    let isTdr = false;
+
+                    if (item[key].length === 3) {
+                        let oncycloMed = item[key].find(item => item.medID === 35);
+                        let revugamMed = item[key].find(item => item.medID === 36);
+                        let thymogamMed = item[key].find(item => item.medID === 37);
+
+                        if (oncycloMed && revugamMed && thymogamMed) {
+                            if ((parseInt(oncycloMed?.NoOfStrips) > 0) && (parseInt(revugamMed?.NoOfStrips)) && (parseInt(thymogamMed?.NoOfVials))) {
+                                isTdr = true;
+                            }
+                        }
+                    }
+
+                    if (isTdr) {
+                        tdrData.push({
+                            'EmployeeName': item[key][0].EmployeeName,
+                            'drName': item[key][0].DoctorsName,
+                            'noOfPatients': item[key][0].NoOfPatients,
+                            //'tdr': item[key].length === 3 ? 'Yes' : 'No',
+                            'tdr': item[key].length === 3 ? 'Yes' : 'No',
+                            'date': new Date(item[key][0].CreatedDate).toLocaleDateString()
+                        });
+                    }
+                }
+            }
+
+            const filteredTdr = tdrData.filter(item => item.tdr.toLowerCase() === "yes");
+
+            setTdr(filteredTdr);
+
+            for (const key in groupedData) {
+
+                let patientList = [];
+                let vialsList = [];
+                let stripList = [];
+                let papList = [];
+
+                groupedData[key].forEach(item => {
+
+                    if (item.DoctorsID === groupedData[key][0].DoctorsID) {
+                        patientList.push({
+                            medID: item.medID,
+                            NoOfPatients: item.NoOfPatients
+                        });
+
+                        vialsList.push({
+                            medID: item.medID,
+                            NoOfVials: item.NoOfVials
+                        });
+
+                        stripList.push({
+                            medID: item.medID,
+                            NoOfStrips: +item.NoOfStrips
+                        });
+
+                        papList.push({
+                            medID: item.medID,
+                            PapValue: +item.PapValue
+                        });
+
+                    }
+                });
+
+
+                groupedDataList.push({
+                    CreatedDate: groupedData[key][0].CreatedDate,
+                    ZoneName: groupedData[key][0].ZoneName,
+                    DoctorsID: groupedData[key][0].DoctorsID,
+                    DoctorsName: groupedData[key][0].DoctorsName,
+                    Speciality: groupedData[key][0].Speciality,
+                    HospitalName: groupedData[key][0].HospitalName,
+                    HospitalCity: groupedData[key][0].hospitalCity,
+                    Indication: groupedData[key][0].Indication,
+                    EmpID: groupedData[key][0].EmpID,
+                    NoOfPatients: patientList,
+                    NoOfVials: vialsList,
+                    NoOfStrips: stripList,
+                    papValues: papList,
+                    EmployeeName: groupedData[key][0].EmployeeName
+                });
+
+            }
+
+            groupedDataList = groupedDataList.sort((a, b) => {
+                let dateA = new Date(a.CreatedDate);
+                let dateB = new Date(b.CreatedDate);
+                return dateA - dateB;
+            });
+
+            setReport(groupedDataList);
+
+            //
+
+        }).catch(err => {
+            console.log(err);
+        });
+
+    };
+
+    const onResetHandler = (e) => {
+        e.preventDefault();
+        setStartDate(null);
+        setEndDate(null);
+        setIsLoaderVisible(true);
 
         const empId = JSON.parse(localStorage.getItem('userData'))?.empId;
 
@@ -676,11 +817,143 @@ const AdminDashboard = () => {
         const headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            //'Authorization': `Bearer ${getAuthToken()
+            //'Authorization': `Bearer ${getAuthToken()}`
         }
 
         axios.post(url, paramObj).then(data => {
-            console.log(data);
+
+            const result = data.data[0].map((item) => {
+                return {
+                    //CreatedDate: item.CreatedDate,
+                    CreatedDate: item.OrderDate[0],
+                    ZoneName: item.ZoneName,
+                    DoctorsID: item.DoctorsID[0],
+                    DoctorsName: item.DoctorsName[0],
+                    Speciality: item.Speciality[0],
+                    HospitalName: item.HospitalName[0],
+                    HospitalCity: item.hospitalCity,
+                    Indication: item.Indication ? item.Indication[0] : '',
+                    NoOfPatients: item.NoOfPatients,
+                    //NoOfVials: item.NoOfVials + item.strips,
+                    NoOfVials: item.NoOfVials,
+                    NoOfStrips: item.strips,
+                    PapValue: item.PapValue,
+                    medID: item.medID,
+                    EmpID: item.EmpID,
+                    EmployeeName: item.EmployeeName
+                };
+            });
+
+            //console.log(result)
+
+            setIsLoaderVisible(false);
+
+            const groupedData = groupByKey(result, 'DoctorsID');
+            let groupedDataList = [];
+            const groupedDataByKeyList = [];
+            const tdrData = [];
+
+            for (const key in groupedData) {
+                groupedDataByKeyList.push(groupByKey(groupedData[key], 'CreatedDate'));
+            }
+
+            for (const item of groupedDataByKeyList) {
+                for (const key in item) {
+
+                    let isTdr = false;
+
+                    if (item[key].length === 3) {
+                        let oncycloMed = item[key].find(item => item.medID === 35);
+                        let revugamMed = item[key].find(item => item.medID === 36);
+                        let thymogamMed = item[key].find(item => item.medID === 37);
+
+                        if (oncycloMed && revugamMed && thymogamMed) {
+                            if ((parseInt(oncycloMed?.NoOfStrips) > 0) && (parseInt(revugamMed?.NoOfStrips)) && (parseInt(thymogamMed?.NoOfVials))) {
+                                isTdr = true;
+                            }
+                        }
+                    }
+
+                    if (isTdr) {
+                        tdrData.push({
+                            'EmployeeName': item[key][0].EmployeeName,
+                            'drName': item[key][0].DoctorsName,
+                            'noOfPatients': item[key][0].NoOfPatients,
+                            //'tdr': item[key].length === 3 ? 'Yes' : 'No',
+                            'tdr': item[key].length === 3 ? 'Yes' : 'No',
+                            'date': new Date(item[key][0].CreatedDate).toLocaleDateString()
+                        });
+                    }
+                }
+            }
+
+            const filteredTdr = tdrData.filter(item => item.tdr.toLowerCase() === "yes");
+
+            setTdr(filteredTdr);
+
+            for (const key in groupedData) {
+
+                let patientList = [];
+                let vialsList = [];
+                let stripList = [];
+                let papList = [];
+
+                groupedData[key].forEach(item => {
+
+                    if (item.DoctorsID === groupedData[key][0].DoctorsID) {
+                        patientList.push({
+                            medID: item.medID,
+                            NoOfPatients: item.NoOfPatients
+                        });
+
+                        vialsList.push({
+                            medID: item.medID,
+                            NoOfVials: item.NoOfVials
+                        });
+
+                        stripList.push({
+                            medID: item.medID,
+                            NoOfStrips: +item.NoOfStrips
+                        });
+
+                        papList.push({
+                            medID: item.medID,
+                            PapValue: +item.PapValue
+                        });
+
+                    }
+                });
+
+
+                groupedDataList.push({
+                    CreatedDate: groupedData[key][0].CreatedDate,
+                    ZoneName: groupedData[key][0].ZoneName,
+                    DoctorsID: groupedData[key][0].DoctorsID,
+                    DoctorsName: groupedData[key][0].DoctorsName,
+                    Speciality: groupedData[key][0].Speciality,
+                    HospitalName: groupedData[key][0].HospitalName,
+                    HospitalCity: groupedData[key][0].hospitalCity,
+                    Indication: groupedData[key][0].Indication,
+                    EmpID: groupedData[key][0].EmpID,
+                    NoOfPatients: patientList,
+                    NoOfVials: vialsList,
+                    NoOfStrips: stripList,
+                    papValues: papList,
+                    EmployeeName: groupedData[key][0].EmployeeName
+                });
+
+            }
+
+            groupedDataList = groupedDataList.sort((a, b) => {
+                let dateA = new Date(a.CreatedDate);
+                let dateB = new Date(b.CreatedDate);
+                return dateA - dateB;
+            });
+
+            setReport(groupedDataList);
+
+            //
+
         }).catch(err => {
             console.log(err);
         });
@@ -694,18 +967,16 @@ const AdminDashboard = () => {
 
                     <div className="card p-3">
 
-                        {/* const [startDate, setStartDate] = useState(null);
-                    const [endDate, setEndDate] = useState(null); */}
-
                         <div className='flex gap-3 mb-3'>
                             <Calendar value={startDate} onChange={(e) => setStartDate(e.value)} placeholder='From' />
                             <Calendar value={endDate} onChange={(e) => setEndDate(e.value)} placeholder='To' />
-                            <Button label="Submit" onClick={onFilterHandler} />
+                            <Button label="Filter" onClick={onFilterHandler} />
+                            <Button label="Reset" onClick={onResetHandler} />
                         </div>
 
 
                         {report.length > 0 &&
-                            <DataTable ref={dt} value={report} paginator rows={5} header={header} rowsPerPageOptions={[5, 10, 25, 50]} emptyMessage="No customers found." showGridlines>
+                            <DataTable ref={dt} value={report} paginator rows={5} header={header} rowsPerPageOptions={[5, 10, 25, 50]} emptyMessage="No Data found." showGridlines>
                                 <Column field="CreatedDate" header="Date" body={dateBodyTamplate} />
                                 <Column field="ZoneName" header="Zone" />
                                 <Column field="EmployeeName" header="EmployeeName" />
@@ -725,7 +996,7 @@ const AdminDashboard = () => {
                         {isLoaderVisible && <Loader />}
                     </div>
                     <div className="card p-3">
-                        <DataTable value={tdr} paginator rows={5} header={tdrHeader} rowsPerPageOptions={[5, 10, 25, 50]} emptyMessage="No customers found." showGridlines>
+                        <DataTable value={tdr} paginator rows={5} header={tdrHeader} rowsPerPageOptions={[5, 10, 25, 50]} emptyMessage="No Data found." showGridlines>
                             <Column field="date" header="Date" />
                             <Column field="drName" header="Doctor Name" />
                             <Column field="EmployeeName" header="EmployeeName" />
