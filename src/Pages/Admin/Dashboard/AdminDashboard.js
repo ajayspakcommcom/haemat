@@ -971,7 +971,7 @@ const AdminDashboard = () => {
                             <Calendar value={startDate} onChange={(e) => setStartDate(e.value)} placeholder='From' />
                             <Calendar value={endDate} onChange={(e) => setEndDate(e.value)} placeholder='To' />
                             <Button label="Filter" onClick={onFilterHandler} />
-                            <Button label="Reset" onClick={onResetHandler} />
+                            {/* <Button label="Reset" onClick={onResetHandler} /> */}
                         </div>
 
 
