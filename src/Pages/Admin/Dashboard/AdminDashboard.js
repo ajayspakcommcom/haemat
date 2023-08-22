@@ -208,86 +208,9 @@ const AdminDashboard = () => {
     const exportExcel = () => {
         import('xlsx').then((xlsx) => {
 
-            //const excelData = originalData.current;
-
-            const arrayData = [...report];
-
-
-
-            // old requirement
-            // const filteredData = arrayData.map(item => {
-
-            //     const vialArrayList = item.NoOfVials.filter(v => v.medID === 37);
-
-            //     const totalVials = vialArrayList.reduce((prevsValue, currentValue) => {
-            //         return prevsValue + currentValue.NoOfVials;
-            //     }, 0);
-
-            //     const RevugamStripArrayList = item.NoOfStrips.filter(s => s.medID === 36 || s.medID === 38);
-
-            //     const totalRevugamStrips = RevugamStripArrayList.reduce((prevsValue, currentValue) => {
-            //         return prevsValue + currentValue.NoOfStrips;
-            //     }, 0);
-
-            //     const OncycloStripArrayList = item.NoOfStrips.filter(s => s.medID === 35 || s.medID === 35);
-
-            //     const totalOncycloStrips = OncycloStripArrayList.reduce((prevsValue, currentValue) => {
-            //         return prevsValue + currentValue.NoOfStrips;
-            //     }, 0);
-
-            //     // pap Value
-            //     const thymogamPapArrayList = item.papValues.filter(p => p.medID === 37);
-
-            //     const totalThymogamPap = thymogamPapArrayList.reduce((prevsValue, currentValue) => {
-            //         return prevsValue + currentValue.PapValue;
-            //     }, 0);
-
-            //     const revugamPapArrayList = item.papValues.filter(p => p.medID === 36 || p.medID === 38);
-
-            //     const totalRevugamPap = revugamPapArrayList.reduce((prevsValue, currentValue) => {
-            //         return prevsValue + currentValue.PapValue;
-            //     }, 0);
-
-
-            //     const oncycloPapArrayList = item.papValues.filter(p => p.medID === 35);
-
-            //     const totalOncycloPap = oncycloPapArrayList.reduce((prevsValue, currentValue) => {
-            //         return prevsValue + currentValue.PapValue;
-            //     }, 0);
-
-            //     return {
-            //         "CreatedDate": item.CreatedDate,
-            //         "ZoneName": item.ZoneName,
-            //         "DoctorsID": item.DoctorsID,
-            //         "DoctorsName": item.DoctorsName,
-            //         "Speciality": item.Speciality,
-            //         "HospitalName": item.HospitalName,
-            //         "Indication": getIndicationText(item.Indication),
-            //         "EmpID": item.EmpID,
-            //         "Oncyclo NoOfPatients": item.NoOfPatients[0].medID === 35 ? item.NoOfPatients[0].NoOfPatients : '-NA-',
-            //         "Revugam NoOfPatients": (item.NoOfPatients[0].medID === 36 || item.NoOfPatients[0].medID === 38) ? item.NoOfPatients[0].NoOfPatients : '-NA-',
-            //         "Thymogam NoOfPatients": item.NoOfPatients[0].medID === 37 ? item.NoOfPatients[0].NoOfPatients : '-NA-',
-            //         //"NoOfVialsStrips": `Oncyclo ${totalOncycloStrips.toString()}, Revugam ${totalRevugamStrips.toString()}, Thymogam ${totalVials.toString()}`,
-            //         //"papValues": `Oncyclo ${totalOncycloPap.toString()}, Revugam ${totalRevugamPap.toString()},  Thymogam ${totalThymogamPap.toString()}`,
-            //         "OncycloStrips": `${totalOncycloStrips.toString()}`,
-            //         "RevugamStrips": `${totalRevugamStrips.toString()}`,
-            //         "ThymogamVials": `${totalVials.toString()}`,
-
-            //         "OncycloPap": `${totalOncycloPap.toString()}`,
-            //         "RevugamPap": `${totalRevugamPap.toString()}`,
-            //         "ThymogamPap": `${totalThymogamPap.toString()}`,
-            //         "EmployeeName": item.EmployeeName
-            //     }
-            // });
-
-
-            // new requirement 
-            const newData = originalData.current
-            //console.log(newData);
+            const newData = originalData.current;
 
             const newFilteredData = newData.map((item) => {
-
-                //console.log(item.OrderDate[0]);
 
                 return {
                     "ZoneName": item.ZoneName,
@@ -313,10 +236,11 @@ const AdminDashboard = () => {
             });
 
 
+            newFilteredData.sort(function (a, b) {
+                return new Date(b.OrderDate) - new Date(a.OrderDate);
+            });
 
-            console.log(newFilteredData);
-
-            const worksheet = xlsx.utils.json_to_sheet(newFilteredData);
+            const worksheet = xlsx.utils.json_to_sheet(newFilteredData.reverse());
             const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
             const excelBuffer = xlsx.write(workbook, {
                 bookType: 'xlsx',
@@ -661,6 +585,8 @@ const AdminDashboard = () => {
         // }
 
         axios.post(url, paramObj).then(data => {
+
+            originalData.current = [...data.data[0]];
 
             const result = data.data[0].map((item) => {
                 return {
