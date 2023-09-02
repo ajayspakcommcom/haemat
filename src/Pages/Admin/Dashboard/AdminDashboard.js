@@ -70,7 +70,11 @@ const AdminDashboard = () => {
             }
 
             for (const item of groupedDataByKeyList) {
+
+
                 for (const key in item) {
+
+                    console.log(item[key]);
 
                     let isTdr = false;
 

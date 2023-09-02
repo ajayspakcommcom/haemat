@@ -223,14 +223,20 @@ const Product = () => {
             endPoints.push(itemObj);
         });
 
-
-
+        const entryDate = endPoints[0].orderDate.getDate();
 
         endPoints.map((item) => {
-            item.orderDate = new Date(item.orderDate.setDate(item.orderDate.getDate() + 1));
+            item.orderDate = new Date(item.orderDate.setDate(entryDate + 1));
             item.orderDate = new Date(item.orderDate);
             return item;
         });
+
+
+        // endPoints.map((item) => {
+        //     item.orderDate = new Date(item.orderDate.setDate(item.orderDate.getDate() + 1));
+        //     item.orderDate = new Date(item.orderDate);
+        //     return item;
+        // });
 
         console.log(endPoints);
 
