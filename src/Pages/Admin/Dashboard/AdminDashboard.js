@@ -74,7 +74,7 @@ const AdminDashboard = () => {
 
                 for (const key in item) {
 
-                    console.log(item[key]);
+                    //console.log(item[key]);
 
                     let isTdr = false;
 
@@ -84,7 +84,7 @@ const AdminDashboard = () => {
                         let thymogamMed = item[key].find(item => item.medID === 37);
 
                         if (oncycloMed && revugamMed && thymogamMed) {
-                            if ((parseInt(oncycloMed?.NoOfStrips) > 0) && (parseInt(revugamMed?.NoOfStrips)) && (parseInt(thymogamMed?.NoOfVials))) {
+                            if ((parseInt(oncycloMed?.NoOfStrips) >= 0) && (parseInt(revugamMed?.NoOfStrips) >= 0) && (parseInt(thymogamMed?.NoOfVials) >= 0)) {
                                 isTdr = true;
                             }
                         }
@@ -623,9 +623,14 @@ const AdminDashboard = () => {
             const groupedDataByKeyList = [];
             const tdrData = [];
 
+            console.log(groupedData);
+
             for (const key in groupedData) {
-                groupedDataByKeyList.push(groupByKey(groupedData[key], 'CreatedDate'));
+                //groupedDataByKeyList.push(groupByKey(groupedData[key], 'CreatedDate'));
+                groupedDataByKeyList.push(groupByKey(groupedData[key], 'DoctorsName'));
             }
+
+            console.log(groupedDataByKeyList);
 
             for (const item of groupedDataByKeyList) {
                 for (const key in item) {
@@ -638,7 +643,7 @@ const AdminDashboard = () => {
                         let thymogamMed = item[key].find(item => item.medID === 37);
 
                         if (oncycloMed && revugamMed && thymogamMed) {
-                            if ((parseInt(oncycloMed?.NoOfStrips) > 0) && (parseInt(revugamMed?.NoOfStrips)) && (parseInt(thymogamMed?.NoOfVials))) {
+                            if ((parseInt(oncycloMed?.NoOfStrips) >= 0) && (parseInt(revugamMed?.NoOfStrips) >= 0) && (parseInt(thymogamMed?.NoOfVials)) >= 0) {
                                 isTdr = true;
                             }
                         }
@@ -791,6 +796,8 @@ const AdminDashboard = () => {
                 for (const key in item) {
 
                     let isTdr = false;
+
+                    //console.log(item[key]);
 
                     if (item[key].length === 3) {
                         let oncycloMed = item[key].find(item => item.medID === 35);
