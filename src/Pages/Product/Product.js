@@ -18,6 +18,7 @@ import Thankyou from '../Thankyou.js/Thankyou';
 import configData from '../../Config/Config.json';
 import { InputNumber } from 'primereact/inputnumber';
 import Loader from '../../Component/Loader/Loader';
+import { v4 as uuid } from 'uuid';
 
 
 
@@ -28,6 +29,8 @@ const Product = () => {
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
     const [isThankyouPageVisible, setIsThankyouPageVisible] = useState(false);
     const [isLoaderVisible, setIsLoaderVisible] = useState(true);
+
+    const entry_id = uuid();
 
 
     const params = useParams();
@@ -218,7 +221,8 @@ const Product = () => {
                 NoOfStrips: +item.key !== 37 ? +item.name : null,
                 NoOfPatients: +noOfPatient,
                 papValue: +papVal,
-                indication: paramData.actionName
+                indication: paramData.actionName,
+                EntryID: entry_id
             };
             endPoints.push(itemObj);
         });
@@ -232,16 +236,10 @@ const Product = () => {
         });
 
 
-        // endPoints.map((item) => {
-        //     item.orderDate = new Date(item.orderDate.setDate(item.orderDate.getDate() + 1));
-        //     item.orderDate = new Date(item.orderDate);
-        //     return item;
-        // });
-
-        console.log(endPoints);
-
         setIsBtnDisabled(true);
         setIsLoaderVisible(true);
+
+        console.log(endPoints);
 
         Promise.all(endPoints.map((endpoint) => axios.post(`${configData.SERVER_URL}/save-details/`, endpoint))).then(
             axios.spread((...allData) => {
