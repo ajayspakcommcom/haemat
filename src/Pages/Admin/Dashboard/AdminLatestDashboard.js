@@ -19,6 +19,9 @@ const AdminLatestDashboard = () => {
 
     const [isLoaderVisible, setIsLoaderVisible] = useState(true);
 
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+
 
     const url = `${configData.SERVER_URL}/admin-report1`;
     const tdrUrl = `${configData.SERVER_URL}/admin-report-tdr`;
@@ -39,9 +42,24 @@ const AdminLatestDashboard = () => {
 
         loadSummaryData();
         loadTdrData();
-
-
     }, []);
+
+    const onFilterHandler = async (e) => {
+        e.preventDefault();
+
+        const empId = JSON.parse(localStorage.getItem('userData'))?.empId;
+
+        const paramObj = {
+            empId: empId,
+            startDate: startDate,
+            endDate: endDate
+        };
+
+        const resp = await axios.post(url, paramObj);
+        const respData = resp.data;
+        console.log(respData);
+
+    }
 
     const saveAsExcelFile = (buffer, fileName) => {
         import('file-saver').then((module) => {
@@ -144,8 +162,6 @@ const AdminLatestDashboard = () => {
     };
 
     const tdrDateBodyTamplate = (rowData) => {
-        console.clear();
-        console.log(rowData);
         return (
             <>
                 {rowData && new Date(rowData.Orderdate).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}
@@ -260,6 +276,14 @@ const AdminLatestDashboard = () => {
         <>
 
             <div className="card p-3">
+
+                <div className='flex gap-3 mb-3'>
+                    <Calendar value={startDate} onChange={(e) => setStartDate(e.value)} placeholder='From' />
+                    <Calendar value={endDate} onChange={(e) => setEndDate(e.value)} placeholder='To' />
+                    <Button label="Filter" onClick={onFilterHandler} />
+                    {/* <Button label="Reset" onClick={onResetHandler} /> */}
+                </div>
+
                 <DataTable ref={dt} value={summaryData} paginator rows={5} header={header} rowsPerPageOptions={[5, 10, 25, 50]} emptyMessage="No Data found." showGridlines>
                     <Column field="CreatedDate" header="Date" body={dateBodyTamplate} />
                     <Column field="Zonename" header="Zone" />
