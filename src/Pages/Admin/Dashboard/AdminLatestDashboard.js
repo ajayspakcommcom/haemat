@@ -87,6 +87,8 @@ const AdminLatestDashboard = () => {
 
             const newData = [...summaryData];
 
+            console.log(newData);
+
             const newFilteredData = newData.map((item) => {
 
                 return {
@@ -99,15 +101,15 @@ const AdminLatestDashboard = () => {
                     "Indication": item.Indication ? getIndicationText(item.Indication) : 0,
 
                     "Thymogam NoOfPatients": item.Thymogam_NoOfPatients ? parseInt(item.Thymogam_NoOfPatients) : 0,
-                    "Revugam NoOfPatients": item.Revugam_NoOfPatients ? parseInt(item.Revugam_NoOfPatients) : 0,
+                    "Revugam NoOfPatients": (item.Revugam_NoOfPatients || item['Revugam-25_NoOfPatients']) ? parseInt((item.Revugam_NoOfPatients || item['Revugam-25_NoOfPatients'])) : 0,
                     "Oncyclo NoOfPatients": item.Oncyclo_NoOfPatients ? parseInt(item.Oncyclo_NoOfPatients) : 0,
 
                     "ThymogamVials": item.Thymogam_strips ? parseInt(item.Thymogam_strips) : 0,
-                    "RevugamStrips": item['Revugam-25_strips'] ? parseInt(item['Revugam-25_strips']) : 0,
+                    "RevugamStrips": (item.Revugam_strips || item['Revugam-25_strips']) ? parseInt((item.Revugam_strips || item['Revugam-25_strips'])) : 0,
                     "OncycloStrips": item.Oncyclo_strips ? parseInt(item.Oncyclo_strips) : 0,
 
                     "ThymogamPap": item.Thymogam_PapValue ? parseInt(item.Thymogam_PapValue) : 0,
-                    "RevugamPap": item.Revugam_PapValue ? parseInt(item.Revugam_PapValue) : 0,
+                    "RevugamPap": (item.Revugam_PapValue || item['Revugam-25_PapValue']) ? parseInt((item.Revugam_PapValue || item['Revugam-25_PapValue'])) : 0,
                     "OncycloPap": item.Oncyclo_PapValue ? parseInt(item.Oncyclo_PapValue) : 0,
                 }
             });
