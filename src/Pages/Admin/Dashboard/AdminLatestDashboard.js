@@ -26,6 +26,9 @@ const AdminLatestDashboard = () => {
     const url = `${configData.SERVER_URL}/admin-report1`;
     const tdrUrl = `${configData.SERVER_URL}/admin-report-tdr`;
 
+    const filterUrl = `${configData.SERVER_URL}/admin-report1-filter`;
+    const tdrFilterUrl = `${configData.SERVER_URL}/admin-report-tdr1-filter`;
+
     useEffect(() => {
 
         const loadSummaryData = async () => {
@@ -55,10 +58,14 @@ const AdminLatestDashboard = () => {
             endDate: endDate
         };
 
-        const resp = await axios.post(url, paramObj);
-        const respData = resp.data;
-        console.log(respData);
+        const summaryResp = await axios.post(filterUrl, paramObj);
+        setSummaryData(summaryResp.data[0]);
 
+        console.log(paramObj);
+
+        const tdrResp = await axios.post(tdrFilterUrl, paramObj);
+        console.log(tdrResp);
+        setTdrData(tdrResp.data[0]);
     }
 
     const saveAsExcelFile = (buffer, fileName) => {
