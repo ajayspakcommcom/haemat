@@ -104,8 +104,21 @@ const AdminLatestDashboard = () => {
     };
 
     const exportExcelTdr = () => {
+
+
+        const exportTdrData = tdrData;
+
+        exportTdrData.map((item) => {
+            delete item.EmpID;
+            delete item.DoctorsID;
+            delete item.IsTDR;
+            delete item.EntryCount;
+            item.Orderdate = item.Orderdate ? new Date(item.Orderdate).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) : item.Orderdate;
+            return item;
+        });
+
         import('xlsx').then((xlsx) => {
-            const worksheet = xlsx.utils.json_to_sheet(tdrData);
+            const worksheet = xlsx.utils.json_to_sheet(exportTdrData);
             const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
             const excelBuffer = xlsx.write(workbook, {
                 bookType: 'xlsx',
@@ -126,6 +139,16 @@ const AdminLatestDashboard = () => {
         return (
             <>
                 {rowData && new Date(rowData.OrderDate).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+            </>
+        );
+    };
+
+    const tdrDateBodyTamplate = (rowData) => {
+        console.clear();
+        console.log(rowData);
+        return (
+            <>
+                {rowData && new Date(rowData.Orderdate).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}
             </>
         );
     };
@@ -255,7 +278,7 @@ const AdminLatestDashboard = () => {
 
             <div className="card p-3">
                 <DataTable value={tdrData} paginator rows={5} header={tdrHeader} rowsPerPageOptions={[5, 10, 25, 50]} emptyMessage="No Data found." showGridlines>
-                    <Column field="Orderdate" header="Date" />
+                    <Column field="Orderdate" header="Date" body={tdrDateBodyTamplate} />
                     <Column field="DoctorsName" header="Doctor Name" />
                     <Column field="EmployeeName" header="EmployeeName" />
                     <Column field="NoofPatients" header="No Of Patients" />
