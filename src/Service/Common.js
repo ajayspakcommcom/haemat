@@ -61,7 +61,10 @@ export const groupByKey = (array, key) => {
 // };
 
 export const getIndicationText = (itemObj) => {
-    if (itemObj === 'aa') {
+    if (itemObj === 'tdr') {
+        return "Tdr";
+    }
+    else if (itemObj === 'aa') {
         return 'Aplastic Anaemia';
     } else if (itemObj === 'itp') {
         return 'Immune Thrombocytopenic Purpura';

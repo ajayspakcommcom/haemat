@@ -35,6 +35,7 @@ const AdminLatestDashboard = () => {
             const resp = await axios.get(url);
             const respData = resp.data[0];
             setSummaryData(respData);
+            console.log(respData);
         };
 
         const loadTdrData = async () => {
@@ -61,7 +62,7 @@ const AdminLatestDashboard = () => {
         const summaryResp = await axios.post(filterUrl, paramObj);
         setSummaryData(summaryResp.data[0]);
 
-        console.log(paramObj);
+        console.log(summaryResp.data[0])
 
         const tdrResp = await axios.post(tdrFilterUrl, paramObj);
         console.log(tdrResp);
@@ -187,9 +188,11 @@ const AdminLatestDashboard = () => {
     };
 
     const indicationBodyTamplate = (rowData) => {
+        console.log(rowData);
         return (
             <>
-                {rowData.Indication ? getIndicationText(rowData.Indication) : '-NA-'}
+                {/* {rowData.Indication ? getIndicationText(rowData.Indication) : '-NA-'} */}
+                {getIndicationText(rowData.Indication)}
             </>
         );
     };
@@ -209,7 +212,7 @@ const AdminLatestDashboard = () => {
                     <tbody>
                         <tr>
                             <td>{rowData.Oncyclo_NoOfPatients}</td>
-                            <td>{rowData['Revugam-25_NoOfPatients']}</td>
+                            <td>{rowData['Revugam-25_NoOfPatients'] || rowData['Revugam_NoOfPatients']}</td>
                             <td>{rowData['Thymogam_NoOfPatients']}</td>
                         </tr>
                     </tbody>
@@ -232,7 +235,7 @@ const AdminLatestDashboard = () => {
                     <tbody>
                         <tr>
                             <td>{rowData.Oncyclo_strips}</td>
-                            <td>{rowData['Revugam-25_strips']}</td>
+                            <td>{rowData['Revugam-25_strips'] || rowData['Revugam_strips']}</td>
                             <td>{rowData['Thymogam_strips']}</td>
                         </tr>
                     </tbody>
