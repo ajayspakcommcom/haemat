@@ -13,14 +13,6 @@ import Product from './Pages/Product/Product';
 
 function App() {
 
-  const location = useLocation();
-
-  useEffect(() => {
-    if (window.location.protocol === 'https:') {
-      window.location.href = `http:${window.location.href.substring(window.location.protocol.length)}`;
-    }
-  }, [location]);
-
   const ctx = useContext(LoginContext);
   const LoginLayoutPage = !ctx.isLogin ? Login : Layout;
 
