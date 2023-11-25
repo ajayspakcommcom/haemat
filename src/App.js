@@ -14,7 +14,23 @@ import Product from './Pages/Product/Product';
 function App() {
 
   const ctx = useContext(LoginContext);
-  const LoginLayoutPage = !ctx.isLogin ? Login : Layout;
+
+
+
+
+
+  //let LoginLayoutPage = !ctx.isLogin ? Login : Layout;
+
+  let LoginLayoutPage;
+
+  if (localStorage.getItem('userData')) {
+    LoginLayoutPage = Layout;
+  } else {
+    LoginLayoutPage = Login;
+  }
+
+
+
 
 
 
