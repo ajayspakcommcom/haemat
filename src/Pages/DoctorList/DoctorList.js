@@ -21,7 +21,7 @@ const DoctorList = () => {
     const [isLoaderVisible, setIsLoaderVisible] = useState(true);
 
     const [doctorList, setDoctorList] = useState(null);
-    const url = `${configData.SERVER_URL}/getmydoctorlist/${loginContext.userData.empId ? loginContext.userData.empId : getEmpId()}`;
+    const url = `${configData.SERVER_URL}//home/kamdoclist/${loginContext.userData.EmpID ? loginContext.userData.EmpID : getEmpId()}`;
 
     const navigate = useNavigate();
 
@@ -66,9 +66,11 @@ const DoctorList = () => {
     const header = renderHeader();
 
     useEffect(() => {
-        axios.get(url).then((resp) => {
+        axios.post(url).then((resp) => {
 
-            const respData = resp.data.map((item) => {
+            console.log(resp);
+
+            const respData = resp.data.Data.map((item) => {
                 return {
                     customerCode: item.customerCode ? item.customerCode : '-NA-',
                     doctorName: item.doctorName ? item.doctorName : '-NA-',
@@ -80,12 +82,9 @@ const DoctorList = () => {
                 }
             });
 
-            // console.log(respData);
-            // console.log('====================================');
-            // console.log(resp.data);
-
             setDoctorList(respData);
             setIsLoaderVisible(false);
+
         }).catch((err) => {
             console.log(err)
         });

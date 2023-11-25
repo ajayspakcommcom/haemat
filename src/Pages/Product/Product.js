@@ -36,7 +36,10 @@ const Product = () => {
     const params = useParams();
 
     const [brands, setBrands] = useState([]);
-    const url = `${configData.SERVER_URL}/getdoctordetails/${params.id}`;
+
+    //const url = `${configData.SERVER_URL}/getdoctordetails/${params.id}`;
+
+    const url = `${configData.SERVER_URL}/home/kamdocdetail/${params.id}`;
 
     const [paramData, setParamData] = useState(params);
     const [drData, setDrData] = useState({});
@@ -120,23 +123,38 @@ const Product = () => {
             return [...papInputField];
         });
 
-
-
     };
+
 
 
     useEffect(() => {
 
-        axios.get(url).then((resp) => {
+        axios.post(url).then(async (resp) => {
 
-            setDrData(resp.data[0][0]);
-            console.log(resp.data[0][0]);
+            console.log(resp);
+
+            setDrData(resp.data.Data);
 
             //let imgList = [{ name: "oncyclo", url: oncyclo }, { name: "revugam", url: revugam }, { name: "thymogam", url: thymogam }];
             let imgList = [{ name: "oncyclo", url: oncyclo }, { name: "revugam", url: revugam }, { name: "revugam25", url: revugam25 }, { name: "thymogam", url: thymogam }];
-            let brandList = resp.data[1].map((item) => {
+
+
+
+            async function fetchDataAsync() {
+                return new Promise((resolve, reject) => {
+                    axios.post('http://160.153.155.222/plesk-site-preview/api.haemat.com/api/home/kammedicinelist').then((data) => resolve(data.data.Data));
+                });
+            }
+
+            let brandListData = await fetchDataAsync();
+
+            let brandList = brandListData.map((item) => {
                 return { key: item.medID };
             });
+
+            // brandList = resp.data[1].map((item) => {
+            //     return { key: item.medID };
+            // });
 
             console.log(imgList);
             console.log(brandList);
@@ -147,7 +165,6 @@ const Product = () => {
             //     brandList = brandList.filter(item => item.key === 36);
             // }
 
-            //console.log(paramData.actionName)
 
             if (paramData.actionName === 'itp') {
                 imgList = imgList.filter(item => item.name === 'revugam' || item.name === 'revugam25');
@@ -160,15 +177,10 @@ const Product = () => {
                 imgList = imgList.filter(item => item.name !== 'revugam25');
                 brandList = brandList.filter(item => item.key !== 38);
 
-                // for tdr
                 setInputFields([{ "name": "", "key": 37, "placeholder": "Total Vials for Thymogam" }, { "name": "", "key": 36, "placeholder": "Total Strips for Revugam" }, { "name": "", "key": 35, "placeholder": "Total Strips for Oncyclo" }]);
                 papSetInputFields([{ "name": "", "key": 37, "placeholder": "Vials for Pap Thymogam" }, { "name": "", "key": 36, "placeholder": "Strips for Pap Revugam" }, { "name": "", "key": 35, "placeholder": "Strips for Pap Oncyclo" }]);
-                // for tdr
 
             }
-
-            // console.log(imgList);
-            // console.log(brandList);
 
             setBrandImgList(imgList.reverse());
             setBrands(brandList.reverse());

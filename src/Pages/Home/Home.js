@@ -6,9 +6,12 @@ import AdminLatestDashboard from '../Admin/Dashboard/AdminLatestDashboard';
 
 
 const Home = (props) => {
+
     const ctx = useContext(LoginContext);
-    console.log(ctx.userData.post);
-    const designation = (ctx.userData.post || '').toLowerCase().trim();
+
+    console.log(ctx.userData.Designation);
+
+    const designation = (ctx.userData.Designation || '').toLowerCase().trim();
 
     if (designation === 'admin' || designation === 'zbm') {
         return (

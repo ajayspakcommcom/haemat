@@ -22,9 +22,9 @@ export const getImage = (path, fileName) => {
 export const getEmpId = () => {
 
     if (localStorage.getItem('userData')) {
-        let empId = JSON.parse(localStorage.getItem('userData')).empId;
-        if (empId) {
-            return empId
+        let EmpID = JSON.parse(localStorage.getItem('userData')).EmpID;
+        if (EmpID) {
+            return EmpID
         } else {
             return null;
         }
@@ -34,7 +34,7 @@ export const getEmpId = () => {
 export const getEmpName = () => {
 
     if (localStorage.getItem('userData')) {
-        let name = JSON.parse(localStorage.getItem('userData')).name;
+        let name = JSON.parse(localStorage.getItem('userData')).firstName;
         if (name) {
             return name
         } else {

@@ -22,11 +22,14 @@ const LoginContextProvider = (props) => {
     }, [isLoggedIn]);
 
     const onLoginHandler = (obj) => {
-        let logObj = { ...obj };
 
-        axios.post(`${configData.SERVER_URL}/login`, logObj).then((resp) => {
-            if (resp.data.success) {
-                localStorage.setItem("userData", JSON.stringify(resp.data.userDetiails));
+        let logObj = { Username: obj.email, Password: obj.password };
+
+
+        axios.post(`${configData.SERVER_URL}/auth/loginsp`, logObj).then((resp) => {
+            console.log(resp);
+            if (!resp.data.HasError) {
+                localStorage.setItem("userData", JSON.stringify(resp.data.Data));
                 setUserData(getUserData());
                 setIsLoggedIn(true);
             } else {
