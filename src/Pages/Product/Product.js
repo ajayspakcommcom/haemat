@@ -228,9 +228,9 @@ const Product = () => {
                 doctorId: +drId,
                 empID: +empId,
                 medId: +item.key,
-                orderDate: date, //? date.toLocaleDateString() : date,
+                orderDate: date,
                 NoOfVials: +item.key === 37 ? +item.name : -1,
-                NoOfStrips: +item.key !== 37 ? +item.name : null,
+                NoOfStrips: +item.key !== 37 ? +item.name : 0,
                 NoOfPatients: +noOfPatient,
                 papValue: +papVal,
                 indication: paramData.actionName,
@@ -242,18 +242,17 @@ const Product = () => {
         const entryDate = endPoints[0].orderDate.getDate();
 
         endPoints.map((item) => {
-            item.orderDate = new Date(item.orderDate.setDate(entryDate + 1));
-            item.orderDate = new Date(item.orderDate);
+            item.orderDate = new Date(item.orderDate.setDate(entryDate)).toISOString().split('T')[0];
+            item.orderDate = new Date(item.orderDate).toISOString().split('T')[0];
             return item;
         });
 
+        console.log(endPoints);
 
         setIsBtnDisabled(true);
         setIsLoaderVisible(true);
 
-        console.log(endPoints);
-
-        Promise.all(endPoints.map((endpoint) => axios.post(`${configData.SERVER_URL}/save-details/`, endpoint))).then(
+        Promise.all(endPoints.map((endpoint) => axios.post(`${configData.SERVER_URL}/home/KamAddOrder`, endpoint))).then(
             axios.spread((...allData) => {
                 console.log({ allData });
                 setIsBtnDisabled(false);
