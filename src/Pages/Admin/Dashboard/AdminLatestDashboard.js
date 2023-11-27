@@ -204,7 +204,7 @@ const AdminLatestDashboard = () => {
 
     const patientBodyTemplate = (rowData) => {
 
-
+        console.log(rowData);
 
         return (
             <>
