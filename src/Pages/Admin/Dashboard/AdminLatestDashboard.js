@@ -6,7 +6,7 @@ import { Button } from 'primereact/button';
 import Loader from '../../../Component/Loader/Loader';
 import axios from "axios";
 import configData from '../../../Config/Config.json';
-import { groupByKey, getIndicationText } from '../../../Service/Common';
+import { groupByKey, getIndicationText, formatDate } from '../../../Service/Common';
 import DoctorDetail from './DoctorDetail';
 import { Calendar } from 'primereact/calendar';
 
@@ -57,11 +57,17 @@ const AdminLatestDashboard = () => {
 
         const paramObj = {
             empID: empId,
-            Startdate: new Date(startDate).toISOString().split('T')[0],
-            Enddate: new Date(endDate).toISOString().split('T')[0]
+            // Startdate: new Date(startDate).toISOString().split('T')[0],
+            // Enddate: new Date(endDate).toISOString().split('T')[0],
+
+            Startdate: formatDate(startDate),
+            Enddate: formatDate(endDate),
         };
 
+        console.log(paramObj);
+
         const summaryResp = await axios.post(filterUrl, paramObj);
+        console.log(summaryData);
         setSummaryData(summaryResp.data.Data);
 
         const tdrResp = await axios.post(tdrFilterUrl, paramObj);

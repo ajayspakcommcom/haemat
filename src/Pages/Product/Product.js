@@ -12,7 +12,7 @@ import oncyclo from '../../Content/img/med/oncyclo.png';
 import revugam from '../../Content/img/med/revugam.png';
 import revugam25 from '../../Content/img/med/revugam-25.png';
 import thymogam from '../../Content/img/med/thymogam.png';
-import { getEmpId } from '../../Service/Common';
+import { formatDate, getEmpId } from '../../Service/Common';
 import LoginContext from '../../Context/Login/LoginContext';
 import Thankyou from '../Thankyou.js/Thankyou';
 import configData from '../../Config/Config.json';
@@ -242,12 +242,11 @@ const Product = () => {
         const entryDate = endPoints[0].orderDate.getDate();
 
         endPoints.map((item) => {
-            item.orderDate = new Date(item.orderDate.setDate(entryDate)).toISOString().split('T')[0];
-            item.orderDate = new Date(item.orderDate).toISOString().split('T')[0];
+            // item.orderDate = new Date(item.orderDate.setDate(entryDate)).toISOString().split('T')[0];
+            // item.orderDate = new Date(item.orderDate).toISOString().split('T')[0];
+            item.orderDate = formatDate(item.orderDate);
             return item;
         });
-
-        console.log(endPoints);
 
         setIsBtnDisabled(true);
         setIsLoaderVisible(true);
