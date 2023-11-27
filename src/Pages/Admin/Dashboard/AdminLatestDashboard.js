@@ -23,19 +23,20 @@ const AdminLatestDashboard = () => {
     const [endDate, setEndDate] = useState(null);
 
 
-    const url = `${configData.SERVER_URL}/admin-report1`;
+    const url = `${configData.SERVER_URL}/home/KamAdminReport`;
     const tdrUrl = `${configData.SERVER_URL}/admin-report-tdr`;
 
-    const filterUrl = `${configData.SERVER_URL}/admin-report1-filter`;
+    const filterUrl = `${configData.SERVER_URL}/home/KamAdminReport`;
     const tdrFilterUrl = `${configData.SERVER_URL}/admin-report-tdr1-filter`;
 
     useEffect(() => {
 
         const loadSummaryData = async () => {
-            const resp = await axios.get(url);
-            const respData = resp.data[0];
-            setSummaryData(respData);
+            const resp = await axios.post(url);
+            //const respData = resp.data[0];
+            const respData = resp.data.Data;
             console.log(respData);
+            setSummaryData(respData);
         };
 
         const loadTdrData = async () => {
@@ -93,7 +94,7 @@ const AdminLatestDashboard = () => {
             const newFilteredData = newData.map((item) => {
 
                 return {
-                    "ZoneName": item.Zonename,
+                    "ZoneName": item.ZoneName,
                     "EmployeeName": item.EmployeeName,
                     "OrderDate": new Date(item.OrderDate).toLocaleDateString('en-GB'),
                     "DoctorsName": item.DoctorsName,
@@ -182,7 +183,7 @@ const AdminLatestDashboard = () => {
     const cityBodyTamplate = (rowData) => {
         return (
             <>
-                <span>{rowData.hospitalCity && rowData.HospitalCity.length > 0 ? rowData.HospitalCity : '-NA-'}</span>
+                <span>{rowData.hospitalCity && rowData.hospitalCity.length > 0 ? rowData.hospitalCity : '-NA-'}</span>
             </>
         );
     };
@@ -199,6 +200,9 @@ const AdminLatestDashboard = () => {
 
 
     const patientBodyTemplate = (rowData) => {
+
+        console.log(rowData);
+
         return (
             <>
                 <table className='table'>
@@ -210,11 +214,19 @@ const AdminLatestDashboard = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+
+                        {/* <tr>
                             <td>{rowData.Oncyclo_NoOfPatients}</td>
                             <td>{rowData['Revugam-25_NoOfPatients'] || rowData['Revugam_NoOfPatients']}</td>
                             <td>{rowData['Thymogam_NoOfPatients']}</td>
+                        </tr> */}
+
+                        <tr>
+                            <td>{rowData.medID === 35 ? rowData.NoOfPatients : 0}</td>
+                            <td>{rowData.medID === 36 || rowData.medID === 38 ? rowData.NoOfPatients : 0}</td>
+                            <td>{rowData.medID === 37 ? rowData.NoOfPatients : 0}</td>
                         </tr>
+
                     </tbody>
                 </table>
             </>
@@ -233,11 +245,18 @@ const AdminLatestDashboard = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        {/* <tr>
                             <td>{rowData.Oncyclo_strips}</td>
                             <td>{rowData['Revugam-25_strips'] || rowData['Revugam_strips']}</td>
                             <td>{rowData['Thymogam_strips']}</td>
+                        </tr> */}
+
+                        <tr>
+                            <td>{rowData.medID === 35 ? +rowData.strips : 0}</td>
+                            <td>{rowData.medID === 36 || rowData.medID === 38 ? +rowData.strips : 0}</td>
+                            <td>{rowData.medID === 37 ? +rowData.NoOfVials : 0}</td>
                         </tr>
+
                     </tbody>
                 </table>
             </>
@@ -257,11 +276,18 @@ const AdminLatestDashboard = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            {/* <tr>
                                 <td>{rowData.Oncyclo_PapValue}</td>
                                 <td>{rowData['Revugam-25_PapValue']}</td>
                                 <td>{rowData['Thymogam_PapValue']}</td>
+                            </tr> */}
+
+                            <tr>
+                                <td>{rowData.medID === 35 ? +rowData.PapValue : 0}</td>
+                                <td>{rowData.medID === 36 || rowData.medID === 38 ? +rowData.PapValue : 0}</td>
+                                <td>{rowData.medID === 37 ? +rowData.PapValue : 0}</td>
                             </tr>
+
                         </tbody>
                     </table>
                 </>
