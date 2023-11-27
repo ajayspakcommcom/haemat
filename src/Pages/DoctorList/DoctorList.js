@@ -68,8 +68,6 @@ const DoctorList = () => {
     useEffect(() => {
         axios.post(url).then((resp) => {
 
-            console.log(resp);
-
             const respData = resp.data.Data.map((item) => {
                 return {
                     customerCode: item.customerCode ? item.customerCode : '-NA-',

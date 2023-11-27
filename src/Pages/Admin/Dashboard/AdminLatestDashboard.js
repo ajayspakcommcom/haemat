@@ -24,10 +24,10 @@ const AdminLatestDashboard = () => {
 
 
     const url = `${configData.SERVER_URL}/home/KamAdminReport`;
-    const tdrUrl = `${configData.SERVER_URL}/admin-report-tdr`;
+    const tdrUrl = `${configData.SERVER_URL}/home/KamMedicineTDR`;
 
     const filterUrl = `${configData.SERVER_URL}/home/KamAdminReport`;
-    const tdrFilterUrl = `${configData.SERVER_URL}/admin-report-tdr1-filter`;
+    const tdrFilterUrl = `${configData.SERVER_URL}/home/KamMedicineTDR`;
 
     useEffect(() => {
 
@@ -35,13 +35,14 @@ const AdminLatestDashboard = () => {
             const resp = await axios.post(url);
             //const respData = resp.data[0];
             const respData = resp.data.Data;
-            console.log(respData);
             setSummaryData(respData);
+            console.log(respData);
         };
 
         const loadTdrData = async () => {
-            const resp = await axios.get(tdrUrl);
-            const respData = resp.data[0];
+            const resp = await axios.post(tdrUrl);
+            console.log(resp.data.Data);
+            const respData = resp.data.Data;
             setTdrData(respData);
         };
 
@@ -52,22 +53,19 @@ const AdminLatestDashboard = () => {
     const onFilterHandler = async (e) => {
         e.preventDefault();
 
-        const empId = JSON.parse(localStorage.getItem('userData'))?.empId;
+        const empId = JSON.parse(localStorage.getItem('userData'))?.EmpID;
 
         const paramObj = {
             empId: empId,
-            startDate: startDate,
-            endDate: endDate
+            Startdate: new Date(startDate).toISOString().split('T')[0],
+            Enddate: new Date(endDate).toISOString().split('T')[0]
         };
 
         const summaryResp = await axios.post(filterUrl, paramObj);
-        setSummaryData(summaryResp.data[0]);
-
-        console.log(summaryResp.data[0])
+        setSummaryData(summaryResp.data.Data);
 
         const tdrResp = await axios.post(tdrFilterUrl, paramObj);
-        console.log(tdrResp);
-        setTdrData(tdrResp.data[0]);
+        setTdrData(tdrResp.data.Data);
     }
 
     const saveAsExcelFile = (buffer, fileName) => {
@@ -189,7 +187,6 @@ const AdminLatestDashboard = () => {
     };
 
     const indicationBodyTamplate = (rowData) => {
-        console.log(rowData);
         return (
             <>
                 {/* {rowData.Indication ? getIndicationText(rowData.Indication) : '-NA-'} */}
@@ -201,7 +198,7 @@ const AdminLatestDashboard = () => {
 
     const patientBodyTemplate = (rowData) => {
 
-        console.log(rowData);
+
 
         return (
             <>
