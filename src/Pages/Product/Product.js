@@ -143,7 +143,7 @@ const Product = () => {
             async function fetchDataAsync() {
                 return new Promise((resolve, reject) => {
                     //axios.post('http://160.153.155.222/plesk-site-preview/api.haemat.com/api/home/kammedicinelist').then((data) => resolve(data.data.Data));
-                    axios.post(`${configData.SERVER_URL}/api/home/kammedicinelist`).then((data) => resolve(data.data.Data));
+                    axios.post(`${configData.SERVER_URL}/home/kammedicinelist`).then((data) => resolve(data.data.Data));
                 });
             }
 
