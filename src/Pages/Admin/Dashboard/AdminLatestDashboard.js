@@ -56,7 +56,7 @@ const AdminLatestDashboard = () => {
         const empId = JSON.parse(localStorage.getItem('userData'))?.EmpID;
 
         const paramObj = {
-            empId: empId,
+            empID: empId,
             Startdate: new Date(startDate).toISOString().split('T')[0],
             Enddate: new Date(endDate).toISOString().split('T')[0]
         };
