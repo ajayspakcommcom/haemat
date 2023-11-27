@@ -100,17 +100,17 @@ const AdminLatestDashboard = () => {
                     "HospitalName": item.HospitalName,
                     "Indication": item.Indication ? getIndicationText(item.Indication) : 0,
 
-                    "Thymogam NoOfPatients": item.Thymogam_NoOfPatients ? parseInt(item.Thymogam_NoOfPatients) : 0,
-                    "Revugam NoOfPatients": (item.Revugam_NoOfPatients || item['Revugam-25_NoOfPatients']) ? parseInt((item.Revugam_NoOfPatients || item['Revugam-25_NoOfPatients'])) : 0,
-                    "Oncyclo NoOfPatients": item.Oncyclo_NoOfPatients ? parseInt(item.Oncyclo_NoOfPatients) : 0,
+                    "Thymogam NoOfPatients": item.medID === 37 ? parseInt(item.NoOfPatients) : 0,
+                    "Revugam NoOfPatients": (item.medID === 36 || item.medID === 38) ? parseInt(item.NoOfPatients) : 0,
+                    "Oncyclo NoOfPatients": item.medID === 35 ? parseInt(item.NoOfPatients) : 0,
 
-                    "ThymogamVials": item.Thymogam_strips ? parseInt(item.Thymogam_strips) : 0,
-                    "RevugamStrips": (item.Revugam_strips || item['Revugam-25_strips']) ? parseInt((item.Revugam_strips || item['Revugam-25_strips'])) : 0,
-                    "OncycloStrips": item.Oncyclo_strips ? parseInt(item.Oncyclo_strips) : 0,
+                    "ThymogamVials": item.medID === 37 ? parseInt(item.NoOfVials) : 0,
+                    "RevugamStrips": (item.medID === 36 || item.medID === 38) ? parseInt(item.strips) : 0,
+                    "OncycloStrips": item.medID === 35 ? parseInt(item.strips) : 0,
 
-                    "ThymogamPap": item.Thymogam_PapValue ? parseInt(item.Thymogam_PapValue) : 0,
-                    "RevugamPap": (item.Revugam_PapValue || item['Revugam-25_PapValue']) ? parseInt((item.Revugam_PapValue || item['Revugam-25_PapValue'])) : 0,
-                    "OncycloPap": item.Oncyclo_PapValue ? parseInt(item.Oncyclo_PapValue) : 0,
+                    "ThymogamPap": item.medID === 37 ? parseInt(item.PapValue) : 0,
+                    "RevugamPap": (item.medID === 36 || item.medID === 38) ? parseInt(item.PapValue) : 0,
+                    "OncycloPap": item.medID === 35 ? parseInt(item.PapValue) : 0,
                 }
             });
 
