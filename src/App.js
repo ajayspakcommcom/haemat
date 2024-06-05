@@ -8,16 +8,13 @@ import ForgotPassword from './Pages/Login/ForgotPassword';
 import LoginContext from './Context/Login/LoginContext';
 import DoctorList from './Pages/DoctorList/DoctorList';
 import Product from './Pages/Product/Product';
+import UserDashboard from './Pages/Admin/Dashboard/UserDashboard';
 
 
 
 function App() {
 
   const ctx = useContext(LoginContext);
-
-
-
-
 
   //let LoginLayoutPage = !ctx.isLogin ? Login : Layout;
 
@@ -42,6 +39,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path='/doctor-list' element={<DoctorList />} />
           <Route path='/product/:id/:actionName' element={<Product />} />
+          <Route path='/user-dashboard' element={<UserDashboard />} />
         </Route>
       </Routes>
     </BrowserRouter>

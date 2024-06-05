@@ -1,8 +1,8 @@
-svg {
+.svg {
     width: 25px;
     height: 25px;
 }
 
-svg path {
+.svg path {
     stroke: #fff;
 }

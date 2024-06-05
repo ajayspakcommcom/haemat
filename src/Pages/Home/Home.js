@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import DoctorList from '../DoctorList/DoctorList';
 import LoginContext from '../../Context/Login/LoginContext';
-import AdminDashboard from '../Admin/Dashboard/AdminDashboard';
 import AdminLatestDashboard from '../Admin/Dashboard/AdminLatestDashboard';
 
 
