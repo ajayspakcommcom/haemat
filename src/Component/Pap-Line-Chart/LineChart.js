@@ -59,7 +59,7 @@ const LineChart = (props) => {
     return (
         <>
             <div id="chart">
-                <ReactApexChart options={options} series={series} width={'100%'} height={500} />
+                <ReactApexChart options={options} series={series} width={'100%'} height={400} />
             </div>
         </>
     );

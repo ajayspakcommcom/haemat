@@ -79,7 +79,7 @@ const ColumnChart = (props) => {
     return (
         <>
             <div id="chart">
-                <ReactApexChart options={options} series={series} type={'bar'} width={'100%'} height={500} />
+                <ReactApexChart options={options} series={series} type={'bar'} width={'100%'} height={400} />
                 {/* <ReactApexChart options={{ title: { style: {  } } }} series={series} type={'bar'} width={'50%'} height={350} /> */}
             </div>
         </>
