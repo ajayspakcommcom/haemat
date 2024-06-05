@@ -25,7 +25,8 @@ const ColumnChart = (props) => {
                     console.log('config:', config);
                     //console.log(`Clicked on series: ${config.series[series - 1].name}, data point index: ${dataPointIndex}, value: ${config.series[seriesIndex].data[dataPointIndex]}`);
                 }
-            }
+            },
+            background: '#262d47',
         },
         plotOptions: {
             bar: {
@@ -80,7 +81,7 @@ const ColumnChart = (props) => {
         <>
             <div id="chart">
                 <ReactApexChart options={options} series={series} type={'bar'} width={'100%'} height={400} />
-                {/* <ReactApexChart options={{ title: { style: {  } } }} series={series} type={'bar'} width={'50%'} height={350} /> */}
+                {/* <ReactApexChart options={{chart: }} series={series} type={'bar'} width={'50%'} height={350} /> */}
             </div>
         </>
     );

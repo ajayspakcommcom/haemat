@@ -24,7 +24,8 @@ const LineChart = (props) => {
                     console.log('dataPointIndex:', dataPointIndex);
                     console.log('config:', config);
                 }
-            }
+            },
+            background: '#262d47',
         },
         dataLabels: {
             enabled: false

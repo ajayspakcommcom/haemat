@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import './ColumnChart.css';
+import { generateColorArray } from '../../Service/Common';
 
 const ColumnChart = (props) => {
 
@@ -31,8 +32,29 @@ const ColumnChart = (props) => {
                     console.log('config:', config);
                     //console.log(`Clicked on series: ${config.series[series - 1].name}, data point index: ${dataPointIndex}, value: ${config.series[seriesIndex].data[dataPointIndex]}`);
                 }
+            },
+            background: '#262d47',
+            dropShadow: {
+                enabled: true
             }
         },
+        legend: {
+            show: true,
+            position: 'bottom',
+            horizontalAlign: 'center',
+            offsetX: 10,
+            offsetY: -5,
+            labels: {
+                colors: '#fff',  // Change to any color you prefer
+                useSeriesColors: false // Set to false unless you want the legend colors to match the series colors
+            },
+            fontSize: '12px',
+            fontWeight: 400,
+            markers: {
+                //fillColors: ['red', 'blue', 'yellow'] // Optionally change marker colors if needed
+            }
+        },
+
         plotOptions: {
             bar: {
                 horizontal: false,
@@ -51,16 +73,35 @@ const ColumnChart = (props) => {
         title: {
             text: 'Drs Wise Patients And Progress (Monthly)',
             align: 'center',
-            style: { fontWeight: 500, color: '#8c8c8c', fontSize: 12 }
+            style: { fontWeight: 500, color: '#fff', fontSize: 12 },
+            offsetY: 15 // Adds 5 pixels of space above the title
         },
         grid: {
+            xaxis: {
+                lines: {
+                    show: false // This will hide the x-axis lines across the chart
+                }
+            },
+            yaxis: {
+                lines: {
+                    show: false // This will hide the y-axis lines across the chart
+                }
+            },
             row: {
-                colors: ['#f3f3f3', 'transparent'],
-                opacity: 0.5
+                colors: ['transparent', 'transparent'],
+                opacity: 0
             },
         },
         xaxis: {
             categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            labels: {
+                style: {
+                    colors: [...generateColorArray(12, '#fff')],
+                    fontSize: '12px',
+                },
+                offsetX: 0,
+                offsetY: 0,
+            }
         },
         yaxis: {
             title: {
@@ -68,7 +109,14 @@ const ColumnChart = (props) => {
             },
             tickAmount: 10,
             min: 0,
-            max: 100
+            max: 100,
+            labels: {
+                style: {
+                    colors: ['#ffffff'],
+                    fontSize: '12px',
+                },
+                offsetX: 0
+            }
         },
         fill: {
             opacity: 1
@@ -86,7 +134,7 @@ const ColumnChart = (props) => {
         <>
             <div id="chart">
                 <ReactApexChart options={options} series={series} type={'bar'} width={'100%'} height={400} />
-                {/* <ReactApexChart options={{ title: { style: {  } } }} series={series} type={'bar'} width={'50%'} height={350} /> */}
+                {/* <ReactApexChart options={{ chart: { parentHeightOffset: 30 } }} series={series} type={'bar'} width={'50%'} height={350} /> */}
             </div>
         </>
     );

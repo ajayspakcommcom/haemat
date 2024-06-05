@@ -20,7 +20,7 @@
 
 .apexcharts-menu-icon {
     svg {
-        fill: #000 !important;
+        fill: #fff !important;
     }
 }
 
@@ -32,4 +32,13 @@
         cursor: pointer;
         width: 30px;
     }
+}
+
+.user-dashboard-wrapper {
+    background-color: #1b213b;
+}
+
+.apexcharts-toolbar {
+    right: 15px !important;
+    top: 15px !important;
 }

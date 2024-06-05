@@ -30,21 +30,22 @@ const UserDashboard = () => {
 
     return (
         <>
-            <div className='pdf-report'>
-                <img src={process.env.PUBLIC_URL + '/img/pdf.png'} alt="React Logo" onClick={exportPDF} />
-            </div>
-            <div className="p-3">
-                <div className="grid">
-                    <div className="col-6">
-                        <DrPatientProgressColumnChart />
-                    </div>
-                    <div className="col-6">
-                        <LineChart />
+            <div className='user-dashboard-wrapper'>
+                <div className='pdf-report'>
+                    <img src={process.env.PUBLIC_URL + '/img/pdf.png'} alt="React Logo" onClick={exportPDF} />
+                </div>
+                <div className="p-3">
+                    <div className="grid">
+                        <div className="col-6">
+                            <DrPatientProgressColumnChart />
+                        </div>
+                        <div className="col-6">
+                            <LineChart />
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div className="p-3">
+
                 <div className="grid">
                     <div className="col-6">
                         <DrPatientMonthColumnChart />
@@ -53,6 +54,7 @@ const UserDashboard = () => {
                         <PieChart />
                     </div>
                 </div>
+
             </div>
         </>
     )

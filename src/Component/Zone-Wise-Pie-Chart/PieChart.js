@@ -15,7 +15,8 @@ const PieChart = (props) => {
                 click: function (event, chartContext, { seriesIndex, dataPointIndex, config }) {
                     console.log('Events:', event);
                 }
-            }
+            },
+            background: '#262d47',
         },
         labels: ['North Zone', 'South Zone', 'East Zone', 'West Zone'],
         title: {

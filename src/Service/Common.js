@@ -80,6 +80,13 @@ export function formatDate(date) {
     return `${year}-${month}-${day}`;
 }
 
+export function generateColorArray(count, color) {
+    const colors = [];
+    for (let i = 0; i < count; i++) {
+        colors.push(color);
+    }
+    return colors;
+}
 
 
 
