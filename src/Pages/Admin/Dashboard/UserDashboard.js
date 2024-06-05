@@ -12,14 +12,7 @@ import { jsPDF } from 'jspdf';
 const UserDashboard = () => {
 
     const exportPDF = () => {
-        html2canvas(document.body, {
-            scale: 1, // Adjust scaling to improve image quality
-            useCORS: true, // Try to ensure that images hosted on other domains are loaded in the canvas
-            logging: true, // Enable logging for debugging
-            windowHeight: window.outerHeight,
-            windowWidth: window.outerWidth
-        }).then((canvas) => {
-            debugger;
+        html2canvas(document.body).then((canvas) => {
             const imgData = canvas.toDataURL('image/png');
             const pdf = new jsPDF({ orientation: "portrait" });
             const imgProps = pdf.getImageProperties(imgData);
@@ -31,7 +24,7 @@ const UserDashboard = () => {
     }
 
     useEffect(() => {
-        console.log('Ram');
+
     }, []);
 
 
