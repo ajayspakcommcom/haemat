@@ -36,24 +36,23 @@ const UserDashboard = () => {
                 </div>
                 <div className="p-3">
                     <div className="grid">
-                        <div className="col-6">
+                        <div className="col-4">
                             <DrPatientProgressColumnChart />
                         </div>
-                        <div className="col-6">
+                        <div className="col-4">
                             <LineChart />
+                        </div>
+                        <div className="col-4">
+                            <DrPatientMonthColumnChart />
+                        </div>
+                        <div className="col-4">
+                            <PieChart />
                         </div>
                     </div>
                 </div>
 
 
-                <div className="grid">
-                    <div className="col-6">
-                        <DrPatientMonthColumnChart />
-                    </div>
-                    <div className="col-6">
-                        <PieChart />
-                    </div>
-                </div>
+
 
             </div>
         </>
