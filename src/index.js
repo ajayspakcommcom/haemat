@@ -9,6 +9,13 @@ import "primeicons/primeicons.css";
 import 'primeflex/primeflex.css'
 import LoginContextProvider from './Context/Provider/LoginContextProvider';
 import ProductContextProvider from './Context/Provider/ProductContextProvider';
+import { checkUrlAndRunCommand } from './Service/Common';
+
+const rootElem = document.getElementById('root');
+const isDashboard = checkUrlAndRunCommand("http://localhost:3000/user-dashboard", 'user-dashboard');
+
+isDashboard && rootElem.classList.add('root-dashboard');
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

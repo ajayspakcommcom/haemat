@@ -77,7 +77,7 @@ const PieChart = (props) => {
     return (
         <>
             <div id="chart">
-                <ReactApexChart options={options} series={series} type={'pie'} width={'100%'} height={400} />
+                <ReactApexChart options={options} series={series} type={'pie'} width={'100%'} height={418} />
             </div>
         </>
     );
