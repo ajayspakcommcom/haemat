@@ -42,3 +42,22 @@
     right: 15px !important;
     top: 15px !important;
 }
+
+.card {
+    &.dashboard {
+        .p-menubar {
+            background-color: rgba(32, 39, 70, 0.9) !important;
+        }
+    }
+}
+
+.dashboard-footer {
+    background-color: rgba(32, 39, 70, 0.9) !important;
+    padding: 15px 0;
+
+    p {
+        margin: 0 0;
+        line-height: normal;
+        color: #fff;
+    }
+}

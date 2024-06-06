@@ -88,6 +88,15 @@ export function generateColorArray(count, color) {
     return colors;
 }
 
+export function checkUrlAndRunCommand(url, specificUrl) {
+    // Check if the URL contains the string "user-dashboard"
+    if (url.includes(specificUrl)) {
+        return true
+    } else {
+        return false;
+    }
+}
+
 
 
 

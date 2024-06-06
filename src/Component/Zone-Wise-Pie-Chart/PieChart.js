@@ -64,14 +64,20 @@ const PieChart = (props) => {
                     position: 'bottom'
                 }
             }
-        }]
+        }],
+        plotOptions: {
+            pie: {
+                startAngle: 0,
+                offsetX: 0,
+                offsetY: 15,
+            }
+        }
     };
 
     return (
         <>
             <div id="chart">
                 <ReactApexChart options={options} series={series} type={'pie'} width={'100%'} height={400} />
-                {/* <ReactApexChart options={{ legend: {} }} series={series} type={'pie'} width={'100%'} height={400} /> */}
             </div>
         </>
     );
