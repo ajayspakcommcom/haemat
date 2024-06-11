@@ -13,6 +13,7 @@ import configData from '../../../Config/Config.json';
 import { Button } from 'primereact/button';
 import ZonePerformanceByKam from '../../../Component/ZonePerformanceByKam/ZonePerformanceByKam';
 import ZonePerformanceByBrand from '../../../Component/ZonePerformanceByBrand/ZonePerformanceByBrand';
+import BrandWisePieChartComparison from '../../../Component/Brand-Wise-Pie-Chart-Comparison/BrandWisePieChartComparison';
 
 
 
@@ -81,6 +82,21 @@ const UserDashboard = () => {
                     </div>
                     <ZonePerformanceByBrand />
                 </div>
+
+
+                <div className="p-3 pb-4">
+                    {/* <div className='admin-header-wrapper'>
+                        <h1>Brand Product Zone Wise</h1>
+                    </div> */}
+                    <div className="grid">
+                        <div className="col-4">
+                            <BrandWisePieChartComparison />
+                        </div>
+                    </div>
+                </div>
+
+
+
 
                 <div className="p-3 pb-0">
                     <div className="grid">

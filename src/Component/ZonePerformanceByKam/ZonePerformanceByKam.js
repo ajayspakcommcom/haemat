@@ -9,7 +9,7 @@ const ZonePerformanceByKam = (props) => {
                 zoneName="North"
                 performer="Manish"
                 numOfPatients={98}
-                brand="Thymogam"
+                brand="Revugam 25"
                 pap={23}
             />
 
@@ -25,7 +25,7 @@ const ZonePerformanceByKam = (props) => {
                 zoneName="South"
                 performer="Sanjay Dubey"
                 numOfPatients={58}
-                brand="Thymogam"
+                brand="Revugam 50"
                 pap={18}
             />
 
@@ -33,7 +33,7 @@ const ZonePerformanceByKam = (props) => {
                 zoneName="West"
                 performer="Sanjay Dubey"
                 numOfPatients={45}
-                brand="Thymogam"
+                brand="Oncyclo"
                 pap={15}
             />
         </div>

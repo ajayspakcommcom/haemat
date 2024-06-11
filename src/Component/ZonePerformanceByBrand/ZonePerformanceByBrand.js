@@ -19,7 +19,7 @@ const ZonePerformanceByBrand = (props) => {
                 zoneName="East"
                 performer="Manish"
                 numOfPatients={75}
-                brand="Revugam 50"
+                brand="Oncyclo"
                 pap={21}
             />
 
@@ -35,7 +35,7 @@ const ZonePerformanceByBrand = (props) => {
                 zoneName="West"
                 performer="Sanjay Dubey"
                 numOfPatients={45}
-                brand="Oncyclo"
+                brand="Revugam 50"
                 pap={15}
             />
 
