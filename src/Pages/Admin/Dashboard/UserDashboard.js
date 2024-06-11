@@ -12,6 +12,7 @@ import axios from "axios";
 import configData from '../../../Config/Config.json';
 import { Button } from 'primereact/button';
 import ZonePerformanceByKam from '../../../Component/ZonePerformanceByKam/ZonePerformanceByKam';
+import ZonePerformanceByBrand from '../../../Component/ZonePerformanceByBrand/ZonePerformanceByBrand';
 
 
 
@@ -71,78 +72,14 @@ const UserDashboard = () => {
                     <div className='admin-header-wrapper'>
                         <h1>Zone Wise</h1>
                     </div>
-                    <div className="grid">
-                        <ZonePerformanceByKam
-                            zoneName="North"
-                            performer="Manish"
-                            numOfPatients={98}
-                            brand="Thymogam"
-                            pap={23}
-                        />
-
-                        <ZonePerformanceByKam
-                            zoneName="East"
-                            performer="Manish"
-                            numOfPatients={75}
-                            brand="Thymogam"
-                            pap={21}
-                        />
-
-                        <ZonePerformanceByKam
-                            zoneName="South"
-                            performer="Sanjay Dubey"
-                            numOfPatients={58}
-                            brand="Thymogam"
-                            pap={18}
-                        />
-
-                        <ZonePerformanceByKam
-                            zoneName="West"
-                            performer="Sanjay Dubey"
-                            numOfPatients={45}
-                            brand="Thymogam"
-                            pap={15}
-                        />
-                    </div>
+                    <ZonePerformanceByKam />
                 </div>
 
                 <div className="p-3 pb-4">
                     <div className='admin-header-wrapper'>
-                        <h1>Best Product</h1>
+                        <h1>Best Product Zone Wise</h1>
                     </div>
-                    <div className="grid">
-                        <ZonePerformanceByKam
-                            zoneName="North"
-                            performer="Manish"
-                            numOfPatients={98}
-                            brand="Thymogam"
-                            pap={23}
-                        />
-
-                        <ZonePerformanceByKam
-                            zoneName="East"
-                            performer="Manish"
-                            numOfPatients={75}
-                            brand="Thymogam"
-                            pap={21}
-                        />
-
-                        <ZonePerformanceByKam
-                            zoneName="South"
-                            performer="Sanjay Dubey"
-                            numOfPatients={58}
-                            brand="Thymogam"
-                            pap={18}
-                        />
-
-                        <ZonePerformanceByKam
-                            zoneName="West"
-                            performer="Sanjay Dubey"
-                            numOfPatients={45}
-                            brand="Thymogam"
-                            pap={15}
-                        />
-                    </div>
+                    <ZonePerformanceByBrand />
                 </div>
 
                 <div className="p-3 pb-0">

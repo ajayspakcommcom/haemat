@@ -1,11 +1,13 @@
 import React from 'react';
-import './ZonePerformanceByKam.scss';
-import ZonePerformanceByKamItem from './ZonePerformanceByKamItem';
+import './ZonePerformanceByBrand.scss';
+import ZonePerformanceByBrandItem from './ZonePerformanceByBrandItem';
 
-const ZonePerformanceByKam = (props) => {
+
+const ZonePerformanceByBrand = (props) => {
     return (
         <div className="grid">
-            <ZonePerformanceByKamItem
+
+            <ZonePerformanceByBrandItem
                 zoneName="North"
                 performer="Manish"
                 numOfPatients={98}
@@ -13,31 +15,32 @@ const ZonePerformanceByKam = (props) => {
                 pap={23}
             />
 
-            <ZonePerformanceByKamItem
+            <ZonePerformanceByBrandItem
                 zoneName="East"
                 performer="Manish"
                 numOfPatients={75}
-                brand="Thymogam"
+                brand="Revugam 50"
                 pap={21}
             />
 
-            <ZonePerformanceByKamItem
+            <ZonePerformanceByBrandItem
                 zoneName="South"
                 performer="Sanjay Dubey"
                 numOfPatients={58}
-                brand="Thymogam"
+                brand="Revugam 25"
                 pap={18}
             />
 
-            <ZonePerformanceByKamItem
+            <ZonePerformanceByBrandItem
                 zoneName="West"
                 performer="Sanjay Dubey"
                 numOfPatients={45}
-                brand="Thymogam"
+                brand="Oncyclo"
                 pap={15}
             />
+
         </div>
     );
 };
 
-export default React.memo(ZonePerformanceByKam);
+export default React.memo(ZonePerformanceByBrand);
