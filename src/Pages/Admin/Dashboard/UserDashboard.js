@@ -11,6 +11,7 @@ import { groupByKey, getIndicationText, formatDate } from '../../../Service/Comm
 import axios from "axios";
 import configData from '../../../Config/Config.json';
 import { Button } from 'primereact/button';
+import ZonePerformanceByKam from '../../../Component/ZonePerformanceByKam/ZonePerformanceByKam';
 
 
 
@@ -66,128 +67,81 @@ const UserDashboard = () => {
                     <img src={process.env.PUBLIC_URL + '/img/pdf.png'} alt="React Logo" onClick={exportPDF} />
                 </div>
 
-                <div className="p-3 pb-0">
+                <div className="p-3 pb-4">
+                    <div className='admin-header-wrapper'>
+                        <h1>Zone Wise</h1>
+                    </div>
                     <div className="grid">
-                        <div className="col-3">
-                            <div className='top-performer-wrapper north'>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th><b>Zone</b></th>
-                                            <th>North</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Kam</td>
-                                            <td>Manish</td>
-                                        </tr>
-                                        <tr>
-                                            <td>No Of Patients</td>
-                                            <td>98</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brand</td>
-                                            <td>Thymogam</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Pap</td>
-                                            <td>23</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div className="col-3">
-                            <div className='top-performer-wrapper east'>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th><b>Zone</b></th>
-                                            <th>East</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Kam</td>
-                                            <td>Manish</td>
-                                        </tr>
-                                        <tr>
-                                            <td>No Of Patients</td>
-                                            <td>98</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brand</td>
-                                            <td>Thymogam</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Pap</td>
-                                            <td>23</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div className="col-3">
-                            <div className='top-performer-wrapper south'>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th><b>Zone</b></th>
-                                            <th>South</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Kam</td>
-                                            <td>Manish</td>
-                                        </tr>
-                                        <tr>
-                                            <td>No Of Patients</td>
-                                            <td>98</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brand</td>
-                                            <td>Thymogam</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Pap</td>
-                                            <td>23</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div className="col-3">
-                            <div className='top-performer-wrapper west'>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th><b>Zone</b></th>
-                                            <th>west</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Kam</td>
-                                            <td>Manish</td>
-                                        </tr>
-                                        <tr>
-                                            <td>No Of Patients</td>
-                                            <td>98</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brand</td>
-                                            <td>Thymogam</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Pap</td>
-                                            <td>23</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                        <ZonePerformanceByKam
+                            zoneName="North"
+                            performer="Manish"
+                            numOfPatients={98}
+                            brand="Thymogam"
+                            pap={23}
+                        />
+
+                        <ZonePerformanceByKam
+                            zoneName="East"
+                            performer="Manish"
+                            numOfPatients={75}
+                            brand="Thymogam"
+                            pap={21}
+                        />
+
+                        <ZonePerformanceByKam
+                            zoneName="South"
+                            performer="Sanjay Dubey"
+                            numOfPatients={58}
+                            brand="Thymogam"
+                            pap={18}
+                        />
+
+                        <ZonePerformanceByKam
+                            zoneName="West"
+                            performer="Sanjay Dubey"
+                            numOfPatients={45}
+                            brand="Thymogam"
+                            pap={15}
+                        />
+                    </div>
+                </div>
+
+                <div className="p-3 pb-4">
+                    <div className='admin-header-wrapper'>
+                        <h1>Best Product</h1>
+                    </div>
+                    <div className="grid">
+                        <ZonePerformanceByKam
+                            zoneName="North"
+                            performer="Manish"
+                            numOfPatients={98}
+                            brand="Thymogam"
+                            pap={23}
+                        />
+
+                        <ZonePerformanceByKam
+                            zoneName="East"
+                            performer="Manish"
+                            numOfPatients={75}
+                            brand="Thymogam"
+                            pap={21}
+                        />
+
+                        <ZonePerformanceByKam
+                            zoneName="South"
+                            performer="Sanjay Dubey"
+                            numOfPatients={58}
+                            brand="Thymogam"
+                            pap={18}
+                        />
+
+                        <ZonePerformanceByKam
+                            zoneName="West"
+                            performer="Sanjay Dubey"
+                            numOfPatients={45}
+                            brand="Thymogam"
+                            pap={15}
+                        />
                     </div>
                 </div>
 

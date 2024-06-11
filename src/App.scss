@@ -18,7 +18,7 @@ body,
 }
 
 .p-button {
-    background-color: red;
+    background-color: #e5252a;
 }
 
 .apexcharts-menu.apexcharts-menu-open {
@@ -28,6 +28,24 @@ body,
 .apexcharts-menu-icon {
     svg {
         fill: #fff !important;
+    }
+}
+
+.admin-header-wrapper {
+    h1 {
+        margin: 0 0 10px 0;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 600;
+        // background: linear-gradient(180deg, #ff6b6b, #6b83ff);
+        background: linear-gradient(180deg, #ea941c, #fff);
+
+        background-clip: border-box;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-align: left;
+        padding: 0;
     }
 }
 
@@ -53,7 +71,7 @@ body,
 
         .p-button {
             border: 0 !important;
-            background-color: rgb(255, 69, 96) !important;
+            background-color: #e5252a !important;
         }
     }
 
