@@ -19,6 +19,9 @@ import BrandWisePieChartComparison from '../../../Component/Brand-Wise-Pie-Chart
 
 const UserDashboard = () => {
 
+    const url = `${configData.SERVER_URL}/home/KamAdminReport`;
+    const tdrUrl = `${configData.SERVER_URL}/home/KamMedicineTDR`;
+
     const exportPDF = () => {
         html2canvas(document.body).then((canvas) => {
             const imgData = canvas.toDataURL('image/png');
@@ -32,6 +35,19 @@ const UserDashboard = () => {
     }
 
     useEffect(() => {
+
+        const loadSummaryData = async () => {
+            const resp = await axios.post(url);
+            console.log(resp.data.Data);
+        };
+
+        const loadTdrData = async () => {
+            const resp = await axios.post(tdrUrl);
+            console.log(resp.data.Data);
+        };
+
+        loadSummaryData();
+        loadTdrData();
 
     }, []);
 
