@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { generateColorArray } from '../../Service/Common';
-import './BrandWisePieChartComparison.css';
-import { Brand, ChartBackground } from '../../Service/AppConstants';
+import './PatientZoneWisePieChartComparison.css';
+import { Brand, Zone, ChartBackground } from '../../Service/AppConstants';
 
-const BrandWisePieChartComparison = (props) => {
+const PatientZoneWisePieChartComparison = (props) => {
 
-    const series = [30, 40, 15, 15];
+    const series = [25, 30, 25, 20];
 
     const options = {
         chart: {
@@ -15,6 +15,7 @@ const BrandWisePieChartComparison = (props) => {
             },
             events: {
                 click: function (event, chartContext, { seriesIndex, dataPointIndex, config }) {
+
                     // console.clear();
                     // console.log('Events:', event);
                     // console.log('chartContext:', chartContext);
@@ -49,10 +50,10 @@ const BrandWisePieChartComparison = (props) => {
                 //fillColors: ['red', 'blue', 'yellow'] // Optionally change marker colors if needed
             }
         },
-        labels: [Brand.Oncyclo, Brand.Revugam, Brand.Thymogam, Brand.Revugam25],
+        labels: [Zone.North, Zone.East, Zone.South, Zone.West],
         // colors: ["#447b40", "#cc7870", "#e74ce4"],
         title: {
-            text: 'Brand Wise Comparison',
+            text: 'Patient Zone Wise',
             align: 'center',
             style: { fontWeight: 500, color: '#fff', fontSize: 12, marginBottom: '15px' },
             offsetY: 15
@@ -94,4 +95,4 @@ const BrandWisePieChartComparison = (props) => {
     );
 };
 
-export default React.memo(BrandWisePieChartComparison);
+export default React.memo(PatientZoneWisePieChartComparison);

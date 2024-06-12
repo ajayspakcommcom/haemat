@@ -14,6 +14,8 @@ import { Button } from 'primereact/button';
 import ZonePerformanceByKam from '../../../Component/ZonePerformanceByKam/ZonePerformanceByKam';
 import ZonePerformanceByBrand from '../../../Component/ZonePerformanceByBrand/ZonePerformanceByBrand';
 import BrandWisePieChartComparison from '../../../Component/Brand-Wise-Pie-Chart-Comparison/BrandWisePieChartComparison';
+import PapZoneWisePieChartComparison from '../../../Component/Pap-Zone-Wise-Pie-Chart-Comparison/PapZoneWisePieChartComparison';
+import PatientZoneWisePieChartComparison from '../../../Component/Patient-Zone-Wise-Pie-Chart-Comparison/PatientZoneWisePieChartComparison';
 
 
 
@@ -108,6 +110,15 @@ const UserDashboard = () => {
                         <div className="col-4">
                             <BrandWisePieChartComparison />
                         </div>
+
+                        <div className="col-4">
+                            <PapZoneWisePieChartComparison />
+                        </div>
+
+                        <div className="col-4">
+                            <PatientZoneWisePieChartComparison />
+                        </div>
+
                     </div>
                 </div>
 

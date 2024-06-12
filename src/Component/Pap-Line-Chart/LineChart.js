@@ -2,6 +2,7 @@ import React from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { generateColorArray } from '../../Service/Common';
 import './LineChart.css';
+import { ChartBackground } from '../../Service/AppConstants';
 
 const LineChart = (props) => {
 
@@ -26,7 +27,7 @@ const LineChart = (props) => {
                     console.log('config:', config);
                 }
             },
-            background: '#262d47',
+            background: ChartBackground,
             dropShadow: {
                 enabled: true
             }

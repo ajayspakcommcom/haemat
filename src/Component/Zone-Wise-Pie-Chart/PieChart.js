@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { generateColorArray } from '../../Service/Common';
 import './PieChart.css';
-import { Zone } from '../../Service/AppConstants';
+import { ChartBackground, Zone } from '../../Service/AppConstants';
 
 const PieChart = (props) => {
 
@@ -23,7 +23,7 @@ const PieChart = (props) => {
                     console.log('config:', config);
                 }
             },
-            background: '#262d47',
+            background: ChartBackground,
             dropShadow: {
                 enabled: true
             }

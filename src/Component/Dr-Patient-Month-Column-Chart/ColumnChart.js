@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { generateColorArray } from '../../Service/Common';
 import './ColumnChart.css';
+import { ChartBackground } from '../../Service/AppConstants';
 
 const ColumnChart = (props) => {
 
@@ -27,7 +28,7 @@ const ColumnChart = (props) => {
                     //console.log(`Clicked on series: ${config.series[series - 1].name}, data point index: ${dataPointIndex}, value: ${config.series[seriesIndex].data[dataPointIndex]}`);
                 }
             },
-            background: '#262d47',
+            background: ChartBackground,
             dropShadow: {
                 enabled: true
             }

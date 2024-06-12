@@ -1,3 +1,5 @@
+export const ChartBackground = '#262d47';
+
 export const Brand = {
     Oncyclo: "Oncyclo",
     Revugam: "Revugam",
@@ -9,6 +11,6 @@ export const Zone = {
     North: "North",
     East: "East",
     South: "South",
-    South: "South"
+    West: "West"
 }
 
