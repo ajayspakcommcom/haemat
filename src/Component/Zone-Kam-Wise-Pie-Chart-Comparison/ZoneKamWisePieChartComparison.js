@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { generateColorArray } from '../../Service/Common';
-import './PieChart.css';
-import { Zone } from '../../Service/AppConstants';
+import './ZoneKamWisePieChartComparison.css';
+import { Brand } from '../../Service/AppConstants';
 
-const PieChart = (props) => {
+const ZoneKamWisePieChartComparison = (props) => {
 
     const series = [30, 40, 15, 15];
 
@@ -15,12 +15,18 @@ const PieChart = (props) => {
             },
             events: {
                 click: function (event, chartContext, { seriesIndex, dataPointIndex, config }) {
-                    console.clear();
-                    console.log('Events:', event);
-                    console.log('chartContext:', chartContext);
-                    console.log('seriesIndex:', seriesIndex);
-                    console.log('dataPointIndex:', dataPointIndex);
-                    console.log('config:', config);
+
+                    // console.clear();
+                    // console.log('Events:', event);
+                    // console.log('chartContext:', chartContext);
+                    // console.log('seriesIndex:', seriesIndex);
+                    // console.log('dataPointIndex:', dataPointIndex);
+                    // console.log('config:', config);
+                    //const selectedValue = config.series[seriesIndex][dataPointIndex];
+
+                    console.log("config:", config);
+                    console.log("config:", seriesIndex);
+                    console.log("selectedValue:", config.series[dataPointIndex]);
                 }
             },
             background: '#262d47',
@@ -44,10 +50,10 @@ const PieChart = (props) => {
                 //fillColors: ['red', 'blue', 'yellow'] // Optionally change marker colors if needed
             }
         },
-        labels: [`${Zone.North} Zone`, `${Zone.East} Zone`, `${Zone.South} Zone`, `${Zone.West} Zone`],
+        labels: [Brand.Oncyclo, Brand.Revugam, Brand.Thymogam, Brand.Revugam25],
         // colors: ["#447b40", "#cc7870", "#e74ce4"],
         title: {
-            text: 'Zone Wise Doctors And Patients',
+            text: 'Brand Wise Comparison',
             align: 'center',
             style: { fontWeight: 500, color: '#fff', fontSize: 12, marginBottom: '15px' },
             offsetY: 15
@@ -89,4 +95,4 @@ const PieChart = (props) => {
     );
 };
 
-export default PieChart;
+export default React.memo(ZoneKamWisePieChartComparison);

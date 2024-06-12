@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { generateColorArray } from '../../Service/Common';
 import './BrandWisePieChartComparison.css';
+import { Brand } from '../../Service/AppConstants';
 
 const BrandWisePieChartComparison = (props) => {
 
@@ -48,7 +49,7 @@ const BrandWisePieChartComparison = (props) => {
                 //fillColors: ['red', 'blue', 'yellow'] // Optionally change marker colors if needed
             }
         },
-        labels: ['Oncyclo', 'Revugam', 'Thymogam', 'Revugam-25'],
+        labels: [Brand.Oncyclo, Brand.Revugam, Brand.Thymogam, Brand.Revugam25],
         // colors: ["#447b40", "#cc7870", "#e74ce4"],
         title: {
             text: 'Brand Wise Comparison',
