@@ -22,7 +22,7 @@ const PatientZoneWisePieChartComparison = (props) => {
                     // console.log('seriesIndex:', seriesIndex);
                     // console.log('dataPointIndex:', dataPointIndex);
                     // console.log('config:', config);
-                    //const selectedValue = config.series[seriesIndex][dataPointIndex];
+                    // const selectedValue = config.series[seriesIndex][dataPointIndex];
 
                     console.log("config:", config);
                     console.log("config:", seriesIndex);
